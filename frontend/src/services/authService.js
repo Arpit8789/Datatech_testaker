@@ -284,3 +284,66 @@ export const logout = async () => {
     return { success: false, error: error.message || 'Logout failed' }
   }
 }
+
+
+/**
+ * Student Signup
+ */
+export const studentSignup = async (data) => {
+  try {
+    // Check if already logged in
+    const existingUser = await checkExistingSession()
+    if (existingUser) {
+      throw new Error('Please logout first before creating a new account')
+    }
+
+    // Verify college exists
+    const collegeData = await databases.listDocuments(
+      APPWRITE_CONFIG.databaseId,
+      APPWRITE_CONFIG.collections.colleges,
+      [Query.equal('collegeId', data.collegeId)]
+    )
+
+    if (collegeData.documents.length === 0) {
+      throw new Error('Invalid college code. Please check and try again.')
+    }
+
+    // Create Appwrite account
+    const user = await account.create(
+      ID.unique(),
+      data.email,
+      data.password,
+      data.name
+    )
+
+    // Create student document in database
+    const studentDoc = await databases.createDocument(
+      APPWRITE_CONFIG.databaseId,
+      APPWRITE_CONFIG.collections.students,
+      ID.unique(),
+      {
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        collegeId: data.collegeId,
+        userId: user.$id,
+        payNowEnabled: false,
+      }
+    )
+
+    return { success: true, student: studentDoc }
+
+  } catch (error) {
+    console.error('Student signup error:', error)
+
+    let errorMessage = error.message
+
+    if (error.code === 409 || errorMessage.includes('user_already_exists')) {
+      errorMessage = 'This email is already registered. Please login.'
+    } else if (errorMessage.includes('Invalid college code')) {
+      errorMessage = 'Invalid college code. Please verify with your college.'
+    }
+
+    return { success: false, error: errorMessage }
+  }
+}

@@ -29,6 +29,7 @@ import RegisterStudent from './pages/college/RegisterStudent'
 import ViewStudents from './pages/college/ViewStudents'
 
 // Student Pages
+import StudentSignup from './pages/student/StudentSignup'
 import StudentDashboard from './pages/student/StudentDashboard'
 import AvailableTests from './pages/student/AvailableTests'
 import TakeTest from './pages/student/TakeTest'
@@ -69,6 +70,8 @@ function App() {
           <Route path="/college/students" element={<ViewStudents />} />
           
           {/* Student Routes */}
+          <Route path="/student/signup" element={<StudentSignup />} />
+
           <Route path="/student/dashboard" element={<StudentDashboard />} />
           <Route path="/student/tests" element={<AvailableTests />} />
           <Route path="/student/test/:id" element={<TakeTest />} />

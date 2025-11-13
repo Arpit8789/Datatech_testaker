@@ -7,7 +7,7 @@ import { useAuth } from '../../context/AuthContext'
 
 const CollegeLogin = () => {
   const navigate = useNavigate()
-  const { checkUser } = useAuth()
+  const { checkUser, setCollegeData } = useAuth() // ✅ Get setter
   const [formData, setFormData] = useState({ email: '', password: '' })
   const [loading, setLoading] = useState(false)
 
@@ -15,17 +15,13 @@ const CollegeLogin = () => {
     e.preventDefault()
     setLoading(true)
 
-    console.log('Attempting college login...') // Debug log
-
     const result = await collegeLogin(formData.email, formData.password)
-    
-    console.log('Login result:', result) // Debug log
 
     if (result.success) {
       await checkUser()
+      setCollegeData(result.college) // ✅ Store college data in context
       toast.success('Login successful!')
-      console.log('Navigating to /college/dashboard') // Debug log
-      navigate('/college/dashboard', { replace: true }) // ✅ Force navigation
+      navigate('/college/dashboard', { replace: true })
     } else {
       toast.error(result.error || 'Login failed!')
     }

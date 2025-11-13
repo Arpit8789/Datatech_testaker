@@ -8,6 +8,8 @@ export const useAuth = () => useContext(AuthContext)
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [collegeData, setCollegeData] = useState(null) // ✅ Store college data
+  const [studentData, setStudentData] = useState(null) // ✅ Store student data
 
   const checkUser = async () => {
     try {
@@ -30,7 +32,11 @@ export const AuthProvider = ({ children }) => {
     user,
     loading,
     checkUser,
-    setUser
+    setUser,
+    collegeData,
+    setCollegeData, // ✅ Expose setter
+    studentData,
+    setStudentData, // ✅ Expose setter
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
