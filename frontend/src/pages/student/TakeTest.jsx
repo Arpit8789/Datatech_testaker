@@ -1,16 +1,18 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { Clock, AlertCircle, CheckCircle } from 'lucide-react'
+import { Clock, AlertCircle, CheckCircle, Camera, Eye } from 'lucide-react'
 import toast from 'react-hot-toast'
+import Webcam from 'react-webcam'
 import { databases, storage } from '../../config/appwrite'
 import { APPWRITE_CONFIG } from '../../config/constants'
 import { useAuth } from '../../context/AuthContext'
-import { ID, Query } from 'appwrite'
+import { ID } from 'appwrite'
 
 const TakeTest = () => {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { studentData } = useAuth()
+  const { studentData, user } = useAuth()
+  const webcamRef = useRef(null)
   
   const [test, setTest] = useState(null)
   const [questions, setQuestions] = useState([])
@@ -19,9 +21,23 @@ const TakeTest = () => {
   const [timeLeft, setTimeLeft] = useState(0)
   const [loading, setLoading] = useState(true)
   const [submitting, setSubmitting] = useState(false)
+  const [tabSwitches, setTabSwitches] = useState(0)
+  const [cameraEnabled, setCameraEnabled] = useState(false)
 
   useEffect(() => {
+    // Check if student data exists
+    if (!studentData && !user) {
+      toast.error('Please login first')
+      navigate('/student/login')
+      return
+    }
+    
     fetchTestData()
+    setupProctoring()
+    
+    return () => {
+      cleanupProctoring()
+    }
   }, [id])
 
   useEffect(() => {
@@ -33,25 +49,70 @@ const TakeTest = () => {
     }
   }, [timeLeft, questions])
 
+  const setupProctoring = () => {
+    // Enable camera
+    setCameraEnabled(true)
+    
+    // Detect tab/window switch
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    window.addEventListener('blur', handleWindowBlur)
+    
+    // Disable right-click
+    document.addEventListener('contextmenu', preventCopy)
+    
+    // Disable copy/paste
+    document.addEventListener('copy', preventCopy)
+    document.addEventListener('cut', preventCopy)
+    document.addEventListener('paste', preventCopy)
+  }
+
+  const cleanupProctoring = () => {
+    document.removeEventListener('visibilitychange', handleVisibilityChange)
+    window.removeEventListener('blur', handleWindowBlur)
+    document.removeEventListener('contextmenu', preventCopy)
+    document.removeEventListener('copy', preventCopy)
+    document.removeEventListener('cut', preventCopy)
+    document.removeEventListener('paste', preventCopy)
+  }
+
+  const handleVisibilityChange = () => {
+    if (document.hidden) {
+      const newCount = tabSwitches + 1
+      setTabSwitches(newCount)
+      toast.error(`⚠️ Tab switch detected! (${newCount})`)
+      
+      if (newCount >= 3) {
+        toast.error('Too many tab switches! Auto-submitting test.')
+        setTimeout(() => handleSubmit(), 2000)
+      }
+    }
+  }
+
+  const handleWindowBlur = () => {
+  toast.error('⚠️ Stay on this window!') // ✅ Changed from toast.warning
+}
+
+  const preventCopy = (e) => {
+    e.preventDefault()
+    return false
+  }
+
   const fetchTestData = async () => {
     try {
-      // Fetch test details
       const testDoc = await databases.getDocument(
         APPWRITE_CONFIG.databaseId,
         APPWRITE_CONFIG.collections.tests,
         id
       )
       setTest(testDoc)
-      setTimeLeft(testDoc.duration * 60) // Convert to seconds
+      setTimeLeft(testDoc.duration * 60)
 
-      // Fetch questions from storage - use download instead of view
       try {
         const fileDownload = await storage.getFileDownload(
           APPWRITE_CONFIG.bucketId,
           testDoc.questionsFileId
         )
         
-        // Parse the downloaded file
         const response = await fetch(fileDownload)
         const data = await response.json()
         
@@ -62,7 +123,7 @@ const TakeTest = () => {
         }
       } catch (storageError) {
         console.error('Storage error:', storageError)
-        toast.error('Failed to load questions. Please check storage permissions.')
+        toast.error('Failed to load questions')
         navigate('/student/dashboard')
         return
       }
@@ -83,60 +144,67 @@ const TakeTest = () => {
   }
 
   const handleSubmit = async () => {
-    if (submitting || questions.length === 0) return
-    setSubmitting(true)
+  if (submitting || questions.length === 0) return
+  setSubmitting(true)
 
-    try {
-      // Calculate score
-      let correct = 0
-      let incorrect = 0
-      let unattempted = 0
+  try {
+    let correct = 0
+    let incorrect = 0
+    let unattempted = 0
 
-      questions.forEach((q) => {
-        const userAnswer = answers[q.id]
-        if (userAnswer === undefined) {
-          unattempted++
-        } else if (userAnswer === q.correctAnswer) {
-          correct++
-        } else {
-          incorrect++
-        }
-      })
+    questions.forEach((q) => {
+      const userAnswer = answers[q.id]
+      if (userAnswer === undefined) {
+        unattempted++
+      } else if (userAnswer === q.correctAnswer) {
+        correct++
+      } else {
+        incorrect++
+      }
+    })
 
-      const score = correct * (questions[0]?.marks || 1)
-      const percentage = (correct / questions.length) * 100
+    const score = correct * (questions[0]?.marks || 1)
+    const percentage = (correct / questions.length) * 100
 
-      // Save attempt to database
-      const attempt = await databases.createDocument(
-        APPWRITE_CONFIG.databaseId,
-        APPWRITE_CONFIG.collections.attempts,
-        ID.unique(),
-        {
-          studentId: studentData.$id,
-          testId: id,
-          collegeId: studentData.collegeId,
-          status: 'completed',
-          answers: JSON.stringify(answers),
-          score: score,
-          percentage: percentage,
-          correctCount: correct,
-          incorrectCount: incorrect,
-          unattemptedCount: unattempted,
-          paymentStatus: 'pending',
-          startedAt: new Date().toISOString(),
-          completedAt: new Date().toISOString()
-        }
-      )
+    const studentId = studentData?.$id || user?.$id
+    const collegeId = studentData?.collegeId || 'unknown'
 
-      toast.success('Test submitted successfully!')
-      navigate(`/student/result/${attempt.$id}`)
-    } catch (error) {
-      console.error('Error submitting test:', error)
-      toast.error('Failed to submit test')
-    } finally {
-      setSubmitting(false)
+    if (!studentId) {
+      toast.error('Session expired. Please login again.')
+      navigate('/student/login')
+      return
     }
+
+    // ✅ Removed completedAt and startedAt (not in your schema)
+    const attempt = await databases.createDocument(
+      APPWRITE_CONFIG.databaseId,
+      APPWRITE_CONFIG.collections.attempts,
+      ID.unique(),
+      {
+        studentId: studentId,
+        testId: id,
+        collegeId: collegeId,
+        status: 'completed',
+        answers: JSON.stringify(answers),
+        score: score,
+        percentage: percentage,
+        correctCount: correct,
+        incorrectCount: incorrect,
+        unattemptedCount: unattempted,
+        paymentStatus: 'pending',
+        startedAt: new Date().toISOString()
+      }
+    )
+
+    toast.success('Test submitted successfully!')
+    navigate(`/student/result/${attempt.$id}`)
+  } catch (error) {
+    console.error('Error submitting test:', error)
+    toast.error(`Failed to submit test: ${error.message}`)
+  } finally {
+    setSubmitting(false)
   }
+}
 
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60)
@@ -155,7 +223,6 @@ const TakeTest = () => {
     )
   }
 
-  // ✅ Add safety check
   if (!questions || questions.length === 0) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -174,15 +241,50 @@ const TakeTest = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header with Timer */}
+      {/* Proctoring Warning Banner */}
+      {tabSwitches > 0 && (
+        <div className="bg-red-600 text-white py-2 px-4 text-center font-medium">
+          ⚠️ Warning: {tabSwitches} tab switch(es) detected! Test may be auto-submitted after 3 switches.
+        </div>
+      )}
+
+      {/* Header with Timer & Camera */}
       <div className="bg-white shadow-md sticky top-0 z-10">
         <div className="container-custom flex justify-between items-center py-4">
-          <div>
-            <h1 className="text-xl font-bold text-gray-900">{test?.testName}</h1>
-            <p className="text-sm text-gray-500">
-              Question {currentQuestion + 1} of {questions.length}
-            </p>
+          <div className="flex items-center gap-4">
+            {/* Camera Preview */}
+            <div className="relative">
+              <div className="w-24 h-24 rounded-lg overflow-hidden border-2 border-green-500 shadow-lg">
+                {cameraEnabled ? (
+                  <Webcam
+                    ref={webcamRef}
+                    audio={false}
+                    screenshotFormat="image/jpeg"
+                    className="w-full h-full object-cover"
+                    mirrored={true}
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                    <Camera className="text-gray-400" size={32} />
+                  </div>
+                )}
+              </div>
+              <div className="absolute -top-2 -right-2 bg-green-500 text-white rounded-full p-1">
+                <Eye size={16} />
+              </div>
+            </div>
+
+            <div>
+              <h1 className="text-xl font-bold text-gray-900">{test?.testName}</h1>
+              <p className="text-sm text-gray-500">
+                Question {currentQuestion + 1} of {questions.length}
+              </p>
+              <p className="text-xs text-red-600 font-medium">
+                🔴 Proctored Test - Stay on this tab
+              </p>
+            </div>
           </div>
+
           <div className={`flex items-center gap-2 px-4 py-2 rounded-lg ${
             timeLeft < 300 ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'
           }`}>
@@ -197,7 +299,6 @@ const TakeTest = () => {
           {/* Main Question Area */}
           <div className="lg:col-span-3">
             <div className="bg-white rounded-xl shadow-lg p-8">
-              {/* Question */}
               <div className="mb-6">
                 <div className="flex items-start gap-3 mb-4">
                   <span className="bg-primary-600 text-white px-4 py-2 rounded-lg font-bold">
@@ -214,7 +315,6 @@ const TakeTest = () => {
                 </div>
               </div>
 
-              {/* Options */}
               <div className="space-y-3">
                 {question?.options?.map((option, index) => (
                   <button
@@ -245,7 +345,6 @@ const TakeTest = () => {
                 ))}
               </div>
 
-              {/* Navigation Buttons */}
               <div className="flex justify-between mt-8 pt-6 border-t">
                 <button
                   onClick={() => setCurrentQuestion(Math.max(0, currentQuestion - 1))}
@@ -277,7 +376,7 @@ const TakeTest = () => {
 
           {/* Question Palette */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-xl shadow-lg p-6 sticky top-24">
+            <div className="bg-white rounded-xl shadow-lg p-6 sticky top-36">
               <h3 className="font-bold text-gray-900 mb-4">Question Palette</h3>
               
               <div className="grid grid-cols-5 gap-2 mb-6">
@@ -298,8 +397,7 @@ const TakeTest = () => {
                 ))}
               </div>
 
-              {/* Legend */}
-              <div className="space-y-2 text-sm">
+              <div className="space-y-2 text-sm mb-4">
                 <div className="flex items-center gap-2">
                   <div className="w-6 h-6 bg-green-100 rounded"></div>
                   <span className="text-gray-600">Answered</span>
@@ -314,8 +412,7 @@ const TakeTest = () => {
                 </div>
               </div>
 
-              {/* Stats */}
-              <div className="mt-6 pt-6 border-t space-y-2 text-sm">
+              <div className="pt-4 border-t space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span className="text-gray-600">Answered:</span>
                   <span className="font-bold text-green-600">
@@ -326,6 +423,12 @@ const TakeTest = () => {
                   <span className="text-gray-600">Not Answered:</span>
                   <span className="font-bold text-gray-600">
                     {questions.length - Object.keys(answers).length}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Tab Switches:</span>
+                  <span className={`font-bold ${tabSwitches > 0 ? 'text-red-600' : 'text-gray-600'}`}>
+                    {tabSwitches}
                   </span>
                 </div>
               </div>
