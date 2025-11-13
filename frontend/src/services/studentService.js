@@ -27,7 +27,7 @@ export const registerStudent = async (studentData) => {
         collegeId: studentData.collegeId,
         userId: user.$id,
         payNowEnabled: false,
-        createdAt: new Date().toISOString(),
+        //createdAt: new Date().toISOString(),
       }
     )
     

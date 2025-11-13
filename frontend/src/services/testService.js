@@ -94,7 +94,7 @@ export const createTest = async (testData, questionsFile) => {
         duration: testData.duration || 60,
         totalQuestions: testData.totalQuestions,
         questionsFileId: file.$id,
-        createdAt: new Date().toISOString(),
+        //createdAt: new Date().toISOString(),
       }
     )
     

@@ -18,6 +18,7 @@ export const adminLogin = async (email, password) => {
     
     return { success: true, user }
   } catch (error) {
+    console.error('Admin login error:', error)
     return { success: false, error: error.message }
   }
 }
@@ -44,10 +45,14 @@ export const collegeLogin = async (email, password) => {
     
     return { success: true, user, college: collegeData.documents[0] }
   } catch (error) {
+    console.error('College login error:', error)
     return { success: false, error: error.message }
   }
 }
 
+/**
+ * College Signup
+ */
 /**
  * College Signup
  */
@@ -73,20 +78,39 @@ export const collegeSignup = async (data) => {
         phone: data.phone,
         address: data.address,
         userId: user.$id,
-        scholarshipPercentage: 60, // Default
+        scholarshipPercentage: 60,
         payNowEnabled: false,
-        createdAt: new Date().toISOString(),
+        // ✅ No need for createdAt - Appwrite provides $createdAt automatically
       }
     )
     
     // Send verification email
-    await account.createVerification(`${window.location.origin}/verify-otp`)
+    try {
+      await account.createVerification(`${window.location.origin}/verify-otp`)
+    } catch (verifyError) {
+      console.warn('Email verification failed, but account created:', verifyError)
+    }
     
     return { success: true, college: collegeDoc }
   } catch (error) {
-    return { success: false, error: error.message }
+    console.error('College signup error:', error)
+    
+    let errorMessage = error.message
+    
+    if (error.code === 409 || errorMessage.includes('user_already_exists')) {
+      errorMessage = 'Email already registered. Please login or use a different email.'
+    } else if (errorMessage.includes('Invalid email')) {
+      errorMessage = 'Please enter a valid email address.'
+    } else if (errorMessage.includes('Password')) {
+      errorMessage = 'Password must be at least 8 characters long.'
+    } else if (errorMessage.includes('Unknown attribute')) {
+      errorMessage = 'Database configuration error. Please check collection attributes.'
+    }
+    
+    return { success: false, error: errorMessage }
   }
 }
+
 
 /**
  * Student Login
@@ -110,6 +134,7 @@ export const studentLogin = async (email, password) => {
     
     return { success: true, user, student: studentData.documents[0] }
   } catch (error) {
+    console.error('Student login error:', error)
     return { success: false, error: error.message }
   }
 }
@@ -122,6 +147,7 @@ export const verifyOTP = async (userId, secret) => {
     await account.updateVerification(userId, secret)
     return { success: true }
   } catch (error) {
+    console.error('OTP verification error:', error)
     return { success: false, error: error.message }
   }
 }
@@ -134,6 +160,7 @@ export const sendPasswordRecovery = async (email) => {
     await account.createRecovery(email, `${window.location.origin}/reset-password`)
     return { success: true }
   } catch (error) {
+    console.error('Password recovery error:', error)
     return { success: false, error: error.message }
   }
 }
@@ -146,6 +173,7 @@ export const logout = async () => {
     await account.deleteSession('current')
     return { success: true }
   } catch (error) {
+    console.error('Logout error:', error)
     return { success: false, error: error.message }
   }
 }
