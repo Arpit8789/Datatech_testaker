@@ -1,0 +1,485 @@
+{
+  "testInfo": {
+    "testName": "Test 1: General Aptitude & Data Science",
+    "testNumber": 1,
+    "duration": 60,
+    "totalQuestions": 50,
+    "sections": [
+      {
+        "name": "Quantitative Aptitude",
+        "questions": 15
+      },
+      {
+        "name": "Verbal Ability (English)",
+        "questions": 15
+      },
+      {
+        "name": "Data Science",
+        "questions": 20
+      }
+    ],
+    "description": "Comprehensive test covering quantitative aptitude, verbal ability, and data science fundamentals"
+  },
+  "questions": [
+    {
+      "id": 1,
+      "section": "Quantitative Aptitude",
+      "question": "A 9-digit number in which no zero appears and no digit is repeated has the following properties: The number formed by the first two digits is divisible by 2, the first three digits by 3, the first four digits by 4, and so on. The number is:",
+      "options": ["246913578", "381654972", "987654312", "918273645"],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 2,
+      "section": "Quantitative Aptitude",
+      "question": "If 12,212,121 is divided by 111, then what is the remainder?",
+      "options": ["21", "33", "45", "99"],
+      "correctAnswer": 3,
+      "marks": 1
+    },
+    {
+      "id": 3,
+      "section": "Quantitative Aptitude",
+      "question": "6 engines consume 8 tonnes of coal when each is running 10 hours daily. How many tonnes will be consumed by 9 engines, each running 12 hours daily, if 2 of the first type consume as much as 3 of the second type?",
+      "options": ["14", "16", "18", "20"],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 4,
+      "section": "Quantitative Aptitude",
+      "question": "Work done by a woman in 7 hrs = work done by a man in 5 hrs = work done by a boy in 10 hrs. If 8 men working 6 hrs/day can finish a job in 8 days, in how many days will 10 men, 10 women, and 10 boys working 7 hrs/day complete it?",
+      "options": ["2", "3", "4", "5"],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 5,
+      "section": "Quantitative Aptitude",
+      "question": "If Z = 2197 and R = 729. How would J be written in that code?",
+      "options": ["216", "124", "512", "125"],
+      "correctAnswer": 3,
+      "marks": 1
+    },
+    {
+      "id": 6,
+      "section": "Quantitative Aptitude",
+      "question": "A certain amount is distributed among 'A', 'B', 'C' and 'D' in such a way that 'A' gets 25% less amount than 'B', 'B' gets 20% less amount than 'C' and 'C' gets 25% more amount than 'D'. If amount received 'A' is Rs. 2,400, then find the amount received by 'C'.",
+      "options": ["2400", "3200", "4000", "3000"],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 7,
+      "section": "Quantitative Aptitude",
+      "question": "If the radius of a cylinder is increased by 20% while its height is decreased by 25%, then the volume of the cylinder increases by 46 cm³. Find the original volume of the cylinder.",
+      "options": ["575 cm³", "425 cm³", "615 cm³", "525 cm³"],
+      "correctAnswer": 0,
+      "marks": 1
+    },
+    {
+      "id": 8,
+      "section": "Quantitative Aptitude",
+      "question": "Arun is travelling on his cycle and has calculated to reach point A at 3 pm if he travels at 10 kmph. He will reach there at 12 noon if he travels at 15 kmph. At what speed must he travel to reach A at 4 pm?",
+      "options": ["7 kmph", "10 kmph", "9 kmph", "8 kmph"],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 9,
+      "section": "Quantitative Aptitude",
+      "question": "8 litres are drawn from a cask full of wine and is then filled with water. This operation is performed three more times. The ratio of the quantity of wine now left in cask to that of the water is 16:65. How much wine did the cask originally hold?",
+      "options": ["26", "24", "32", "34"],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 10,
+      "section": "Quantitative Aptitude",
+      "question": "From 'A' kg of pure tea a shopkeeper removes A% of the mixture (Either pure tea or adulterated tea) and replaces it with same quantity of adulteration. If he repeated this process once more and now the amount of pure tea remaining in the mixture is (90% of 40% of A) kg, then find the value of A.",
+      "options": ["60%", "50%", "40%", "30%"],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 11,
+      "section": "Quantitative Aptitude",
+      "question": "There are six members -- P, Q, R, S, T and U are in a family. P and Q are a married couple. P is one of the male members. S is the only son of R who is brother of P. T is the sister of S. Q is the daughter-in-law of U, whose husband has passed away. How many female members are there in the family?",
+      "options": ["Can't be determined", "Only one", "Two", "Three"],
+      "correctAnswer": 3,
+      "marks": 1
+    },
+    {
+      "id": 12,
+      "section": "Quantitative Aptitude",
+      "question": "Statements: Some hens are dogs. All frog are chairs. All dogs are frog. Conclusion: I. Some hens are frog II. All frog are dogs III. All chairs are hens IV. All frog are hens",
+      "options": ["Only I & II follow", "Only II follows", "Only I & IV follow", "None of these"],
+      "correctAnswer": 3,
+      "marks": 1
+    },
+    {
+      "id": 13,
+      "section": "Quantitative Aptitude",
+      "question": "How much does a watch lose per day, if its hands coincide every 64 minutes?",
+      "options": ["32 (8/11)", "33 (8/11)", "34 (8/11)", "35 (8/11)"],
+      "correctAnswer": 0,
+      "marks": 1
+    },
+    {
+      "id": 14,
+      "section": "Quantitative Aptitude",
+      "question": "What percent of students in a school are freshmen with glasses? (1) Of the freshmen in the school, 10% wear glasses. (2) Of the non-freshmen in the school, 20% wear glasses.",
+      "options": [
+        "Statement (1) ALONE is sufficient, but statement (2) alone is not sufficient",
+        "Statements (1) and (2) TOGETHER are NOT sufficient",
+        "BOTH statements (1) and (2) TOGETHER are sufficient",
+        "EACH statement ALONE is sufficient"
+      ],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 15,
+      "section": "Quantitative Aptitude",
+      "question": "In 2013 there are 300 employees at Company ABC. If the number of employees increased by 200% from 1993 to 2013, by what percent did the number increase from 2003 to 2013? (1) In 2003 there were 160 employees. (2) From 1993 to 2003 the number increased by 60%.",
+      "options": [
+        "Statement (1) ALONE is sufficient",
+        "Statement (2) ALONE is sufficient",
+        "BOTH statements TOGETHER are sufficient",
+        "EACH statement ALONE is sufficient"
+      ],
+      "correctAnswer": 3,
+      "marks": 1
+    },
+    {
+      "id": 16,
+      "section": "Verbal Ability",
+      "question": "Previous studies have shown that, since the 1950s, (A) / rates of sea level rise along Atlantic coast of (B) / North America were fast than the global average -- leading (C) / to this region coming to be known as a sea level rise hotspot. (D)",
+      "options": ["AB", "CD", "BD", "BC"],
+      "correctAnswer": 3,
+      "marks": 1
+    },
+    {
+      "id": 17,
+      "section": "Verbal Ability",
+      "question": "No child growing up in India fails to study the Indus Valley Civilisation, (A) / which is now more popularly referred to the Harappan Civilisation (B) / after Harappa, the first of its site to be excavated (C) / in the 1920s by British archaeologist Sir Mortimer Wheeler. (D)",
+      "options": ["AD", "BC", "AC", "CD"],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 18,
+      "section": "Verbal Ability",
+      "question": "A few of the technology to reduce emissions from (A) / agriculture and farming, and to optimise feed yields, (B) / are already available but (C) / adoption of the science is lagging. (D)",
+      "options": ["AC", "AB", "BC", "AD"],
+      "correctAnswer": 0,
+      "marks": 1
+    },
+    {
+      "id": 19,
+      "section": "Verbal Ability",
+      "question": "The end of the Cold War saw India reframe how they (A) / viewed the world, and had left it with (B) / little choice but to deepen its (C) / engagement with the only superpower at the time. (D)",
+      "options": ["BD", "BC", "AD", "AB"],
+      "correctAnswer": 3,
+      "marks": 1
+    },
+    {
+      "id": 20,
+      "section": "Verbal Ability",
+      "question": "Apart from plugging revenue leakages and reducing the cost (A) / of delays and fuel consumption, which is also lookalike to cut down the nation's GDP loss, (B) / according to the government, the RFID tag helps remove (C) / bottlenecks, ensures seamless moving of traffic and saves time. (D)",
+      "options": ["CD", "BD", "AD", "BC"],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 21,
+      "section": "Verbal Ability",
+      "question": "INADVERTENT: The company argued the breach was inadvertent and it was unaware of the court order when the automatically generated email went out.",
+      "options": ["Unintended", "Deliberate", "Unpremeditated", "Unwitting"],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 22,
+      "section": "Verbal Ability",
+      "question": "ANTAGONIZE: Canada has decided to not antagonize India in spite of its dismal human rights record.",
+      "options": ["Placate", "Estrange", "Hostile", "Provoke"],
+      "correctAnswer": 0,
+      "marks": 1
+    },
+    {
+      "id": 23,
+      "section": "Verbal Ability",
+      "question": "PAUCITY: A paucity of urea is worrying farmers for the past few days in several states in north India.",
+      "options": ["Dearth", "Insufficient", "Surfeit", "Want"],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 24,
+      "section": "Verbal Ability",
+      "question": "Ahead of the (A) maiden budget of his second term in office, Prime Minister (B) brainstormed with top bureaucrats of Finance and other Ministries for (C) ideas to reverse a (D) sagging economy and create jobs.",
+      "options": ["A-D", "B-C", "A-B", "A-C"],
+      "correctAnswer": 0,
+      "marks": 1
+    },
+    {
+      "id": 25,
+      "section": "Verbal Ability",
+      "question": "While steps to (A) enhance investments in manufacturing would be high on (B) agenda, the Modi 2.0 government would also look at steps to (C) address agriculture distress and (D) improve farm income in the upcoming Budget.",
+      "options": ["A-B", "B-D", "A-D", "No interchange possible"],
+      "correctAnswer": 3,
+      "marks": 1
+    },
+    {
+      "id": 26,
+      "section": "Verbal Ability",
+      "question": "Nutritionists have long (A) observed that no one weight-loss (B) strategy works for everyone, and that individuals show (C) striking differences in their responses to different (D) diets.",
+      "options": ["B-C", "A-B", "B-D", "No interchange possible"],
+      "correctAnswer": 3,
+      "marks": 1
+    },
+    {
+      "id": 27,
+      "section": "Verbal Ability",
+      "question": "A hot potato",
+      "options": [
+        "An angry person",
+        "A controversial situation that is awkward to deal with",
+        "A useless person",
+        "A situation that is easy to deal with"
+      ],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 28,
+      "section": "Verbal Ability",
+      "question": "Caught between two stools",
+      "options": [
+        "To be very fat",
+        "Caught between two major problems",
+        "To be partial",
+        "Caught between two alternatives to choose"
+      ],
+      "correctAnswer": 3,
+      "marks": 1
+    },
+    {
+      "id": 29,
+      "section": "Verbal Ability",
+      "question": "I. Yellowstone National Park is the oldest national park in the US and likely the world. II. Anyone can drive through the park and encounter an array of wildlife a few feet away.",
+      "options": [
+        "If there is an error only in the first sentence",
+        "If there is an error only in the second sentence",
+        "If there are errors in both sentences",
+        "If there is an error in either of the sentences"
+      ],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 30,
+      "section": "Verbal Ability",
+      "question": "Which of the following sentences contains no grammatical error?",
+      "options": [
+        "Each of the students have submitted their assignments",
+        "The committee are meeting tomorrow",
+        "Neither the teacher nor the students were present",
+        "Everyone must bring their own lunch"
+      ],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 31,
+      "section": "Data Science",
+      "question": "Which of the following is a supervised learning algorithm?",
+      "options": ["K-Means", "PCA", "Linear Regression", "Apriori"],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 32,
+      "section": "Data Science",
+      "question": "Which library is primarily used for numerical computation in Python?",
+      "options": ["pandas", "matplotlib", "numpy", "seaborn"],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 33,
+      "section": "Data Science",
+      "question": "In statistics, the measure of spread of data is called:",
+      "options": ["Mean", "Median", "Variance", "Mode"],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 34,
+      "section": "Data Science",
+      "question": "Which SQL clause is used to group rows that have the same values?",
+      "options": ["WHERE", "ORDER BY", "GROUP BY", "HAVING"],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 35,
+      "section": "Data Science",
+      "question": "What is the default axis for the drop() method in pandas DataFrame?",
+      "options": ["0", "1", "Both", "None"],
+      "correctAnswer": 0,
+      "marks": 1
+    },
+    {
+      "id": 36,
+      "section": "Data Science",
+      "question": "What is the activation function commonly used in output layer of binary classification?",
+      "options": ["tanh", "sigmoid", "ReLU", "softmax"],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 37,
+      "section": "Data Science",
+      "question": "Which evaluation metric is best for imbalanced classification problems?",
+      "options": ["Accuracy", "Precision", "F1-score", "Recall"],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 38,
+      "section": "Data Science",
+      "question": "What does the iloc[] method in pandas do?",
+      "options": [
+        "Select by label",
+        "Select by position",
+        "Select by condition",
+        "Select by column name"
+      ],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 39,
+      "section": "Data Science",
+      "question": "Which of the following is a dimension reduction technique?",
+      "options": ["Decision Tree", "PCA", "Naive Bayes", "Random Forest"],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 40,
+      "section": "Data Science",
+      "question": "What type of variable is 'Temperature in Celsius'?",
+      "options": ["Nominal", "Ordinal", "Interval", "Ratio"],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 41,
+      "section": "Data Science",
+      "question": "Which command shows the first 5 rows of a DataFrame?",
+      "options": ["df.start()", "df.head()", "df.first()", "df.top()"],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 42,
+      "section": "Data Science",
+      "question": "Which Python library is used for data visualization?",
+      "options": ["os", "pandas", "matplotlib", "itertools"],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 43,
+      "section": "Data Science",
+      "question": "In machine learning, 'overfitting' means:",
+      "options": [
+        "Model performs well on new data",
+        "Model fits training data too well but performs poorly on unseen data",
+        "Model has low bias",
+        "Model has high generalization"
+      ],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 44,
+      "section": "Data Science",
+      "question": "What is the purpose of the confusion matrix?",
+      "options": [
+        "To measure runtime performance",
+        "To summarize classification results",
+        "To visualize missing data",
+        "To store parameters"
+      ],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 45,
+      "section": "Data Science",
+      "question": "In Python, what does df.shape return?",
+      "options": [
+        "Total number of elements",
+        "Data types of columns",
+        "Dimensions (rows, columns)",
+        "Column names"
+      ],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 46,
+      "section": "Data Science",
+      "question": "Which algorithm is used for market basket analysis?",
+      "options": ["Decision Tree", "Apriori", "Logistic Regression", "SVM"],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 47,
+      "section": "Data Science",
+      "question": "What is the range of correlation coefficient (r)?",
+      "options": ["0 to 1", "-1 to +1", "-∞ to +∞", "0 to ∞"],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 48,
+      "section": "Data Science",
+      "question": "What is the role of a cost function in machine learning?",
+      "options": [
+        "To minimize prediction error",
+        "To increase training speed",
+        "To control activation",
+        "To reduce dataset size"
+      ],
+      "correctAnswer": 0,
+      "marks": 1
+    },
+    {
+      "id": 49,
+      "section": "Data Science",
+      "question": "Which of the following is NOT a type of neural network?",
+      "options": ["CNN", "RNN", "SVM", "GAN"],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 50,
+      "section": "Data Science",
+      "question": "In hypothesis testing, p-value < 0.05 indicates:",
+      "options": [
+        "Strong evidence against null hypothesis",
+        "Weak evidence for null hypothesis",
+        "No relationship",
+        "Null hypothesis is true"
+      ],
+      "correctAnswer": 0,
+      "marks": 1
+    }
+  ]
+}

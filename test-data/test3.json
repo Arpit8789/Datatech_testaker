@@ -1,0 +1,525 @@
+{
+  "testInfo": {
+    "testName": "Test 3: Web Development",
+    "testNumber": 3,
+    "duration": 60,
+    "totalQuestions": 50,
+    "sections": [
+      {
+        "name": "Quantitative Aptitude",
+        "questions": 15
+      },
+      {
+        "name": "Verbal Ability (English)",
+        "questions": 15
+      },
+      {
+        "name": "Web Development",
+        "questions": 20
+      }
+    ],
+    "description": "Comprehensive test covering quantitative aptitude, English proficiency, and web development concepts including HTML, CSS, JavaScript, React, Node.js"
+  },
+  "questions": [
+    {
+      "id": 1,
+      "section": "Quantitative Aptitude",
+      "question": "A has to pay Rs. 220 to B after 1 year. B asks A to pay Rs. 110 in cash and defer the payment of Rs. 110 for 2 years. A agrees to it. If the rate of interest be 10% per annum in this mode of payment:",
+      "options": [
+        "There is no gain or loss to anyone",
+        "A gains Rs. 7.34",
+        "A loses Rs. 7.34",
+        "A gains Rs. 11"
+      ],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 2,
+      "section": "Quantitative Aptitude",
+      "question": "There are 3 points P, Q and R in a straight line, such that point Q is equidistant from points P and R. A man can swim from point P to R downstream in 48 hours and from Q to P upstream in 32 hours. Find the ratio of speed of man in still water to speed of stream:",
+      "options": ["1:7", "7:1", "5:2", "2:5"],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 3,
+      "section": "Quantitative Aptitude",
+      "question": "In a 1000m race, P beats Q by 100m. Q beats R by 50m in a 500m race. If P beats R by 60 seconds in 2000m race, how long would Q take to travel a distance of 3000m?",
+      "options": ["400", "416", "456", "None"],
+      "correctAnswer": 3,
+      "marks": 1
+    },
+    {
+      "id": 4,
+      "section": "Quantitative Aptitude",
+      "question": "If a cyclist starts at 7 km/hr and he increases his speed in every 4 hours by 1 km/hr then the time taken by the cyclist to cover 116 km is?",
+      "options": ["27/2 hours", "20/3 hours", "12 hours", "14 hours"],
+      "correctAnswer": 3,
+      "marks": 1
+    },
+    {
+      "id": 5,
+      "section": "Quantitative Aptitude",
+      "question": "A can do a piece of work in 24 days, B in 32 days and C in 64 days. Everyone begins to do it together, but A leaves after 6 days and B leaves 9 days before the completion of the work. How many days did the work last?",
+      "options": ["15", "22", "18", "30"],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 6,
+      "section": "Quantitative Aptitude",
+      "question": "If a pipe A can fill a tank 3 times faster than pipe B. If both the pipes can fill the tank in 32 minutes, then the slower pipe alone will be able to fill the tank in?",
+      "options": ["128 minutes", "124 minutes", "154 minutes", "168 minutes"],
+      "correctAnswer": 0,
+      "marks": 1
+    },
+    {
+      "id": 7,
+      "section": "Quantitative Aptitude",
+      "question": "At what time between 9 to 10 will the hands of a watch be together?",
+      "options": [
+        "45 minutes past 9",
+        "50 minutes past 9",
+        "49(1/11) minutes past 9",
+        "48(2/11) minutes past 9"
+      ],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 8,
+      "section": "Quantitative Aptitude",
+      "question": "Simple interest on a certain amount is 9/25 of the principal. If the numbers representing the rate (p.a. in %) and time (years) are equal, then the time is:",
+      "options": ["5 years", "6 years", "7 years", "8 years"],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 9,
+      "section": "Quantitative Aptitude",
+      "question": "A person invested some money at 12% SI and another amount at 8% SI. He received ₹1000 total interest in a year. If he had interchanged the amounts, he would have received ₹80 more. How much was invested at 12%?",
+      "options": ["₹3000", "₹4200", "₹5000", "₹6000"],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 10,
+      "section": "Quantitative Aptitude",
+      "question": "Ranjan purchased 100 tables at ₹120 each. He sold 40 tables at a profit of ₹15 each and 45 tables at a profit of ₹12 each. The remaining tables were sold at a loss of ₹10 each. What is the average profit per table?",
+      "options": ["9.4", "9.9", "10.2", "10.5"],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 11,
+      "section": "Quantitative Aptitude",
+      "question": "A couple has a son and a daughter. Father is 4× the son's age. Daughter is 1/3 of mother's age. Wife is 6 years younger than husband and sister is 3 years older than brother. Mother's age is:",
+      "options": ["54", "42", "48", "63"],
+      "correctAnswer": 0,
+      "marks": 1
+    },
+    {
+      "id": 12,
+      "section": "Quantitative Aptitude",
+      "question": "A farmer plans posts at 5 m intervals with posts at both ends. He bought some posts but is 6 short. If he instead spaces them 7 m apart, the posts he bought are exactly enough. Find the side length and how many posts he bought.",
+      "options": ["90 m, 13", "105 m, 17", "105 m, 16", "140 m, 21"],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 13,
+      "section": "Quantitative Aptitude",
+      "question": "A garden has 9 rows and 15 columns of mango trees. Spacing between adjacent trees is 3 m, and there's a 1 m margin on all sides. The length of the garden is:",
+      "options": ["40 m", "42 m", "44 m", "46 m"],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 14,
+      "section": "Quantitative Aptitude",
+      "question": "If ₹420 are divided among 8 men, 10 women and 12 boys such that each man gets an amount equal to one woman and one boy together, and each woman gets twice as much as a boy, then the amount received by all men is:",
+      "options": ["₹120", "₹140", "₹160", "₹180"],
+      "correctAnswer": 3,
+      "marks": 1
+    },
+    {
+      "id": 15,
+      "section": "Quantitative Aptitude",
+      "question": "Cost of 8 pencils, 5 pens and 3 erasers is Rs. 111. Cost of 9 pencils, 6 pens and 5 erasers is Rs. 130. Cost of 16 pencils, 11 pens and 3 erasers is Rs. 221. What is the cost (in Rs) of 39 pencils, 26 pens and 13 erasers?",
+      "options": ["316", "552", "624", "546"],
+      "correctAnswer": 3,
+      "marks": 1
+    },
+    {
+      "id": 16,
+      "section": "Verbal Ability",
+      "question": "Previous studies have shown that, since the 1950s, (A) / rates of sea level rise along Atlantic coast of (B) / North America were fast than the global average -- leading (C) / to this region coming to be known as a sea level rise hotspot. (D)",
+      "options": ["AB", "CD", "BD", "BC"],
+      "correctAnswer": 3,
+      "marks": 1
+    },
+    {
+      "id": 17,
+      "section": "Verbal Ability",
+      "question": "No child growing up in India fails to study the Indus Valley Civilisation, (A) / which is now more popularly referred to the Harappan Civilisation (B) / after Harappa, the first of its site to be excavated (C) / in the 1920s by British archaeologist Sir Mortimer Wheeler. (D)",
+      "options": ["AD", "BC", "AC", "CD"],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 18,
+      "section": "Verbal Ability",
+      "question": "A few of the technology to reduce emissions from (A) / agriculture and farming, and to optimise feed yields, (B) / are already available but (C) / adoption of the science is lagging. (D)",
+      "options": ["AC", "AB", "BC", "AD"],
+      "correctAnswer": 0,
+      "marks": 1
+    },
+    {
+      "id": 19,
+      "section": "Verbal Ability",
+      "question": "The end of the Cold War saw India reframe how they (A) / viewed the world, and had left it with (B) / little choice but to deepen its (C) / engagement with the only superpower at the time. (D)",
+      "options": ["BD", "BC", "AD", "AB"],
+      "correctAnswer": 3,
+      "marks": 1
+    },
+    {
+      "id": 20,
+      "section": "Verbal Ability",
+      "question": "Apart from plugging revenue leakages and reducing the cost (A) / of delays and fuel consumption, which is also lookalike to cut down the nation's GDP loss, (B) / according to the government, the RFID tag helps remove (C) / bottlenecks, ensures seamless moving of traffic and saves time. (D)",
+      "options": ["CD", "BD", "AD", "BC"],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 21,
+      "section": "Verbal Ability",
+      "question": "INADVERTENT: The company argued the breach was inadvertent and it was unaware of the court order when the automatically generated email went out.",
+      "options": ["Unintended", "Deliberate", "Unpremeditated", "Unwitting"],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 22,
+      "section": "Verbal Ability",
+      "question": "ANTAGONIZE: Canada has decided to not antagonize India in spite of its dismal human rights record.",
+      "options": ["Placate", "Estrange", "Hostile", "Provoke"],
+      "correctAnswer": 0,
+      "marks": 1
+    },
+    {
+      "id": 23,
+      "section": "Verbal Ability",
+      "question": "PAUCITY: A paucity of urea is worrying farmers for the past few days in several states in north India.",
+      "options": ["Dearth", "Insufficient", "Surfeit", "Want"],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 24,
+      "section": "Verbal Ability",
+      "question": "Ahead of the (A) maiden budget of his second term in office, Prime Minister (B) brainstormed with top bureaucrats of Finance and other Ministries for (C) ideas to reverse a (D) sagging economy and create jobs.",
+      "options": ["A-D", "B-C", "A-B", "A-C"],
+      "correctAnswer": 0,
+      "marks": 1
+    },
+    {
+      "id": 25,
+      "section": "Verbal Ability",
+      "question": "While steps to (A) enhance investments in manufacturing would be high on (B) agenda, the Modi 2.0 government would also look at steps to (C) address agriculture distress and (D) improve farm income in the upcoming Budget.",
+      "options": ["A-B", "B-D", "A-D", "No interchange possible"],
+      "correctAnswer": 3,
+      "marks": 1
+    },
+    {
+      "id": 26,
+      "section": "Verbal Ability",
+      "question": "Nutritionists have long (A) observed that no one weight-loss (B) strategy works for everyone, and that individuals show (C) striking differences in their responses to different (D) diets.",
+      "options": ["B-C", "A-B", "B-D", "No interchange possible"],
+      "correctAnswer": 3,
+      "marks": 1
+    },
+    {
+      "id": 27,
+      "section": "Verbal Ability",
+      "question": "A hot potato",
+      "options": [
+        "An angry person",
+        "A controversial situation that is awkward to deal with",
+        "A useless person",
+        "A situation that is easy to deal with"
+      ],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 28,
+      "section": "Verbal Ability",
+      "question": "Caught between two stools",
+      "options": [
+        "To be very fat",
+        "Caught between two major problems",
+        "To be partial",
+        "Caught between two alternatives to choose"
+      ],
+      "correctAnswer": 3,
+      "marks": 1
+    },
+    {
+      "id": 29,
+      "section": "Verbal Ability",
+      "question": "I. Yellowstone National Park is the oldest national park in the US and likely the world. II. Anyone can drive through the park and encounter an array of wildlife a few feet away.",
+      "options": [
+        "If there is an error only in the first sentence",
+        "If there is an error only in the second sentence",
+        "If there are errors in both sentences",
+        "If there is an error in either of the sentences"
+      ],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 30,
+      "section": "Verbal Ability",
+      "question": "No matter how sophisticated (1)/ your strategies to rid yourself of (A) / bad habits and create good ones are, (B)/ you're less likelier to succeed if you don't (C)/ track and review you're progress frequently (E).",
+      "options": ["AD", "BC", "AC", "CD"],
+      "correctAnswer": 3,
+      "marks": 1
+    },
+    {
+      "id": 31,
+      "section": "Web Development",
+      "question": "Which HTTP header is used to prevent clickjacking by restricting framing of a page?",
+      "options": [
+        "X-Frame-Options",
+        "X-Content-Type-Options",
+        "Content-Security-Policy",
+        "Access-Control-Allow-Origin"
+      ],
+      "correctAnswer": 0,
+      "marks": 1
+    },
+    {
+      "id": 32,
+      "section": "Web Development",
+      "question": "In React, what is the primary benefit of using React.memo()?",
+      "options": [
+        "It delays rendering of a component",
+        "It prevents unnecessary re-renders by memoizing output",
+        "It forces a re-render on every state update",
+        "It converts class components to functional components"
+      ],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 33,
+      "section": "Web Development",
+      "question": "Which of the following is not a valid HTTP/2 improvement over HTTP/1.1?",
+      "options": [
+        "Header compression",
+        "Multiplexing requests",
+        "Server push",
+        "Stateful connections"
+      ],
+      "correctAnswer": 3,
+      "marks": 1
+    },
+    {
+      "id": 34,
+      "section": "Web Development",
+      "question": "In Node.js, which module allows creating a secure HTTPS server?",
+      "options": ["tls", "https", "crypto", "secure-http"],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 35,
+      "section": "Web Development",
+      "question": "Which CSS property creates a new stacking context?",
+      "options": [
+        "opacity: 0.99;",
+        "display: flex;",
+        "z-index: auto;",
+        "color: inherit;"
+      ],
+      "correctAnswer": 0,
+      "marks": 1
+    },
+    {
+      "id": 36,
+      "section": "Web Development",
+      "question": "What is the main advantage of using a Service Worker in a PWA (Progressive Web App)?",
+      "options": [
+        "Faster animations",
+        "Offline support and background sync",
+        "Improved SEO",
+        "Increased HTML parsing speed"
+      ],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 37,
+      "section": "Web Development",
+      "question": "In JavaScript, which of the following is true about Promise.allSettled()?",
+      "options": [
+        "It resolves only when all promises are fulfilled",
+        "It rejects if any promise rejects",
+        "It returns the results of all promises, regardless of outcome",
+        "It cancels rejected promises automatically"
+      ],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 38,
+      "section": "Web Development",
+      "question": "Which of the following is not part of the critical rendering path?",
+      "options": [
+        "DOM construction",
+        "CSSOM construction",
+        "JavaScript event loop",
+        "Layout and painting"
+      ],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 39,
+      "section": "Web Development",
+      "question": "In React, what does the useLayoutEffect hook do differently from useEffect?",
+      "options": [
+        "It runs after paint",
+        "It runs synchronously before browser paint",
+        "It only works on server components",
+        "It has no dependency array"
+      ],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 40,
+      "section": "Web Development",
+      "question": "In RESTful APIs, which HTTP status code indicates 'Request succeeded but no content returned'?",
+      "options": ["200", "202", "204", "304"],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 41,
+      "section": "Web Development",
+      "question": "What is the default scope of CSS variables (--varName) declared in :root?",
+      "options": [
+        "Local to component",
+        "Global to the document",
+        "Limited to the nearest div",
+        "Only inside inline styles"
+      ],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 42,
+      "section": "Web Development",
+      "question": "Which JavaScript feature allows asynchronous, non-blocking I/O in Node.js?",
+      "options": ["Promises", "Event Loop", "Streams", "Child Processes"],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 43,
+      "section": "Web Development",
+      "question": "What does 'Hydration' mean in React SSR (Server-Side Rendering)?",
+      "options": [
+        "Merging server-rendered HTML with client-side React DOM",
+        "Adding CSS to a pre-rendered page",
+        "Rendering the app only on the client",
+        "Compressing static assets for delivery"
+      ],
+      "correctAnswer": 0,
+      "marks": 1
+    },
+    {
+      "id": 44,
+      "section": "Web Development",
+      "question": "In MongoDB, which data structure is used to store documents?",
+      "options": ["B-tree", "BSON", "JSON", "HashMap"],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 45,
+      "section": "Web Development",
+      "question": "Which of the following HTTP methods is idempotent?",
+      "options": ["POST", "PATCH", "PUT", "CONNECT"],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 46,
+      "section": "Web Development",
+      "question": "In Webpack, what does the code splitting feature achieve?",
+      "options": [
+        "Reduces server load",
+        "Splits source code into multiple servers",
+        "Breaks bundles for faster loading",
+        "Removes unused CSS"
+      ],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 47,
+      "section": "Web Development",
+      "question": "What is the main purpose of key prop in React lists?",
+      "options": [
+        "For styling child elements",
+        "For uniquely identifying elements during reconciliation",
+        "For rendering multiple roots",
+        "For optimizing class components"
+      ],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 48,
+      "section": "Web Development",
+      "question": "Which of the following improves First Contentful Paint (FCP) the most?",
+      "options": [
+        "Using synchronous scripts",
+        "Deferring non-critical JS",
+        "Using large background images",
+        "Adding multiple font families"
+      ],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 49,
+      "section": "Web Development",
+      "question": "What does CORS primarily control in web development?",
+      "options": [
+        "Cookie lifetime",
+        "Resource sharing between origins",
+        "HTML injection",
+        "WebSocket connection speed"
+      ],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 50,
+      "section": "Web Development",
+      "question": "In Express.js, what does next() do inside a middleware function?",
+      "options": [
+        "Stops the request pipeline",
+        "Sends the response to the client",
+        "Passes control to the next middleware",
+        "Logs the request automatically"
+      ],
+      "correctAnswer": 2,
+      "marks": 1
+    }
+  ]
+}

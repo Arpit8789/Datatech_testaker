@@ -1,0 +1,510 @@
+{
+  "testInfo": {
+    "testName": "Test 2: DSA & Problem Solving",
+    "testNumber": 2,
+    "duration": 60,
+    "totalQuestions": 50,
+    "sections": [
+      {
+        "name": "Quantitative Aptitude",
+        "questions": 15
+      },
+      {
+        "name": "Verbal Ability (English)",
+        "questions": 15
+      },
+      {
+        "name": "Data Structures & Algorithms",
+        "questions": 20
+      }
+    ],
+    "description": "Comprehensive assessment covering quantitative aptitude, English proficiency, and data structures & algorithms concepts"
+  },
+  "questions": [
+    {
+      "id": 1,
+      "section": "Quantitative Aptitude",
+      "question": "If Feb 12th, 1986 falls on Wednesday then Jan 1st, 1987 falls on which day?",
+      "options": ["Wednesday", "Tuesday", "Thursday", "Friday"],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 2,
+      "section": "Quantitative Aptitude",
+      "question": "Rahul borrowed a sum of Rs.2250 from Amit at the simple interest rate of 6 p.c.p.a. for 3 years. He then added some more money to the borrowed sum and lent it to Sachin for the same time at 9 p.c.p.a. simple interest. If Rahul gains Rs.274.95 by way of interest on borrowed sum as well as his own amount from the whole transaction, then what is the sum lent by him to Sachin?",
+      "options": ["Rs. 1200", "Rs. 1690", "Rs. 2518.33", "Rs. 1900"],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 3,
+      "section": "Quantitative Aptitude",
+      "question": "Find the cost price of an article on rate 5% per annum with two equal instalment of 8820rs of each on compounded annually?",
+      "options": ["17400/-", "16400/-", "19400/-", "18400/-"],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 4,
+      "section": "Quantitative Aptitude",
+      "question": "What is the percentage increase in the price of a product from last year to this year? Statement 1: The price of the product last year was $50, and this year it is $60. Statement 2: The price of the product this year is $60.",
+      "options": [
+        "Statement 1 alone is sufficient, but Statement 2 alone is not sufficient",
+        "Statement 2 alone is sufficient, but Statement 1 alone is not sufficient",
+        "Both statements together are sufficient, but neither statement alone is sufficient",
+        "Each statement alone is sufficient"
+      ],
+      "correctAnswer": 0,
+      "marks": 1
+    },
+    {
+      "id": 5,
+      "section": "Quantitative Aptitude",
+      "question": "If log X/(a² + ab + b²) = log Y/(b² + bc + c²) = log Z/(c² + ca + a²), then X^(a-b) × Y^(b-c) × Z^(c-a) = ?",
+      "options": ["0", "-1", "1", "2"],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 6,
+      "section": "Quantitative Aptitude",
+      "question": "It takes eleven hours for a 600 km journey, if 120 km is done by train and the rest by car. It takes 40 minutes more, if 200 km is done by train and the rest by car. What is the ratio of the speed of the train to that of the car?",
+      "options": ["1:2", "1:3", "3:4", "2:3"],
+      "correctAnswer": 3,
+      "marks": 1
+    },
+    {
+      "id": 7,
+      "section": "Quantitative Aptitude",
+      "question": "A and B together can do a piece of work in 30 days. B and C together can do the same work in 45 days & C and A together complete it in 60 days. In how many days C alone could complete it?",
+      "options": ["120 days", "180 days", "360 days", "250 days"],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 8,
+      "section": "Quantitative Aptitude",
+      "question": "If a pipe A can fill a tank 3 times faster than pipe B and takes 32 minutes less than pipe B to fill the tank. If both the pipes are opened simultaneously, then find the time taken to fill the tank?",
+      "options": ["12 minutes", "14 minutes", "15 minutes", "16 minutes"],
+      "correctAnswer": 0,
+      "marks": 1
+    },
+    {
+      "id": 9,
+      "section": "Quantitative Aptitude",
+      "question": "A boat travels from point A to B, a distance of 12 km. From A it travels 4 km downstream in 15 minutes and the remaining 8 km upstream to reach B. If the downstream speed is four times as high as the upstream speed, what is the average speed of the boat for the journey from A to B?",
+      "options": ["5.33 km/hr", "3.33 km/hr", "7.33 km/hr", "9.33 km/hr"],
+      "correctAnswer": 0,
+      "marks": 1
+    },
+    {
+      "id": 10,
+      "section": "Quantitative Aptitude",
+      "question": "A man rows 'k' km upstream and back again downstream to the same point in H hours. The speed of rowing in still water is s km/hr and the rate of stream is r km/hr. Then:",
+      "options": [
+        "(s² - r²) = 2sk/H",
+        "(r + s) = kH/(r - s)",
+        "rs = kH",
+        "None of the above"
+      ],
+      "correctAnswer": 0,
+      "marks": 1
+    },
+    {
+      "id": 11,
+      "section": "Quantitative Aptitude",
+      "question": "Find the number of zeros in 532!",
+      "options": ["144", "142", "131", "148"],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 12,
+      "section": "Quantitative Aptitude",
+      "question": "The product of two numbers is 2028 and their H.C.F is 13. The number of such pairs is?",
+      "options": ["5", "1", "3", "2"],
+      "correctAnswer": 3,
+      "marks": 1
+    },
+    {
+      "id": 13,
+      "section": "Quantitative Aptitude",
+      "question": "N is the greatest number that will divide 734, 761 and 1463 leaving the same remainder in each case. What is sum of digits of N?",
+      "options": ["12", "10", "7", "9"],
+      "correctAnswer": 3,
+      "marks": 1
+    },
+    {
+      "id": 14,
+      "section": "Quantitative Aptitude",
+      "question": "Madhuri starts at Point T, walks straight to point U which is 4 ft. away. She turns left, at 90° and walks to W which is 4 ft. away, turns 90° right and goes 3 ft. to P, turns 90° right and walks 4 ft. to Q, turns left at 90° and goes to V, which is 1 ft. away and once again turns 90° right and goes to O, 6 ft. away. What is the distance between T and O?",
+      "options": ["9 ft", "10 ft", "7 ft", "8 ft"],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 15,
+      "section": "Quantitative Aptitude",
+      "question": "A and B contest in an election, if the ratio between the valid votes and the vote got by A is 5:3 and the ratio of invalid votes and vote got by B is 1:2 and the ratio between the valid and invalid votes is 5:1 then find the ratio between the votes got by A and B.",
+      "options": ["2:3", "2:1", "3:2", "1:2"],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 16,
+      "section": "Verbal Ability",
+      "question": "Identify the parts which are correct in terms of grammar, spelling and logical consistency: A. The worse attack on this peacekeeping B. mission is a tragic reminder C. of how this conflict is D. spiralling out of control.",
+      "options": ["A & B", "A, B & D", "A, B & C", "B, C & D"],
+      "correctAnswer": 3,
+      "marks": 1
+    },
+    {
+      "id": 17,
+      "section": "Verbal Ability",
+      "question": "I. Yellowstone National Park is the oldest national park in the US and likely the world. II. Anyone can drive through the park and encounter an array of wildlife a few feet away. Select the correct option:",
+      "options": [
+        "If there is an error only in the first sentence",
+        "If there is an error only in the second sentence",
+        "If there are errors in both sentences",
+        "If there is no error in either of the sentences"
+      ],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 18,
+      "section": "Verbal Ability",
+      "question": "The Brazilian market for (A)/ flying is expected to grow (B)/ by around 10% per year (C)/ annually for at least (D)/ the next three or four years (E). Choose parts with no error:",
+      "options": ["ABCD", "ABCE", "BCDE", "Other than these options"],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 19,
+      "section": "Verbal Ability",
+      "question": "Since the grid now has more (A)/ than one owner, it is often (B)/ hard to know whom will (C)/ bear the risks and who (D)/ will be garnering the rewards (E). Choose parts with no error:",
+      "options": ["ABDE", "ABCE", "BCDE", "Other than these options"],
+      "correctAnswer": 0,
+      "marks": 1
+    },
+    {
+      "id": 20,
+      "section": "Verbal Ability",
+      "question": "Select the sentence which is error-free:",
+      "options": [
+        "Ms. Mangeshkar is not first victim from filmdom of the bogus news syndrome",
+        "Ms. Mangeshkar is not the first victim from filmdom of the bogus newses syndrome",
+        "Ms. Mangeshkar is not the first victims from filmdom of the bogus news syndrome",
+        "Ms. Mangeshkar is not the first victim from filmdom of the bogus news syndrome"
+      ],
+      "correctAnswer": 3,
+      "marks": 1
+    },
+    {
+      "id": 21,
+      "section": "Verbal Ability",
+      "question": "In today's world, privacy (1) and a company's ability (2) to secure personal data has become an practice (3) component of strong business essential (4). Which words need to be swapped?",
+      "options": ["practice -- essential", "privacy -- ability", "essential -- privacy", "No change required"],
+      "correctAnswer": 0,
+      "marks": 1
+    },
+    {
+      "id": 22,
+      "section": "Verbal Ability",
+      "question": "In this new age of discussions (1) governance, issues like gender equality (2), equal pay, diversity, and environmental responsibility (3) are becoming second nature in daily business corporate (4). Which words need to be swapped?",
+      "options": [
+        "discussions -- equality",
+        "responsibility -- corporate",
+        "corporate -- discussions",
+        "equality -- responsibility"
+      ],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 23,
+      "section": "Verbal Ability",
+      "question": "Physical exercise can help counter (1) the loss of memory delay (2) by Alzheimer's as well as caused (3) the onset of the most common type of dementia, according (4) to a study. Which words need to be swapped?",
+      "options": [
+        "Counter -- According",
+        "Delay -- Caused",
+        "According -- Delay",
+        "Caused -- Counter"
+      ],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 24,
+      "section": "Verbal Ability",
+      "question": "Sudden, unpredictable drops in associated (1) income during young adulthood are personal (2) with an increased risk of developing heart (3) disease and/or dying (4) from any cause. Which words need to be swapped?",
+      "options": [
+        "Heart -- Dying",
+        "Associated -- Heart",
+        "Dying -- Personal",
+        "Personal -- Associated"
+      ],
+      "correctAnswer": 3,
+      "marks": 1
+    },
+    {
+      "id": 25,
+      "section": "Verbal Ability",
+      "question": "One of the most significant phenomenons of our time has been the development of cinema. Replace 'phenomenons' with:",
+      "options": ["phenomenon", "phenomena", "phenomenonna", "phenomenonns"],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 26,
+      "section": "Verbal Ability",
+      "question": "For many centuries in Indian History there was no city so famous like the city of Ujjain. Replace 'like' with:",
+      "options": ["as", "such as", "so like", "likewise"],
+      "correctAnswer": 0,
+      "marks": 1
+    },
+    {
+      "id": 27,
+      "section": "Verbal Ability",
+      "question": "Acquisition of certain specific skills can be facilitated from general awareness, education to novel situations. Replace 'facilitated from' with:",
+      "options": [
+        "can be facilitated by",
+        "may facilitate through",
+        "can be felicitated with",
+        "may be felicitated with"
+      ],
+      "correctAnswer": 0,
+      "marks": 1
+    },
+    {
+      "id": 28,
+      "section": "Verbal Ability",
+      "question": "Why did you not threw the bag away? Correct the error:",
+      "options": [
+        "did you not throw",
+        "had you not threw",
+        "did you not thrown",
+        "you did not thrown"
+      ],
+      "correctAnswer": 0,
+      "marks": 1
+    },
+    {
+      "id": 29,
+      "section": "Verbal Ability",
+      "question": "The intruder stood quietly for few moments. Correct the error:",
+      "options": [
+        "for few time",
+        "for the few moments",
+        "for moments",
+        "for a few moments"
+      ],
+      "correctAnswer": 3,
+      "marks": 1
+    },
+    {
+      "id": 30,
+      "section": "Verbal Ability",
+      "question": "Choose the grammatically correct sentence:",
+      "options": [
+        "Neither he nor his friends was present",
+        "Either you or I am responsible",
+        "The team are winning the match",
+        "Each of the students have completed"
+      ],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 31,
+      "section": "Data Structures & Algorithms",
+      "question": "What is the worst-case time complexity of QuickSort when all elements are equal?",
+      "options": ["O(n log n)", "O(n²)", "O(n)", "O(log n)"],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 32,
+      "section": "Data Structures & Algorithms",
+      "question": "Which of the following data structures is NOT stable when used in its standard form?",
+      "options": ["Merge Sort", "Insertion Sort", "Quick Sort", "Bubble Sort"],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 33,
+      "section": "Data Structures & Algorithms",
+      "question": "The maximum number of nodes in a binary tree of height h is:",
+      "options": ["2^h - 1", "2^(h+1) - 1", "h² - 1", "h × 2^h"],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 34,
+      "section": "Data Structures & Algorithms",
+      "question": "Which data structure gives the best average search performance when data is static and searched frequently?",
+      "options": ["AVL Tree", "Hash Table", "Binary Search Tree", "Linked List"],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 35,
+      "section": "Data Structures & Algorithms",
+      "question": "What is the time complexity of inserting an element in a max-heap of size n?",
+      "options": ["O(1)", "O(log n)", "O(n log n)", "O(n)"],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 36,
+      "section": "Data Structures & Algorithms",
+      "question": "In a Red-Black Tree, which of the following properties is TRUE?",
+      "options": [
+        "Every leaf is black",
+        "Every red node has a red parent",
+        "Root can be red or black",
+        "All paths from root to leaves contain the same number of red nodes"
+      ],
+      "correctAnswer": 0,
+      "marks": 1
+    },
+    {
+      "id": 37,
+      "section": "Data Structures & Algorithms",
+      "question": "The recurrence T(n) = 2T(n/2) + n/log n has complexity:",
+      "options": ["O(n log n)", "O(n²)", "O(n log log n)", "O(n (log n)/log log n)"],
+      "correctAnswer": 0,
+      "marks": 1
+    },
+    {
+      "id": 38,
+      "section": "Data Structures & Algorithms",
+      "question": "Which traversal method is used to obtain the prefix expression from an expression tree?",
+      "options": ["Inorder", "Preorder", "Postorder", "Level order"],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 39,
+      "section": "Data Structures & Algorithms",
+      "question": "In a graph with V vertices and E edges, the time complexity of Dijkstra's algorithm (using a binary heap) is:",
+      "options": ["O(V²)", "O(E log V)", "O(V + E)", "O(E + V log V)"],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 40,
+      "section": "Data Structures & Algorithms",
+      "question": "What is the amortized time complexity of a single push operation in a dynamically growing stack (array doubling technique)?",
+      "options": ["O(1)", "O(log n)", "O(n)", "O(n log n)"],
+      "correctAnswer": 0,
+      "marks": 1
+    },
+    {
+      "id": 41,
+      "section": "Data Structures & Algorithms",
+      "question": "Which of the following statements is TRUE about a Trie (Prefix Tree)?",
+      "options": [
+        "Each node represents a substring",
+        "Searching is faster than HashMap",
+        "It is used only for numerical data",
+        "Memory usage is always less than BST"
+      ],
+      "correctAnswer": 0,
+      "marks": 1
+    },
+    {
+      "id": 42,
+      "section": "Data Structures & Algorithms",
+      "question": "Which data structure is most efficient for implementing Least Recently Used (LRU) Cache?",
+      "options": [
+        "Queue + Stack",
+        "HashMap + Doubly Linked List",
+        "Heap + HashMap",
+        "Binary Search Tree"
+      ],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 43,
+      "section": "Data Structures & Algorithms",
+      "question": "In Kruskal's algorithm, which data structure is used to detect cycles efficiently?",
+      "options": ["Queue", "Stack", "Disjoint Set (Union-Find)", "Heap"],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 44,
+      "section": "Data Structures & Algorithms",
+      "question": "The time complexity of searching in a balanced Binary Search Tree (BST) is:",
+      "options": ["O(n)", "O(log n)", "O(n log n)", "O(√n)"],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 45,
+      "section": "Data Structures & Algorithms",
+      "question": "What is the auxiliary space complexity of Merge Sort?",
+      "options": ["O(1)", "O(log n)", "O(n)", "O(n log n)"],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 46,
+      "section": "Data Structures & Algorithms",
+      "question": "Which of the following algorithms can be used to detect negative-weight cycles in a graph?",
+      "options": [
+        "Dijkstra's Algorithm",
+        "Kruskal's Algorithm",
+        "Bellman-Ford Algorithm",
+        "Prim's Algorithm"
+      ],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 47,
+      "section": "Data Structures & Algorithms",
+      "question": "A circular queue is full when:",
+      "options": [
+        "front == rear",
+        "(rear + 1) % size == front",
+        "rear == front - 1",
+        "rear == size - 1"
+      ],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 48,
+      "section": "Data Structures & Algorithms",
+      "question": "What is the best case time complexity of Bubble Sort?",
+      "options": ["O(n log n)", "O(n²)", "O(n)", "O(log n)"],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 49,
+      "section": "Data Structures & Algorithms",
+      "question": "If a hash table uses chaining and the number of keys inserted is n, with m slots, the expected time for an unsuccessful search is:",
+      "options": ["O(1)", "O(n)", "O(1 + n/m)", "O(log n)"],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 50,
+      "section": "Data Structures & Algorithms",
+      "question": "Which of the following is the most space-efficient representation for a sparse graph?",
+      "options": [
+        "Adjacency matrix",
+        "Incidence matrix",
+        "Adjacency list",
+        "Cross linked list"
+      ],
+      "correctAnswer": 2,
+      "marks": 1
+    }
+  ]
+}
