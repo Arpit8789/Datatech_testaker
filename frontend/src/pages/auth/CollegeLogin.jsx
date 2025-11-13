@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { Building2, Mail, Lock } from 'lucide-react'
+import { Mail, Lock, Building2 } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { collegeLogin } from '../../services/authService'
 import { useAuth } from '../../context/AuthContext'
@@ -15,23 +15,27 @@ const CollegeLogin = () => {
     e.preventDefault()
     setLoading(true)
 
+    console.log('Attempting college login...') // Debug log
+
     const result = await collegeLogin(formData.email, formData.password)
+    
+    console.log('Login result:', result) // Debug log
 
     if (result.success) {
       await checkUser()
       toast.success('Login successful!')
-      navigate('/college/dashboard')
+      console.log('Navigating to /college/dashboard') // Debug log
+      navigate('/college/dashboard', { replace: true }) // ✅ Force navigation
     } else {
-      toast.error(result.error || 'Login failed')
+      toast.error(result.error || 'Login failed!')
     }
 
     setLoading(false)
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center p-4">
       <div className="max-w-md w-full">
-        {/* Header */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-600 rounded-2xl mb-4">
             <Building2 className="text-white" size={32} />
@@ -40,10 +44,8 @@ const CollegeLogin = () => {
           <p className="text-gray-600">Access your college dashboard</p>
         </div>
 
-        {/* Login Card */}
         <div className="bg-white rounded-2xl shadow-xl p-8">
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Email */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Email Address
@@ -61,7 +63,6 @@ const CollegeLogin = () => {
               </div>
             </div>
 
-            {/* Password */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Password
@@ -79,7 +80,6 @@ const CollegeLogin = () => {
               </div>
             </div>
 
-            {/* Submit Button */}
             <button
               type="submit"
               disabled={loading}
@@ -89,25 +89,16 @@ const CollegeLogin = () => {
             </button>
           </form>
 
-          {/* Signup Link */}
-          <div className="mt-6 pt-6 border-t border-gray-200">
-            <div className="text-center space-y-2">
-              <p className="text-sm text-gray-600">
-                Don't have an account?{' '}
-                <Link to="/college/signup" className="text-blue-600 hover:text-blue-700 font-medium">
-                  Sign Up
-                </Link>
-              </p>
-              <div className="flex items-center justify-center space-x-2 text-sm text-gray-600">
-                <Link to="/admin/login" className="text-primary-600 hover:text-primary-700 font-medium">
-                  Admin Login
-                </Link>
-                <span>|</span>
-                <Link to="/student/login" className="text-primary-600 hover:text-primary-700 font-medium">
-                  Student Login
-                </Link>
-              </div>
-            </div>
+          <div className="mt-6 text-center space-y-3">
+            <p className="text-sm text-gray-600">
+              Don't have an account?{' '}
+              <Link to="/college/signup" className="text-blue-600 hover:text-blue-700 font-medium">
+                Sign up here
+              </Link>
+            </p>
+            <Link to="/" className="text-sm text-gray-500 hover:text-gray-700 block">
+              ← Back to Home
+            </Link>
           </div>
         </div>
       </div>
