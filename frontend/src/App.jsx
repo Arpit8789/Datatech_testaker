@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { useAuth } from './context/AuthContext'
-
+import HomePage from './pages/HomePage'
 // Auth Pages
 import AdminLogin from './pages/auth/AdminLogin'
 import CollegeLogin from './pages/auth/CollegeLogin'
@@ -46,7 +46,8 @@ function App() {
   return (
     <Routes>
       {/* Public Routes */}
-      <Route path="/" element={<Navigate to="/admin/login" replace />} />
+      <Route path="/" element={<HomePage />} />
+      {/* <Route path="/" element={<Navigate to="/admin/login" replace />} /> */}
       
       {/* Auth Routes */}
       <Route path="/admin/login" element={<AdminLogin />} />
