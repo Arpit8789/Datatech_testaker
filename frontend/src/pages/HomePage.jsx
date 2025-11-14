@@ -223,38 +223,50 @@ const HomePage = () => {
       </main>
 
       {/* Modern Footer */}
-      <footer className="bg-gray-900 text-gray-300 py-8">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="flex items-center gap-3">
-              <div className="rounded-lg bg-gradient-to-br from-primary-600 to-blue-600 w-10 h-10 flex items-center justify-center text-white font-bold text-xl">
-                D
-              </div>
-              <div>
-                <p className="font-semibold text-white">Datatech Test Platform</p>
-                <p className="text-sm text-gray-400">© 2025 All rights reserved by DatatechAlpha</p>
-              </div>
-            </div>
-
-            <div className="flex gap-6">
-              <a
-                href="https://github.com/Arpit8789/Datatech_testaker"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-400 hover:text-white transition-colors"
-              >
-                GitHub
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                Privacy
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                Terms
-              </a>
-            </div>
-          </div>
+      {/* Modern Footer */}
+<footer className="bg-gray-900 text-gray-300 py-8">
+  <div className="max-w-7xl mx-auto px-6">
+    <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+      <div className="flex items-center gap-3">
+        <div className="rounded-lg bg-gradient-to-br from-primary-600 to-blue-600 w-10 h-10 flex items-center justify-center text-white font-bold text-xl">
+          D
         </div>
-      </footer>
+        <div>
+          <p className="font-semibold text-white">Datatech Test Platform</p>
+          <p className="text-sm text-gray-400">© 2025 All rights reserved</p>
+        </div>
+      </div>
+
+      <div className="flex gap-6">
+        <Link
+          to="/privacy"
+          className="text-gray-400 hover:text-white transition-colors"
+        >
+          Privacy Policy
+        </Link>
+        <Link
+          to="/terms"
+          className="text-gray-400 hover:text-white transition-colors"
+        >
+          Terms
+        </Link>
+        <Link
+          to="/refund"
+          className="text-gray-400 hover:text-white transition-colors"
+        >
+          Refund Policy
+        </Link>
+        <Link
+          to="/contact"
+          className="text-gray-400 hover:text-white transition-colors"
+        >
+          Contact
+        </Link>
+      </div>
+    </div>
+  </div>
+</footer>
+
     </div>
   )
 }
