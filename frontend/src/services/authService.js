@@ -298,17 +298,18 @@ export const studentSignup = async (userData) => {
       userData.name
     )
 
-    // Create student document
     await databases.createDocument(
       APPWRITE_CONFIG.databaseId,
       APPWRITE_CONFIG.collections.students,
-      user.$id,
+      user.$id,  // student document ID = user ID
       {
+        userId: user.$id,   // ✅ FIX: required attribute added
         name: userData.name,
         email: userData.email,
         phone: userData.phone,
-        collegeId: userData.collegeId || null, // ✅ Can be null for general students
-        studentType: userData.studentType || 'general' // ✅ New field
+        collegeId: userData.collegeId || null,
+        studentType: userData.studentType || 'general',
+        payNowEnabled: false // optional but you have this in DB
       }
     )
 
