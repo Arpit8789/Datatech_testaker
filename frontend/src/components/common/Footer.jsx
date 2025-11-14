@@ -1,4 +1,5 @@
 import { Heart } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 const Footer = () => {
   return (
@@ -19,24 +20,30 @@ const Footer = () => {
 
           {/* Links */}
           <div className="flex space-x-6 text-sm">
-            <a
-              href="#"
+            <Link
+              to="/privacy"
               className="text-gray-600 hover:text-primary-600 transition-colors"
             >
               Privacy Policy
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link
+              to="/terms"
               className="text-gray-600 hover:text-primary-600 transition-colors"
             >
               Terms of Service
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link
+              to="/refund"
+              className="text-gray-600 hover:text-primary-600 transition-colors"
+            >
+              Refund Policy
+            </Link>
+            <Link
+              to="/contact"
               className="text-gray-600 hover:text-primary-600 transition-colors"
             >
               Contact Us
-            </a>
+            </Link>
           </div>
         </div>
       </div>

@@ -38,6 +38,15 @@ import PaymentPage from './pages/student/PaymentPage'
 import PaymentSuccess from './pages/student/PaymentSuccess'
 import TechnicalTests from './pages/student/TechnicalTests'
 
+// Import the new pages
+import TermsConditions from './pages/TermsConditions'
+import PrivacyPolicy from './pages/PrivacyPolicy'
+import RefundPolicy from './pages/RefundPolicy'
+import ContactUs from './pages/ContactUs'
+
+// Add routes (in <Routes>)
+
+
 
 function App() {
   return (
@@ -82,7 +91,14 @@ function App() {
           <Route path="/student/payment-success" element={<PaymentSuccess />} />
           <Route path="/student/payment/:attemptId" element={<PaymentPage />} />
           <Route path="/student/technical-tests" element={<TechnicalTests />} />
+          
           <Route path="/student/payment-success" element={<PaymentSuccess />} />
+          
+          <Route path="/terms" element={<TermsConditions />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/refund" element={<RefundPolicy />} />
+          <Route path="/contact" element={<ContactUs />} />
+          
           {/* Catch all - redirect to home */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
