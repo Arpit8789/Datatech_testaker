@@ -37,6 +37,8 @@ import TestResult from './pages/student/TestResult'
 import PaymentPage from './pages/student/PaymentPage'
 import PaymentSuccess from './pages/student/PaymentSuccess'
 
+
+
 function App() {
   return (
     <AuthProvider>
@@ -60,7 +62,7 @@ function App() {
           <Route path="/admin/tests" element={<AllTests />} />
           <Route path="/admin/tests/:id/edit" element={<EditTest />} />
           <Route path="/admin/marks" element={<AllMarks />} />
-          <Route path="/admin/scholarships" element={<ScholarshipManagement />} />
+          <Route path="/admin/scholarship" element={<ScholarshipManagement />} />
           <Route path="/admin/payments" element={<PaymentManagement />} />
           <Route path="/admin/groups" element={<GroupsManagement />} />
           
@@ -78,7 +80,8 @@ function App() {
           <Route path="/student/result/:id" element={<TestResult />} />
           <Route path="/student/payment/:attemptId" element={<PaymentPage />} />
           <Route path="/student/payment-success" element={<PaymentSuccess />} />
-          
+          <Route path="/student/payment/:attemptId" element={<PaymentPage />} />
+          <Route path="/student/payment-success" element={<PaymentSuccess />} />
           {/* Catch all - redirect to home */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

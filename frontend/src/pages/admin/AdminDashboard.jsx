@@ -146,6 +146,15 @@ const AdminDashboard = () => {
             <p className="text-green-100 text-sm">Student performance analytics</p>
           </button>
 
+
+          <button
+    onClick={() => navigate('/admin/scholarship')}
+    className="bg-gradient-to-br from-yellow-500 to-amber-600 text-white rounded-xl p-6 hover:shadow-2xl transition-all group"
+  >
+    <Award className="mb-3 group-hover:scale-110 transition-transform" size={32} />
+    <h3 className="text-xl font-bold mb-2">Scholarship Management</h3>
+    <p className="text-yellow-100 text-sm">Set cutoffs & enable payments</p>
+  </button>
           <button
             onClick={() => navigate('/admin/payments')}
             className="bg-gradient-to-br from-purple-500 to-purple-600 text-white rounded-xl p-6 hover:shadow-2xl transition-all group"
