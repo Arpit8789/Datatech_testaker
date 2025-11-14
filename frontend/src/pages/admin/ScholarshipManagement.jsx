@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Award, Building2, ArrowLeft, Save, Users, ToggleLeft, ToggleRight, CheckCircle, Edit2, TrendingUp } from 'lucide-react'
+import { Award, Building2, ArrowLeft, Save, Users, ToggleLeft, ToggleRight, CheckCircle, Edit2, TrendingUp, Calendar, Globe } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { databases } from '../../config/appwrite'
 import { APPWRITE_CONFIG } from '../../config/constants'
@@ -10,9 +10,14 @@ const ScholarshipManagement = () => {
   const navigate = useNavigate()
   const [colleges, setColleges] = useState([])
   const [attempts, setAttempts] = useState([])
+  const [generalSettings, setGeneralSettings] = useState(null)
   const [loading, setLoading] = useState(true)
   const [editingCollege, setEditingCollege] = useState(null)
   const [newPercentage, setNewPercentage] = useState('')
+  const [editingGeneral, setEditingGeneral] = useState(false)
+  const [generalPercentage, setGeneralPercentage] = useState('')
+  const [editingTiming, setEditingTiming] = useState(null)
+  const [timingData, setTimingData] = useState({ start: '', end: '' })
 
   useEffect(() => {
     fetchData()
@@ -20,12 +25,15 @@ const ScholarshipManagement = () => {
 
   const fetchData = async () => {
     try {
-      const [collegesRes, attemptsRes] = await Promise.all([
+      const [collegesRes, attemptsRes, generalRes] = await Promise.all([
         databases.listDocuments(APPWRITE_CONFIG.databaseId, APPWRITE_CONFIG.collections.colleges),
-        databases.listDocuments(APPWRITE_CONFIG.databaseId, APPWRITE_CONFIG.collections.attempts)
+        databases.listDocuments(APPWRITE_CONFIG.databaseId, APPWRITE_CONFIG.collections.attempts),
+        databases.listDocuments(APPWRITE_CONFIG.databaseId, APPWRITE_CONFIG.collections.generalSettings)
       ])
+      
       setColleges(collegesRes.documents)
       setAttempts(attemptsRes.documents)
+      setGeneralSettings(generalRes.documents[0] || null)
     } catch (error) {
       console.error('Error fetching data:', error)
       toast.error('Failed to load data')
@@ -34,6 +42,42 @@ const ScholarshipManagement = () => {
     }
   }
 
+  // Update General Scholarship
+  const handleUpdateGeneralScholarship = async () => {
+    if (!generalPercentage || parseInt(generalPercentage) < 0 || parseInt(generalPercentage) > 100) {
+      toast.error('Please enter a valid percentage (0-100)')
+      return
+    }
+
+    try {
+      if (generalSettings) {
+        await databases.updateDocument(
+          APPWRITE_CONFIG.databaseId,
+          APPWRITE_CONFIG.collections.generalSettings,
+          generalSettings.$id,
+          { scholarshipPercentage: parseInt(generalPercentage) }
+        )
+      } else {
+        await databases.createDocument(
+          APPWRITE_CONFIG.databaseId,
+          APPWRITE_CONFIG.collections.generalSettings,
+          'settings',
+          { 
+            scholarshipPercentage: parseInt(generalPercentage),
+            paymentAmount: 949
+          }
+        )
+      }
+      toast.success('General scholarship updated!')
+      setEditingGeneral(false)
+      fetchData()
+    } catch (error) {
+      console.error('Error updating general scholarship:', error)
+      toast.error('Failed to update')
+    }
+  }
+
+  // Update College Scholarship
   const handleUpdateScholarship = async (collegeId) => {
     if (!newPercentage || parseInt(newPercentage) < 0 || parseInt(newPercentage) > 100) {
       toast.error('Please enter a valid percentage (0-100)')
@@ -47,7 +91,7 @@ const ScholarshipManagement = () => {
         collegeId,
         { scholarshipPercentage: parseInt(newPercentage) }
       )
-      toast.success('Scholarship percentage updated successfully!')
+      toast.success('Scholarship percentage updated!')
       setEditingCollege(null)
       setNewPercentage('')
       fetchData()
@@ -57,29 +101,53 @@ const ScholarshipManagement = () => {
     }
   }
 
+  // Update Test Timing
+  const handleUpdateTiming = async (collegeId) => {
+    if (!timingData.start || !timingData.end) {
+      toast.error('Please select both start and end times')
+      return
+    }
+
+    if (new Date(timingData.end) <= new Date(timingData.start)) {
+      toast.error('End time must be after start time')
+      return
+    }
+
+    try {
+      await databases.updateDocument(
+        APPWRITE_CONFIG.databaseId,
+        APPWRITE_CONFIG.collections.colleges,
+        collegeId,
+        {
+          testStartTime: timingData.start,
+          testEndTime: timingData.end
+        }
+      )
+      toast.success('Test timing updated!')
+      setEditingTiming(null)
+      setTimingData({ start: '', end: '' })
+      fetchData()
+    } catch (error) {
+      console.error('Error updating timing:', error)
+      toast.error('Failed to update timing')
+    }
+  }
+
+  // Toggle Payment
   const handleTogglePayment = async (college) => {
     try {
-      const newStatus = !college.payNowEnabled
       await databases.updateDocument(
         APPWRITE_CONFIG.databaseId,
         APPWRITE_CONFIG.collections.colleges,
         college.$id,
-        { payNowEnabled: newStatus }
+        { payNowEnabled: !college.payNowEnabled }
       )
-      toast.success(`Payment ${newStatus ? 'enabled' : 'disabled'} for ${college.collegeName}`)
+      toast.success(`Payment ${!college.payNowEnabled ? 'enabled' : 'disabled'}`)
       fetchData()
     } catch (error) {
       console.error('Error toggling payment:', error)
       toast.error('Failed to update payment status')
     }
-  }
-
-  // Get stats for each percentage threshold (for preview)
-  const getStatsForThreshold = (collegeId, threshold) => {
-    const collegeAttempts = attempts.filter(a => a.collegeId === collegeId)
-    const eligible = collegeAttempts.filter(a => a.percentage >= threshold).length
-    const mustPay = collegeAttempts.filter(a => a.percentage < threshold).length
-    return { eligible, mustPay, total: collegeAttempts.length }
   }
 
   const getEligibleStudents = (collegeId, threshold) => {
@@ -93,9 +161,15 @@ const ScholarshipManagement = () => {
   }
 
   const getPaidStudents = (collegeId) => {
-    const collegeAttempts = attempts.filter(a => a.collegeId === collegeId)
-    return collegeAttempts.filter(a => a.paymentStatus === 'paid').length
+    return attempts.filter(a => a.collegeId === collegeId && a.paymentStatus === 'paid').length
   }
+
+  // General students stats
+  const generalAttempts = attempts.filter(a => !a.collegeId || a.collegeId === 'null' || a.collegeId === '')
+  const generalEligible = generalAttempts.filter(a => a.percentage >= (generalSettings?.scholarshipPercentage || 60)).length
+  const generalMustPay = generalAttempts.filter(a => 
+    a.percentage < (generalSettings?.scholarshipPercentage || 60) && a.paymentStatus === 'pending'
+  ).length
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-yellow-50 to-amber-50">
@@ -107,32 +181,88 @@ const ScholarshipManagement = () => {
             </button>
             <div>
               <h1 className="text-3xl font-bold text-gray-900">Scholarship & Payment Management</h1>
-              <p className="text-sm text-gray-500">Set scholarship cutoffs and enable/disable payments</p>
+              <p className="text-sm text-gray-500">Manage scholarship cutoffs, payments, and test timings</p>
             </div>
           </div>
         </div>
       </div>
 
       <div className="container-custom py-8">
-        {/* Info Card */}
-        <div className="bg-gradient-to-r from-yellow-500 to-amber-500 text-white rounded-xl p-8 mb-8 shadow-xl">
-          <div className="flex items-center gap-4 mb-4">
-            <div className="bg-white/20 p-3 rounded-lg">
-              <Award size={32} />
-            </div>
+        {/* General Students Settings Card */}
+        <div className="bg-gradient-to-r from-purple-500 to-indigo-600 text-white rounded-2xl shadow-2xl p-8 mb-8">
+          <div className="flex items-center gap-3 mb-6">
+            <Globe size={32} />
             <div>
-              <h2 className="text-2xl font-bold">How It Works</h2>
-              <ul className="text-yellow-100 text-sm mt-2 space-y-1">
-                <li>• Set scholarship cutoff percentage for each college</li>
-                <li>• Students scoring ≥ cutoff get scholarship (no payment required)</li>
-                <li>• Students scoring &lt; cutoff must pay (if payment enabled)</li>
-                <li>• Toggle payment option to enable/disable for entire college</li>
-              </ul>
+              <h2 className="text-2xl font-bold">General Students Settings</h2>
+              <p className="text-purple-100 text-sm">Global settings for students without college affiliation</p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Scholarship Percentage */}
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6">
+              <div className="flex items-center justify-between mb-4">
+                <p className="text-lg font-semibold">Scholarship Cutoff</p>
+                {!editingGeneral && (
+                  <button
+                    onClick={() => {
+                      setEditingGeneral(true)
+                      setGeneralPercentage((generalSettings?.scholarshipPercentage || 60).toString())
+                    }}
+                    className="text-white hover:bg-white/20 px-3 py-1 rounded-lg transition-all flex items-center gap-2"
+                  >
+                    <Edit2 size={16} />
+                    Edit
+                  </button>
+                )}
+              </div>
+
+              {editingGeneral ? (
+                <div className="space-y-3">
+                  <input
+                    type="number"
+                    min="0"
+                    max="100"
+                    className="input-field text-center text-2xl font-bold text-gray-900"
+                    value={generalPercentage}
+                    onChange={(e) => setGeneralPercentage(e.target.value)}
+                  />
+                  <div className="flex gap-2">
+                    <button onClick={handleUpdateGeneralScholarship} className="btn-primary flex-1">
+                      <Save size={16} className="inline mr-2" />
+                      Save
+                    </button>
+                    <button onClick={() => setEditingGeneral(false)} className="btn-secondary flex-1">
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <p className="text-6xl font-bold">{generalSettings?.scholarshipPercentage || 60}%</p>
+              )}
+            </div>
+
+            {/* Stats */}
+            <div className="space-y-3">
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                <p className="text-purple-100 text-sm">Total General Students</p>
+                <p className="text-3xl font-bold">{generalAttempts.length}</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                <p className="text-purple-100 text-sm">Scholarship Eligible</p>
+                <p className="text-3xl font-bold text-green-300">{generalEligible}</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                <p className="text-purple-100 text-sm">Payment Pending</p>
+                <p className="text-3xl font-bold text-yellow-300">{generalMustPay}</p>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Colleges Grid */}
+        <h2 className="text-2xl font-bold text-gray-900 mb-6">College-Wise Management</h2>
+
         {loading ? (
           <div className="text-center py-12">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto"></div>
@@ -145,7 +275,8 @@ const ScholarshipManagement = () => {
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {colleges.map((college) => {
-              const isEditing = editingCollege === college.$id
+              const isEditingScholarship = editingCollege === college.$id
+              const isEditingTime = editingTiming === college.$id
               const currentThreshold = college.scholarshipPercentage || 60
               const eligible = getEligibleStudents(college.collegeId, currentThreshold)
               const mustPay = getMustPayStudents(college.collegeId, currentThreshold)
@@ -167,173 +298,184 @@ const ScholarshipManagement = () => {
                     </div>
                   </div>
 
-                  {/* Scholarship Threshold Editor */}
-                  <div className="bg-gradient-to-r from-yellow-50 to-amber-50 rounded-lg p-6 mb-4 border border-yellow-200">
+                  {/* Test Timing Section */}
+                  <div className="bg-blue-50 rounded-lg p-4 mb-4 border border-blue-200">
                     <div className="flex items-center justify-between mb-3">
-                      <div>
-                        <p className="text-sm font-medium text-gray-700 mb-1">Scholarship Cutoff</p>
-                        <p className="text-xs text-gray-600">Students scoring above this get scholarship</p>
+                      <div className="flex items-center gap-2">
+                        <Calendar size={18} className="text-blue-600" />
+                        <p className="font-semibold text-gray-900">Test Availability Window</p>
                       </div>
-                      {!isEditing && (
+                      {!isEditingTime && (
                         <button
                           onClick={() => {
-                            setEditingCollege(college.$id)
-                            setNewPercentage(currentThreshold.toString())
+                            setEditingTiming(college.$id)
+                            setTimingData({
+                              start: college.testStartTime || '',
+                              end: college.testEndTime || ''
+                            })
                           }}
-                          className="flex items-center gap-2 text-primary-600 hover:text-primary-700 font-medium"
+                          className="text-blue-600 hover:text-blue-700 text-sm font-medium"
                         >
-                          <Edit2 size={16} />
+                          <Edit2 size={14} className="inline mr-1" />
                           Edit
                         </button>
                       )}
                     </div>
 
-                    {isEditing ? (
-                      <>
-                        <div className="mb-3">
+                    {isEditingTime ? (
+                      <div className="space-y-3">
+                        <div>
+                          <label className="text-xs text-gray-600 block mb-1">Start Time</label>
                           <input
-                            type="number"
-                            min="0"
-                            max="100"
-                            className="input-field text-center text-2xl font-bold"
-                            value={newPercentage}
-                            onChange={(e) => setNewPercentage(e.target.value)}
-                            placeholder="e.g., 60"
+                            type="datetime-local"
+                            className="input-field text-sm"
+                            value={timingData.start}
+                            onChange={(e) => setTimingData({ ...timingData, start: e.target.value })}
                           />
                         </div>
-
-                        {/* Preview Stats */}
-                        {newPercentage && (
-                          <div className="bg-white rounded-lg p-3 mb-3">
-                            <p className="text-xs text-gray-600 mb-2 font-medium">Preview at {newPercentage}%:</p>
-                            <div className="grid grid-cols-2 gap-2 text-xs">
-                              <div className="flex items-center gap-2">
-                                <CheckCircle size={14} className="text-green-600" />
-                                <span className="text-gray-700">
-                                  Eligible: <strong className="text-green-600">
-                                    {getEligibleStudents(college.collegeId, parseInt(newPercentage))}
-                                  </strong>
-                                </span>
-                              </div>
-                              <div className="flex items-center gap-2">
-                                <Award size={14} className="text-yellow-600" />
-                                <span className="text-gray-700">
-                                  Must Pay: <strong className="text-yellow-600">
-                                    {getMustPayStudents(college.collegeId, parseInt(newPercentage))}
-                                  </strong>
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                        )}
-
+                        <div>
+                          <label className="text-xs text-gray-600 block mb-1">End Time</label>
+                          <input
+                            type="datetime-local"
+                            className="input-field text-sm"
+                            value={timingData.end}
+                            onChange={(e) => setTimingData({ ...timingData, end: e.target.value })}
+                          />
+                        </div>
                         <div className="flex gap-2">
                           <button
-                            onClick={() => handleUpdateScholarship(college.$id)}
-                            className="btn-primary flex-1 flex items-center justify-center gap-2"
+                            onClick={() => handleUpdateTiming(college.$id)}
+                            className="btn-primary flex-1 text-sm py-2"
                           >
-                            <Save size={16} />
-                            Save Changes
+                            Save Timing
                           </button>
                           <button
-                            onClick={() => {
-                              setEditingCollege(null)
-                              setNewPercentage('')
-                            }}
-                            className="btn-secondary flex-1"
+                            onClick={() => setEditingTiming(null)}
+                            className="btn-secondary flex-1 text-sm py-2"
                           >
                             Cancel
                           </button>
                         </div>
-                      </>
+                      </div>
                     ) : (
-                      <div className="text-center">
-                        <p className="text-5xl font-bold text-yellow-600 mb-1">{currentThreshold}%</p>
-                        <p className="text-xs text-gray-600">Current cutoff percentage</p>
+                      <div className="space-y-2 text-sm">
+                        {college.testStartTime ? (
+                          <>
+                            <div className="flex justify-between">
+                              <span className="text-gray-600">Starts:</span>
+                              <span className="font-medium text-gray-900">
+                                {new Date(college.testStartTime).toLocaleString('en-IN', {
+                                  dateStyle: 'medium',
+                                  timeStyle: 'short'
+                                })}
+                              </span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-gray-600">Ends:</span>
+                              <span className="font-medium text-gray-900">
+                                {new Date(college.testEndTime).toLocaleString('en-IN', {
+                                  dateStyle: 'medium',
+                                  timeStyle: 'short'
+                                })}
+                              </span>
+                            </div>
+                          </>
+                        ) : (
+                          <p className="text-gray-500 text-center py-2">No timing set - Always available</p>
+                        )}
                       </div>
                     )}
                   </div>
 
+                  {/* Scholarship Section */}
+                  <div className="bg-yellow-50 rounded-lg p-4 mb-4 border border-yellow-200">
+                    <div className="flex items-center justify-between mb-3">
+                      <p className="font-semibold text-gray-900">Scholarship Cutoff</p>
+                      {!isEditingScholarship && (
+                        <button
+                          onClick={() => {
+                            setEditingCollege(college.$id)
+                            setNewPercentage(currentThreshold.toString())
+                          }}
+                          className="text-primary-600 hover:text-primary-700 text-sm font-medium"
+                        >
+                          <Edit2 size={14} className="inline mr-1" />
+                          Edit
+                        </button>
+                      )}
+                    </div>
+
+                    {isEditingScholarship ? (
+                      <div className="space-y-3">
+                        <input
+                          type="number"
+                          min="0"
+                          max="100"
+                          className="input-field text-center text-xl font-bold"
+                          value={newPercentage}
+                          onChange={(e) => setNewPercentage(e.target.value)}
+                        />
+                        <div className="flex gap-2">
+                          <button onClick={() => handleUpdateScholarship(college.$id)} className="btn-primary flex-1">
+                            Save
+                          </button>
+                          <button onClick={() => setEditingCollege(null)} className="btn-secondary flex-1">
+                            Cancel
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <p className="text-4xl font-bold text-yellow-600 text-center">{currentThreshold}%</p>
+                    )}
+                  </div>
+
                   {/* Payment Toggle */}
-                  <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-5 mb-4 border border-blue-200">
+                  <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg p-4 mb-4 border border-green-200">
                     <div className="flex items-center justify-between">
                       <div className="flex-1">
-                        <p className="font-semibold text-gray-900 mb-1 flex items-center gap-2">
-                          <TrendingUp size={18} className="text-blue-600" />
-                          Payment Option
-                        </p>
+                        <p className="font-semibold text-gray-900 mb-1">Payment Option</p>
                         <p className="text-xs text-gray-600">
-                          {college.payNowEnabled 
-                            ? '✅ Students can see and use Pay Now button' 
-                            : '❌ Pay Now button hidden from students'}
+                          {college.payNowEnabled ? '✅ Enabled for students' : '❌ Disabled'}
                         </p>
                       </div>
                       <button
                         onClick={() => handleTogglePayment(college)}
-                        className={`flex items-center gap-2 px-5 py-3 rounded-xl font-bold transition-all shadow-md ${
+                        className={`px-4 py-2 rounded-lg font-bold transition-all ${
                           college.payNowEnabled
-                            ? 'bg-green-500 text-white hover:bg-green-600'
-                            : 'bg-gray-300 text-gray-700 hover:bg-gray-400'
+                            ? 'bg-green-500 text-white'
+                            : 'bg-gray-300 text-gray-700'
                         }`}
                       >
-                        {college.payNowEnabled ? (
-                          <>
-                            <ToggleRight size={24} />
-                            ON
-                          </>
-                        ) : (
-                          <>
-                            <ToggleLeft size={24} />
-                            OFF
-                          </>
-                        )}
+                        {college.payNowEnabled ? <ToggleRight size={24} /> : <ToggleLeft size={24} />}
                       </button>
                     </div>
                   </div>
 
-                  {/* Stats Grid */}
-                  <div className="grid grid-cols-2 gap-3 mb-4">
-                    <div className="bg-green-50 rounded-lg p-4 border border-green-200">
-                      <div className="flex items-center gap-2 mb-1">
-                        <CheckCircle size={16} className="text-green-600" />
-                        <span className="text-xs text-gray-600 font-medium">Scholarship Eligible</span>
-                      </div>
-                      <p className="text-2xl font-bold text-green-600">{eligible}</p>
-                      <p className="text-xs text-gray-500 mt-1">≥ {currentThreshold}% score</p>
+                  {/* Stats */}
+                  <div className="grid grid-cols-2 gap-2">
+                    <div className="bg-green-50 rounded p-3 text-center border border-green-200">
+                      <p className="text-xs text-gray-600">Eligible</p>
+                      <p className="text-xl font-bold text-green-600">{eligible}</p>
                     </div>
-
-                    <div className="bg-yellow-50 rounded-lg p-4 border border-yellow-200">
-                      <div className="flex items-center gap-2 mb-1">
-                        <Award size={16} className="text-yellow-600" />
-                        <span className="text-xs text-gray-600 font-medium">Must Pay</span>
-                      </div>
-                      <p className="text-2xl font-bold text-yellow-600">{mustPay}</p>
-                      <p className="text-xs text-gray-500 mt-1">&lt; {currentThreshold}% score</p>
+                    <div className="bg-yellow-50 rounded p-3 text-center border border-yellow-200">
+                      <p className="text-xs text-gray-600">Must Pay</p>
+                      <p className="text-xl font-bold text-yellow-600">{mustPay}</p>
                     </div>
-
-                    <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
-                      <div className="flex items-center gap-2 mb-1">
-                        <CheckCircle size={16} className="text-blue-600" />
-                        <span className="text-xs text-gray-600 font-medium">Already Paid</span>
-                      </div>
-                      <p className="text-2xl font-bold text-blue-600">{paid}</p>
+                    <div className="bg-blue-50 rounded p-3 text-center border border-blue-200">
+                      <p className="text-xs text-gray-600">Paid</p>
+                      <p className="text-xl font-bold text-blue-600">{paid}</p>
                     </div>
-
-                    <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
-                      <div className="flex items-center gap-2 mb-1">
-                        <Users size={16} className="text-purple-600" />
-                        <span className="text-xs text-gray-600 font-medium">Total Attempts</span>
-                      </div>
-                      <p className="text-2xl font-bold text-purple-600">{totalAttempts}</p>
+                    <div className="bg-purple-50 rounded p-3 text-center border border-purple-200">
+                      <p className="text-xs text-gray-600">Total</p>
+                      <p className="text-xl font-bold text-purple-600">{totalAttempts}</p>
                     </div>
                   </div>
 
-                  {/* View Details Button */}
                   <button
                     onClick={() => navigate(`/admin/colleges/${college.$id}`)}
-                    className="btn-secondary w-full"
+                    className="btn-secondary w-full mt-4"
                   >
-                    View Full College Details →
+                    View Full Details →
                   </button>
                 </div>
               )

@@ -289,61 +289,33 @@ export const logout = async () => {
 /**
  * Student Signup
  */
-export const studentSignup = async (data) => {
+export const studentSignup = async (userData) => {
   try {
-    // Check if already logged in
-    const existingUser = await checkExistingSession()
-    if (existingUser) {
-      throw new Error('Please logout first before creating a new account')
-    }
-
-    // Verify college exists
-    const collegeData = await databases.listDocuments(
-      APPWRITE_CONFIG.databaseId,
-      APPWRITE_CONFIG.collections.colleges,
-      [Query.equal('collegeId', data.collegeId)]
-    )
-
-    if (collegeData.documents.length === 0) {
-      throw new Error('Invalid college code. Please check and try again.')
-    }
-
-    // Create Appwrite account
     const user = await account.create(
       ID.unique(),
-      data.email,
-      data.password,
-      data.name
+      userData.email,
+      userData.password,
+      userData.name
     )
 
-    // Create student document in database
-    const studentDoc = await databases.createDocument(
+    // Create student document
+    await databases.createDocument(
       APPWRITE_CONFIG.databaseId,
       APPWRITE_CONFIG.collections.students,
-      ID.unique(),
+      user.$id,
       {
-        name: data.name,
-        email: data.email,
-        phone: data.phone,
-        collegeId: data.collegeId,
-        userId: user.$id,
-        payNowEnabled: false,
+        name: userData.name,
+        email: userData.email,
+        phone: userData.phone,
+        collegeId: userData.collegeId || null, // ✅ Can be null for general students
+        studentType: userData.studentType || 'general' // ✅ New field
       }
     )
 
-    return { success: true, student: studentDoc }
-
+    return { success: true }
   } catch (error) {
-    console.error('Student signup error:', error)
-
-    let errorMessage = error.message
-
-    if (error.code === 409 || errorMessage.includes('user_already_exists')) {
-      errorMessage = 'This email is already registered. Please login.'
-    } else if (errorMessage.includes('Invalid college code')) {
-      errorMessage = 'Invalid college code. Please verify with your college.'
-    }
-
-    return { success: false, error: errorMessage }
+    console.error('Signup error:', error)
+    return { success: false, error: error.message }
   }
 }
+

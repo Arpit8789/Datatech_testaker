@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Building2, Users, BookOpen, CreditCard, LogOut, TrendingUp, Award } from 'lucide-react'
+import { Building2, Users, BookOpen, CreditCard, LogOut, TrendingUp, Award, Globe } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { logout } from '../../services/authService'
 import { databases } from '../../config/appwrite'
@@ -13,6 +13,8 @@ const AdminDashboard = () => {
   const [stats, setStats] = useState({
     colleges: 0,
     students: 0,
+    collegeStudents: 0,
+    generalStudents: 0,
     tests: 0,
     attempts: 0,
     totalRevenue: 0
@@ -33,13 +35,19 @@ const AdminDashboard = () => {
         databases.listDocuments(APPWRITE_CONFIG.databaseId, APPWRITE_CONFIG.collections.attempts)
       ])
 
+      // Separate college and general students
+      const collegeStudents = studentsRes.documents.filter(s => s.collegeId && s.collegeId !== '')
+      const generalStudents = studentsRes.documents.filter(s => !s.collegeId || s.collegeId === '')
+
       setColleges(collegesRes.documents)
       setStats({
         colleges: collegesRes.total,
         students: studentsRes.total,
+        collegeStudents: collegeStudents.length,
+        generalStudents: generalStudents.length,
         tests: testsRes.total,
         attempts: attemptsRes.total,
-        totalRevenue: 0 // Calculate from payments later
+        totalRevenue: attemptsRes.documents.filter(a => a.paymentStatus === 'paid').length * 949
       })
     } catch (error) {
       console.error('Error fetching dashboard data:', error)
@@ -92,8 +100,8 @@ const AdminDashboard = () => {
           <div className="bg-white rounded-xl p-6 shadow-lg border-l-4 border-green-500 hover:shadow-xl transition-all">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-500 text-sm font-medium">Total Students</p>
-                <p className="text-3xl font-bold text-gray-900 mt-2">{loading ? '...' : stats.students}</p>
+                <p className="text-gray-500 text-sm font-medium">College Students</p>
+                <p className="text-3xl font-bold text-gray-900 mt-2">{loading ? '...' : stats.collegeStudents}</p>
               </div>
               <div className="bg-green-100 p-3 rounded-lg">
                 <Users className="text-green-600" size={28} />
@@ -101,16 +109,17 @@ const AdminDashboard = () => {
             </div>
           </div>
 
-          <div className="bg-white rounded-xl p-6 shadow-lg border-l-4 border-purple-500 hover:shadow-xl transition-all">
+          <div className="bg-white rounded-xl p-6 shadow-lg border-l-4 border-purple-500 hover:shadow-xl transition-all cursor-pointer" onClick={() => navigate('/admin/marks?type=general')}>
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-500 text-sm font-medium">Total Tests</p>
-                <p className="text-3xl font-bold text-gray-900 mt-2">{loading ? '...' : stats.tests}</p>
+                <p className="text-gray-500 text-sm font-medium">General Students</p>
+                <p className="text-3xl font-bold text-gray-900 mt-2">{loading ? '...' : stats.generalStudents}</p>
               </div>
               <div className="bg-purple-100 p-3 rounded-lg">
-                <BookOpen className="text-purple-600" size={28} />
+                <Globe className="text-purple-600" size={28} />
               </div>
             </div>
+            <p className="text-xs text-purple-600 mt-2 font-medium">Click to view details →</p>
           </div>
 
           <div className="bg-white rounded-xl p-6 shadow-lg border-l-4 border-yellow-500 hover:shadow-xl transition-all">
@@ -127,7 +136,7 @@ const AdminDashboard = () => {
         </div>
 
         {/* Quick Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <button
             onClick={() => navigate('/admin/tests')}
             className="bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-xl p-6 hover:shadow-2xl transition-all group"
@@ -146,15 +155,15 @@ const AdminDashboard = () => {
             <p className="text-green-100 text-sm">Student performance analytics</p>
           </button>
 
-
           <button
-    onClick={() => navigate('/admin/scholarship')}
-    className="bg-gradient-to-br from-yellow-500 to-amber-600 text-white rounded-xl p-6 hover:shadow-2xl transition-all group"
-  >
-    <Award className="mb-3 group-hover:scale-110 transition-transform" size={32} />
-    <h3 className="text-xl font-bold mb-2">Scholarship Management</h3>
-    <p className="text-yellow-100 text-sm">Set cutoffs & enable payments</p>
-  </button>
+            onClick={() => navigate('/admin/scholarship')}
+            className="bg-gradient-to-br from-yellow-500 to-amber-600 text-white rounded-xl p-6 hover:shadow-2xl transition-all group"
+          >
+            <Award className="mb-3 group-hover:scale-110 transition-transform" size={32} />
+            <h3 className="text-xl font-bold mb-2">Scholarship Management</h3>
+            <p className="text-yellow-100 text-sm">Set cutoffs & enable payments</p>
+          </button>
+
           <button
             onClick={() => navigate('/admin/payments')}
             className="bg-gradient-to-br from-purple-500 to-purple-600 text-white rounded-xl p-6 hover:shadow-2xl transition-all group"

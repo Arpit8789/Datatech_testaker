@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
-import { LogOut, BookOpen, Clock, TrendingUp, Award, CreditCard } from 'lucide-react'
+import { LogOut, BookOpen, Clock, TrendingUp, Award, CreditCard, Lock, Calendar } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { logout } from '../../services/authService'
 import { databases } from '../../config/appwrite'
@@ -14,7 +14,10 @@ const StudentDashboard = () => {
   const [tests, setTests] = useState([])
   const [attempts, setAttempts] = useState([])
   const [college, setCollege] = useState(null)
+  const [generalSettings, setGeneralSettings] = useState(null)
   const [loading, setLoading] = useState(true)
+
+  const isGeneralStudent = !studentData?.collegeId || studentData?.studentType === 'general'
 
   useEffect(() => {
     if (studentData?.$id) {
@@ -24,23 +27,34 @@ const StudentDashboard = () => {
 
   const fetchData = async () => {
     try {
-      const [testsRes, attemptsRes, collegeRes] = await Promise.all([
+      const [testsRes, attemptsRes] = await Promise.all([
         databases.listDocuments(APPWRITE_CONFIG.databaseId, APPWRITE_CONFIG.collections.tests),
         databases.listDocuments(
           APPWRITE_CONFIG.databaseId,
           APPWRITE_CONFIG.collections.attempts,
           [Query.equal('studentId', studentData.$id)]
-        ),
-        databases.listDocuments(
-          APPWRITE_CONFIG.databaseId,
-          APPWRITE_CONFIG.collections.colleges,
-          [Query.equal('collegeId', studentData.collegeId)]
         )
       ])
 
       setTests(testsRes.documents)
       setAttempts(attemptsRes.documents)
-      setCollege(collegeRes.documents[0] || null)
+
+      // Fetch college data if college student
+      if (!isGeneralStudent) {
+        const collegeRes = await databases.listDocuments(
+          APPWRITE_CONFIG.databaseId,
+          APPWRITE_CONFIG.collections.colleges,
+          [Query.equal('collegeId', studentData.collegeId)]
+        )
+        setCollege(collegeRes.documents[0] || null)
+      } else {
+        // Fetch general settings for scholarship percentage
+        const generalRes = await databases.listDocuments(
+          APPWRITE_CONFIG.databaseId,
+          APPWRITE_CONFIG.collections.generalSettings
+        )
+        setGeneralSettings(generalRes.documents[0] || { scholarshipPercentage: 60 })
+      }
     } catch (error) {
       console.error('Error fetching data:', error)
       toast.error('Failed to load dashboard')
@@ -59,24 +73,75 @@ const StudentDashboard = () => {
     }
   }
 
+  // Check test availability based on timing (ONLY for college students)
+  const getTestAvailability = (test) => {
+    // General students: Always available
+    if (isGeneralStudent) {
+      return { available: true, message: null }
+    }
+
+    // College students: Check timing
+    if (!college || !college.testStartTime) {
+      return { available: true, message: null }
+    }
+
+    const now = new Date()
+    const start = new Date(college.testStartTime)
+    const end = new Date(college.testEndTime)
+
+    // Before start time
+    if (now < start) {
+      return {
+        available: false,
+        locked: true,
+        message: `🔒 Test starts on ${start.toLocaleString('en-IN', { 
+          dateStyle: 'medium', 
+          timeStyle: 'short' 
+        })}`
+      }
+    }
+
+    // After end time (still available)
+    if (now > end) {
+      return {
+        available: true,
+        message: `✅ Test available (window ended)`
+      }
+    }
+
+    // During window
+    return {
+      available: true,
+      message: `✅ Test ends on ${end.toLocaleString('en-IN', { 
+        dateStyle: 'medium', 
+        timeStyle: 'short' 
+      })}`
+    }
+  }
+
   const handleTakeTest = (testId) => {
     navigate(`/student/test/${testId}`)
   }
 
-  // ✅ Check if payment is required for an attempt
+  const getScholarshipPercentage = () => {
+    if (isGeneralStudent) {
+      return generalSettings?.scholarshipPercentage || 60
+    }
+    return college?.scholarshipPercentage || 60
+  }
+
   const shouldShowPayButton = (attempt) => {
-    if (!college) return false
+    const scholarshipCutoff = getScholarshipPercentage()
     
-    // Admin must enable payment for college
-    if (!college.payNowEnabled) return false
+    // General students: Always show pay button if not eligible and not paid
+    if (isGeneralStudent) {
+      return attempt.percentage < scholarshipCutoff && attempt.paymentStatus !== 'paid'
+    }
+
+    // College students: Check if payment is enabled by admin
+    if (!college?.payNowEnabled) return false
     
-    // Student must score below scholarship cutoff
-    if (attempt.percentage >= college.scholarshipPercentage) return false
-    
-    // Payment not already done
-    if (attempt.paymentStatus === 'paid') return false
-    
-    return true
+    return attempt.percentage < scholarshipCutoff && attempt.paymentStatus !== 'paid'
   }
 
   return (
@@ -88,7 +153,19 @@ const StudentDashboard = () => {
             <h1 className="text-2xl font-bold text-gray-900">
               Welcome, {studentData?.name || 'Student'}!
             </h1>
-            <p className="text-sm text-gray-500">{studentData?.email}</p>
+            <p className="text-sm text-gray-500">
+              {isGeneralStudent ? (
+                <span className="inline-flex items-center gap-1">
+                  <Award size={14} className="text-green-600" />
+                  General Student
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-1">
+                  <BookOpen size={14} className="text-blue-600" />
+                  {college?.collegeName || 'College Student'}
+                </span>
+              )}
+            </p>
           </div>
           <button onClick={handleLogout} className="flex items-center gap-2 btn-danger">
             <LogOut size={18} />
@@ -127,11 +204,9 @@ const StudentDashboard = () => {
           <div className="bg-white rounded-xl p-6 shadow-md border-l-4 border-yellow-500">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-500 text-sm">Avg Score</p>
+                <p className="text-gray-500 text-sm">Scholarship Cutoff</p>
                 <p className="text-3xl font-bold text-gray-900">
-                  {attempts.length > 0 
-                    ? Math.round(attempts.reduce((acc, a) => acc + (a.percentage || 0), 0) / attempts.length)
-                    : 0}%
+                  {getScholarshipPercentage()}%
                 </p>
               </div>
               <div className="bg-yellow-100 p-3 rounded-lg">
@@ -155,6 +230,36 @@ const StudentDashboard = () => {
           </div>
         </div>
 
+        {/* Test Timing Info for College Students */}
+        {!isGeneralStudent && college?.testStartTime && (
+          <div className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl p-6 mb-8 shadow-xl">
+            <div className="flex items-center gap-3 mb-3">
+              <Calendar size={24} />
+              <h3 className="text-xl font-bold">Test Availability Window</h3>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <p className="text-blue-100 text-sm">Starts At</p>
+                <p className="text-lg font-semibold">
+                  {new Date(college.testStartTime).toLocaleString('en-IN', {
+                    dateStyle: 'medium',
+                    timeStyle: 'short'
+                  })}
+                </p>
+              </div>
+              <div>
+                <p className="text-blue-100 text-sm">Ends At</p>
+                <p className="text-lg font-semibold">
+                  {new Date(college.testEndTime).toLocaleString('en-IN', {
+                    dateStyle: 'medium',
+                    timeStyle: 'short'
+                  })}
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Available Tests */}
         <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
           <h2 className="text-2xl font-bold text-gray-900 mb-6">Available Tests</h2>
@@ -172,20 +277,34 @@ const StudentDashboard = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {tests.map((test) => {
                 const hasAttempted = attempts.some(a => a.testId === test.$id)
-                
+                const availability = getTestAvailability(test)
+                const isLocked = !availability.available && availability.locked
+
                 return (
                   <div
                     key={test.$id}
-                    className="border border-gray-200 rounded-xl p-6 hover:shadow-xl transition-all"
+                    className={`border rounded-xl p-6 transition-all ${
+                      isLocked ? 'border-gray-300 bg-gray-50' : 'border-gray-200 hover:shadow-xl'
+                    }`}
                   >
                     <div className="flex items-start justify-between mb-4">
-                      <div className="bg-primary-100 p-3 rounded-lg">
-                        <BookOpen className="text-primary-600" size={24} />
+                      <div className={`p-3 rounded-lg ${
+                        isLocked ? 'bg-gray-200' : 'bg-primary-100'
+                      }`}>
+                        {isLocked ? (
+                          <Lock className="text-gray-500" size={24} />
+                        ) : (
+                          <BookOpen className="text-primary-600" size={24} />
+                        )}
                       </div>
                       <span className={`text-xs px-3 py-1 rounded-full font-medium ${
-                        hasAttempted ? 'bg-gray-100 text-gray-700' : 'bg-green-100 text-green-700'
+                        hasAttempted 
+                          ? 'bg-gray-100 text-gray-700' 
+                          : isLocked
+                          ? 'bg-red-100 text-red-700'
+                          : 'bg-green-100 text-green-700'
                       }`}>
-                        {hasAttempted ? 'Completed' : 'Available'}
+                        {hasAttempted ? 'Completed' : isLocked ? 'Locked' : 'Available'}
                       </span>
                     </div>
 
@@ -200,14 +319,25 @@ const StudentDashboard = () => {
                         <BookOpen size={16} className="mr-2" />
                         Questions: {test.totalQuestions}
                       </div>
+                      {availability.message && (
+                        <div className={`flex items-center text-xs ${
+                          isLocked ? 'text-red-600' : 'text-green-600'
+                        } font-medium mt-2`}>
+                          {availability.message}
+                        </div>
+                      )}
                     </div>
 
                     <button
                       onClick={() => handleTakeTest(test.$id)}
-                      disabled={hasAttempted}
-                      className={`w-full ${hasAttempted ? 'btn-secondary opacity-50 cursor-not-allowed' : 'btn-primary'}`}
+                      disabled={hasAttempted || isLocked}
+                      className={`w-full ${
+                        hasAttempted || isLocked
+                          ? 'btn-secondary opacity-50 cursor-not-allowed' 
+                          : 'btn-primary'
+                      }`}
                     >
-                      {hasAttempted ? 'Already Taken' : 'Start Test'}
+                      {hasAttempted ? 'Already Taken' : isLocked ? 'Locked' : 'Start Test'}
                     </button>
                   </div>
                 )
@@ -230,6 +360,8 @@ const StudentDashboard = () => {
               {attempts.map((attempt) => {
                 const test = tests.find(t => t.$id === attempt.testId)
                 const showPayButton = shouldShowPayButton(attempt)
+                const scholarshipCutoff = getScholarshipPercentage()
+                const isEligible = attempt.percentage >= scholarshipCutoff
 
                 return (
                   <div key={attempt.$id} className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-all">
@@ -237,22 +369,29 @@ const StudentDashboard = () => {
                       <div className="flex-1">
                         <h3 className="font-bold text-gray-900 mb-2">{test?.testName || 'Unknown Test'}</h3>
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                          <div>
-                            <span className="text-gray-500">Score:</span>
-                            <span className="ml-2 font-bold text-gray-900">{attempt.score}</span>
-                          </div>
-                          <div>
-                            <span className="text-gray-500">Percentage:</span>
-                            <span className={`ml-2 font-bold ${
-                              attempt.percentage >= 60 ? 'text-green-600' : 'text-red-600'
-                            }`}>
-                              {Math.round(attempt.percentage)}%
-                            </span>
-                          </div>
-                          <div>
-                            <span className="text-gray-500">Status:</span>
-                            <span className="ml-2 font-medium capitalize">{attempt.status}</span>
-                          </div>
+                          {isGeneralStudent ? (
+                            <>
+                              <div>
+                                <span className="text-gray-500">Score:</span>
+                                <span className="ml-2 font-bold text-gray-900">{attempt.score}</span>
+                              </div>
+                              <div>
+                                <span className="text-gray-500">Percentage:</span>
+                                <span className={`ml-2 font-bold ${
+                                  isEligible ? 'text-green-600' : 'text-red-600'
+                                }`}>
+                                  {Math.round(attempt.percentage)}%
+                                </span>
+                              </div>
+                            </>
+                          ) : (
+                            <div className="col-span-2">
+                              <span className="text-gray-500">Status:</span>
+                              <span className="ml-2 font-medium text-blue-600">
+                                ✅ Test Submitted Successfully
+                              </span>
+                            </div>
+                          )}
                           <div>
                             <span className="text-gray-500">Payment:</span>
                             <span className={`ml-2 font-medium ${
@@ -264,27 +403,20 @@ const StudentDashboard = () => {
                         </div>
                       </div>
 
-                      {/* ✅ Show Pay Now Button based on logic */}
+                      {/* Payment Button */}
                       {showPayButton && (
                         <button
                           onClick={() => navigate(`/student/payment/${attempt.$id}`)}
                           className="btn-primary flex items-center gap-2 whitespace-nowrap"
                         >
                           <CreditCard size={18} />
-                          Pay Now
+                          Pay ₹949
                         </button>
                       )}
 
-                      {/* Show message if payment not enabled */}
-                      {!college?.payNowEnabled && attempt.paymentStatus === 'pending' && (
-                        <div className="text-sm text-gray-500 italic">
-                          Payment option not enabled yet
-                        </div>
-                      )}
-
-                      {/* Show scholarship eligible message */}
-                      {attempt.percentage >= (college?.scholarshipPercentage || 60) && attempt.paymentStatus === 'pending' && (
-                        <div className="flex items-center gap-2 text-green-600 text-sm font-medium">
+                      {/* Scholarship Eligible Badge */}
+                      {isGeneralStudent && isEligible && attempt.paymentStatus !== 'paid' && (
+                        <div className="flex items-center gap-2 text-green-600 text-sm font-medium bg-green-50 px-4 py-2 rounded-lg">
                           <Award size={18} />
                           Scholarship Eligible
                         </div>
