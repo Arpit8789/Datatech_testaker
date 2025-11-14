@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { CreditCard, CheckCircle, AlertCircle, Home } from 'lucide-react'
+import { CreditCard, CheckCircle, Home } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { databases } from '../../config/appwrite'
 import { APPWRITE_CONFIG } from '../../config/constants'
 import { useAuth } from '../../context/AuthContext'
-import { Query } from 'appwrite'
 
 const PaymentPage = () => {
   const { attemptId } = useParams()
@@ -15,8 +14,6 @@ const PaymentPage = () => {
   const [test, setTest] = useState(null)
   const [loading, setLoading] = useState(true)
   const [processing, setProcessing] = useState(false)
-
-  const isGeneralStudent = !studentData?.collegeId || studentData?.studentType === 'general'
 
   useEffect(() => {
     loadRazorpayScript()
@@ -51,6 +48,7 @@ const PaymentPage = () => {
     } catch (error) {
       console.error('Error fetching details:', error)
       toast.error('Failed to load payment details')
+      navigate('/student/dashboard')
     } finally {
       setLoading(false)
     }
@@ -66,13 +64,13 @@ const PaymentPage = () => {
 
     const options = {
       key: import.meta.env.VITE_RAZORPAY_KEY_ID || 'rzp_test_YOUR_KEY',
-      amount: 94900, // ✅ ₹949 in paise (949 × 100)
+      amount: 94900, // ₹949 in paise
       currency: 'INR',
       name: 'Datatech Test Platform',
-      description: `${test?.testName} - Course Fee`,
-      image: '/logo.png',
+      description: `${test?.testName || 'Test'} - Course Fee`,
       handler: async function (response) {
         try {
+          // ✅ Update payment status with all fields
           await databases.updateDocument(
             APPWRITE_CONFIG.databaseId,
             APPWRITE_CONFIG.collections.attempts,
@@ -81,16 +79,17 @@ const PaymentPage = () => {
               paymentStatus: 'paid',
               paymentId: response.razorpay_payment_id,
               orderId: response.razorpay_order_id || 'N/A',
-              paidAt: new Date().toISOString(),
-              testName: test?.testName // ✅ Store test name
+              testName: test?.testName || 'Unknown Test'
             }
           )
 
-          toast.success('Payment successful!')
-          navigate('/student/payment-success')
+          toast.success('✅ Payment successful!')
+          setTimeout(() => {
+            navigate('/student/payment-success')
+          }, 1000)
         } catch (error) {
-          console.error('Payment update failed:', error)
-          toast.error('Payment recorded but update failed. Contact support.')
+          console.error('Payment update error:', error)
+          toast.error('Payment completed but database update failed. Payment ID: ' + response.razorpay_payment_id)
         }
       },
       prefill: {
@@ -129,7 +128,7 @@ const PaymentPage = () => {
           <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-4">
             <CheckCircle className="text-green-600" size={32} />
           </div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Already Paid</h1>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">Already Paid ✅</h1>
           <p className="text-gray-600 mb-6">This course fee has already been paid.</p>
           <button onClick={() => navigate('/student/dashboard')} className="btn-primary w-full">
             <Home size={18} className="inline mr-2" />
@@ -149,7 +148,7 @@ const PaymentPage = () => {
               <CreditCard className="text-blue-600" size={32} />
             </div>
             <h1 className="text-3xl font-bold text-gray-900 mb-2">Complete Payment</h1>
-            <p className="text-gray-600">{test?.testName}</p>
+            <p className="text-gray-600">{test?.testName || 'Test Fee'}</p>
           </div>
 
           <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl p-6 mb-6 text-center">

@@ -36,7 +36,7 @@ import TakeTest from './pages/student/TakeTest'
 import TestResult from './pages/student/TestResult'
 import PaymentPage from './pages/student/PaymentPage'
 import PaymentSuccess from './pages/student/PaymentSuccess'
-
+import TechnicalTests from './pages/student/TechnicalTests'
 
 
 function App() {
@@ -81,6 +81,7 @@ function App() {
           <Route path="/student/payment/:attemptId" element={<PaymentPage />} />
           <Route path="/student/payment-success" element={<PaymentSuccess />} />
           <Route path="/student/payment/:attemptId" element={<PaymentPage />} />
+          <Route path="/student/technical-tests" element={<TechnicalTests />} />
           <Route path="/student/payment-success" element={<PaymentSuccess />} />
           {/* Catch all - redirect to home */}
           <Route path="*" element={<Navigate to="/" replace />} />

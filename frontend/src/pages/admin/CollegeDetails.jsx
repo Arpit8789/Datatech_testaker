@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { Building2, Users, Award, CreditCard, ArrowLeft, CheckCircle, XCircle, Download, Edit, ToggleLeft, ToggleRight, AlertCircle } from 'lucide-react'
+import { Building2, Users, Award, CreditCard, ArrowLeft, CheckCircle, XCircle, Download, Edit, ToggleLeft, ToggleRight, AlertCircle, Save, TrendingUp } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { databases } from '../../config/appwrite'
 import { APPWRITE_CONFIG } from '../../config/constants'
@@ -14,6 +14,8 @@ const CollegeDetails = () => {
   const [attempts, setAttempts] = useState([])
   const [loading, setLoading] = useState(true)
   const [filterPayment, setFilterPayment] = useState('all')
+  const [editingPlacement, setEditingPlacement] = useState(false)
+  const [placementCount, setPlacementCount] = useState('')
 
   useEffect(() => {
     fetchCollegeData()
@@ -27,6 +29,7 @@ const CollegeDetails = () => {
         id
       )
       setCollege(collegeDoc)
+      setPlacementCount((collegeDoc.totalStudentPlaced || 0).toString())
 
       const [studentsRes, attemptsRes] = await Promise.all([
         databases.listDocuments(
@@ -48,6 +51,28 @@ const CollegeDetails = () => {
       toast.error('Failed to load college details')
     } finally {
       setLoading(false)
+    }
+  }
+
+  const handleUpdatePlacement = async () => {
+    if (!placementCount || parseInt(placementCount) < 0) {
+      toast.error('Please enter a valid number')
+      return
+    }
+
+    try {
+      await databases.updateDocument(
+        APPWRITE_CONFIG.databaseId,
+        APPWRITE_CONFIG.collections.colleges,
+        id,
+        { totalStudentPlaced: parseInt(placementCount) }
+      )
+      toast.success('Placement count updated!')
+      setEditingPlacement(false)
+      fetchCollegeData()
+    } catch (error) {
+      console.error('Error updating placement:', error)
+      toast.error('Failed to update placement count')
     }
   }
 
@@ -138,7 +163,7 @@ const CollegeDetails = () => {
       </div>
 
       <div className="container-custom py-8">
-        {/* College Info Card with Edit Button */}
+        {/* College Info Card with Edit Controls */}
         <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-bold text-gray-900">College Information</h2>
@@ -166,8 +191,8 @@ const CollegeDetails = () => {
             </div>
           </div>
 
-          {/* Scholarship & Payment Status Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          {/* Scholarship & Payment Status + Placement Count */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
             <div className="bg-gradient-to-r from-yellow-50 to-amber-50 rounded-lg p-6 border border-yellow-200">
               <div className="flex items-center justify-between">
                 <div>
@@ -206,6 +231,63 @@ const CollegeDetails = () => {
                   )}
                 </div>
               </div>
+            </div>
+
+            {/* ✅ NEW: Total Students Placed - Editable */}
+            <div className="bg-gradient-to-r from-purple-50 to-indigo-50 rounded-lg p-6 border border-purple-200">
+              <div className="flex items-center justify-between mb-2">
+                <h3 className="text-sm font-medium text-gray-600">Students Placed</h3>
+                {!editingPlacement && (
+                  <button
+                    onClick={() => setEditingPlacement(true)}
+                    className="text-purple-600 hover:text-purple-700 text-sm font-medium flex items-center gap-1"
+                  >
+                    <Edit size={14} />
+                    Edit
+                  </button>
+                )}
+              </div>
+
+              {editingPlacement ? (
+                <div className="space-y-3">
+                  <input
+                    type="number"
+                    min="0"
+                    className="input-field text-center text-2xl font-bold"
+                    value={placementCount}
+                    onChange={(e) => setPlacementCount(e.target.value)}
+                    placeholder="0"
+                  />
+                  <div className="flex gap-2">
+                    <button
+                      onClick={handleUpdatePlacement}
+                      className="btn-primary flex-1 text-sm py-2 flex items-center justify-center gap-1"
+                    >
+                      <Save size={14} />
+                      Save
+                    </button>
+                    <button
+                      onClick={() => {
+                        setEditingPlacement(false)
+                        setPlacementCount((college?.totalStudentPlaced || 0).toString())
+                      }}
+                      className="btn-secondary flex-1 text-sm py-2"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <p className="text-5xl font-bold text-purple-600 mb-2">
+                    {college?.totalStudentPlaced || 0}
+                  </p>
+                  <p className="text-xs text-gray-500 flex items-center gap-1">
+                    <TrendingUp size={12} />
+                    Total placements achieved
+                  </p>
+                </>
+              )}
             </div>
           </div>
 

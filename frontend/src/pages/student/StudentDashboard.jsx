@@ -345,6 +345,31 @@ const StudentDashboard = () => {
             </div>
           )}
         </div>
+        {/* Technical Tests Section */}
+        <div className="bg-gradient-to-r from-purple-500 to-indigo-600 text-white rounded-xl shadow-2xl p-8 mb-8">
+  <div className="flex items-center justify-between">
+    <div className="flex-1">
+      <div className="flex items-center gap-3 mb-3">
+        <Award size={32} />
+        <h2 className="text-2xl font-bold">Technical Tests</h2>
+      </div>
+      <p className="text-purple-100 mb-4">
+        Advanced technical tests to showcase your skills and unlock internship opportunities
+      </p>
+      <ul className="text-purple-100 text-sm space-y-1">
+        <li>✅ Industry-standard technical questions</li>
+        <li>✅ Real-world problem solving</li>
+        <li>✅ Coding challenges & assessments</li>
+      </ul>
+    </div>
+    <button
+      onClick={() => navigate('/student/technical-tests')}
+      className="bg-white text-purple-600 font-bold px-8 py-4 rounded-xl hover:bg-purple-50 transition-all shadow-lg"
+    >
+      View Technical Tests →
+    </button>
+  </div>
+        </div>
 
         {/* Test History with Payment */}
         <div className="bg-white rounded-xl shadow-lg p-6">
