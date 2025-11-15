@@ -58,7 +58,7 @@ const HomePage = () => {
                       <Building2 className="text-blue-600" size={20} />
                     </div>
                     <div>
-                      <p className="font-semibold text-gray-900">College Login</p>
+                      <p className="font-semibold text-gray-900">Institute Login</p>
                       <p className="text-xs text-gray-500">Manage students</p>
                     </div>
                   </Link>
@@ -72,8 +72,8 @@ const HomePage = () => {
                       <Building2 className="text-blue-600" size={20} />
                     </div>
                     <div>
-                      <p className="font-semibold text-gray-900">College Signup</p>
-                      <p className="text-xs text-gray-500">Register your college</p>
+                      <p className="font-semibold text-gray-900">Institute Signup</p>
+                      <p className="text-xs text-gray-500">Register your Institute</p>
                     </div>
                   </Link>
 
@@ -127,10 +127,10 @@ const HomePage = () => {
               <span className="font-medium">Admin Login</span>
             </Link>
             <Link to="/college/login" className="block px-4 py-2 bg-gray-50 rounded-lg hover:bg-gray-100">
-              <span className="font-medium">College Login</span>
+              <span className="font-medium">Institute Login</span>
             </Link>
             <Link to="/college/signup" className="block px-4 py-2 bg-gray-50 rounded-lg hover:bg-gray-100">
-              <span className="font-medium">College Signup</span>
+              <span className="font-medium">Institute Signup</span>
             </Link>
             <Link to="/student/login" className="block px-4 py-2 bg-gray-50 rounded-lg hover:bg-gray-100">
               <span className="font-medium">Student Login</span>
@@ -164,7 +164,7 @@ const HomePage = () => {
                 to="/college/signup"
                 className="btn-secondary text-lg px-10 py-4 shadow-lg hover:shadow-xl transition-all"
               >
-                Register College
+                Register Institute
               </Link>
             </div>
           </div>
@@ -187,7 +187,7 @@ const HomePage = () => {
               </div>
               <h3 className="text-2xl font-bold text-gray-900 mb-3">Deep Analytics</h3>
               <p className="text-gray-600 leading-relaxed">
-                Comprehensive analytics for admins and colleges. Track scores, payments, scholarship eligibility, and performance trends in real-time.
+                Comprehensive analytics for admins and Institutes. Track scores, payments, scholarship eligibility, and performance trends in real-time.
               </p>
             </div>
 
