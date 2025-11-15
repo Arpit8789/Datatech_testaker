@@ -111,37 +111,50 @@ const ScholarshipManagement = () => {
 
   // Update Test Timing
   const handleUpdateTiming = async (collegeId) => {
-    if (!timingData.start || !timingData.end) {
-      toast.error('Please select both start and end times')
-      return
-    }
+    if (!timingData.start || !timingData.end) {
+      toast.error("Please select both start and end times");
+      return;
+    }
+  
+    const startLocal = new Date(timingData.start);
+    const endLocal = new Date(timingData.end);
+  
+    if (endLocal <= startLocal) {
+    toast.error("End time must be after start time");
+    return;
+    }
+  
+    // Convert datetime-local → valid UTC ISO for Appwrite
+    const toUTC = (dateStr) => {
+    const localDate = new Date(dateStr);
+    const utcDate = new Date(localDate.getTime() - localDate.getTimezoneOffset() * 60000);
+    return utcDate.toISOString();
+    };
+  
+    const utcStart = toUTC(timingData.start);
+    const utcEnd = toUTC(timingData.end);
+  
+    try {
+    await databases.updateDocument(
+      APPWRITE_CONFIG.databaseId,
+      APPWRITE_CONFIG.collections.colleges,
+      collegeId,
+      {
+        testStartTime: utcStart,
+        testEndTime: utcEnd,
+      }
+    );
 
+    toast.success("Test timing updated!");
+    setEditingTiming(null);
+    setTimingData({ start: "", end: "" });
+    fetchData();
+    } catch (error) {
+    console.error("Error updating timing:", error);
+    toast.error("Failed to update timing");
+    }
+  };
 
-    if (new Date(timingData.end) <= new Date(timingData.start)) {
-      toast.error('End time must be after start time')
-      return
-    }
-
-
-    try {
-      await databases.updateDocument(
-        APPWRITE_CONFIG.databaseId,
-        APPWRITE_CONFIG.collections.colleges,
-        collegeId,
-        {
-          testStartTime: timingData.start,
-          testEndTime: timingData.end
-        }
-      )
-      toast.success('Test timing updated!')
-      setEditingTiming(null)
-      setTimingData({ start: '', end: '' })
-      fetchData()
-    } catch (error) {
-      console.error('Error updating timing:', error)
-      toast.error('Failed to update timing')
-    }
-  }
 
 
   // Toggle Payment
