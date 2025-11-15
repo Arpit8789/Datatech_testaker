@@ -2,6 +2,32 @@ import { Link } from 'react-router-dom'
 import { GraduationCap, Building2, Shield, ChevronDown, CheckCircle2, TrendingUp, CreditCard, Briefcase } from 'lucide-react' // Added Briefcase
 import { useState } from 'react'
 
+// CPU icon component for your logo in blue
+const CpuIcon = () => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    width="24" height="24" 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="2" 
+    strokeLinecap="round" 
+    strokeLinejoin="round" 
+    className="text-primary-500 mr-2 h-full"
+  >
+    <rect x="4" y="4" width="16" height="16" rx="2"></rect>
+    <rect x="9" y="9" width="6" height="6"></rect>
+    <path d="M15 2v2"></path>
+    <path d="M15 20v2"></path>
+    <path d="M2 15h2"></path>
+    <path d="M2 9h2"></path>
+    <path d="M20 15h2"></path>
+    <path d="M20 9h2"></path>
+    <path d="M9 2v2"></path>
+    <path d="M9 20v2"></path>
+  </svg>
+)
+
 const HomePage = () => {
   const [showDropdown, setShowDropdown] = useState(false)
 
@@ -11,11 +37,12 @@ const HomePage = () => {
       <header className="w-full py-4 px-6 bg-white/95 backdrop-blur-sm shadow-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <Link to="/" className="flex items-center gap-3 group">
-            <div className="rounded-xl bg-gradient-to-br from-primary-600 to-blue-600 w-12 h-12 flex items-center justify-center text-white font-bold text-2xl shadow-lg group-hover:shadow-xl transition-all">
-              D
-            </div>
+            <div className="rounded-xl w-12 h-12 flex items-center justify-center text-primary-500 font-bold text-2xl shadow-lg group-hover:shadow-xl transition-all">
+  <CpuIcon />
+</div>
+
             <div>
-              <span className="text-xl font-bold text-gray-900 tracking-tight block">Datatech</span>
+              <span className="text-xl font-bold text-gray-900 tracking-tight block">DataTechAlpha</span>
               <span className="text-xs text-gray-500 -mt-1 block">Test Platform</span>
             </div>
           </Link>
@@ -246,11 +273,12 @@ const HomePage = () => {
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center gap-3">
-              <div className="rounded-lg bg-gradient-to-br from-primary-600 to-blue-600 w-10 h-10 flex items-center justify-center text-white font-bold text-xl">
-                D
-              </div>
+              <div className="rounded-lg w-10 h-10 flex items-center justify-center text-primary-500 font-bold text-xl">
+  <CpuIcon />
+</div>
+
               <div>
-                <p className="font-semibold text-white">Datatech Test Platform</p>
+                <p className="font-semibold text-white">DataTechAlpha Test Platform</p>
                 <p className="text-sm text-gray-400">© 2025 All rights reserved</p>
               </div>
             </div>
