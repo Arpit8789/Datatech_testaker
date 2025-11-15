@@ -1,0 +1,220 @@
+{
+  "testInfo": {
+    "testName": "Artificial intelligence internship - Question Paper",
+    "testNumber": 1,
+    "duration": null,
+    "totalQuestions": 50,
+    "sections": [
+      {
+        "name": "Quantitative Aptitude",
+        "questions": 15
+      },
+      {
+        "name": "Verbal Ability (English)",
+        "questions": 15
+      },
+      {
+        "name": "Artificial Intelligence",
+        "questions": 20
+      }
+    ],
+    "description": "Question paper with 50 questions spanning Quantitative Aptitude, Verbal Ability, and Artificial Intelligence"
+  },
+  "questions": [
+    {
+      "id": 1,
+      "section": "Quantitative Aptitude",
+      "question": "A dishonest salesman buys x% more grains than what he pays for ,while selling he uses counterfeit weight which measures 800 grams for every 1000 grams. If he sells the item at 10% above the cost price and earn an overall profit of 65%, then find the value of x.",
+      "options": [
+        "20%",
+        "25%",
+        "35%",
+        "15%"
+      ],
+      "correctAnswer": 0,
+      "marks": 1
+    },
+    {
+      "id": 2,
+      "section": "Quantitative Aptitude",
+      "question": "XYZ publication started with 2000 novels. The printing cost, packaging cost and delivery cost of each novel is Rs. 150, Rs. 20 and Rs. 50 respectively. If 40% of the novels are sold at 3/4th of the cost price, then how much percent above the cost price should the remaining novels be sold to get 20% profit on total expenditure?",
+      "options": [
+        "25%",
+        "20%",
+        "30%",
+        "50%"
+      ],
+      "correctAnswer": 3,
+      "marks": 1
+    },
+    {
+      "id": 3,
+      "section": "Quantitative Aptitude",
+      "question": "660 656 620 520 324 ?",
+      "options": [
+        "116",
+        "56",
+        "1",
+        "0"
+      ],
+      "correctAnswer": 3,
+      "marks": 1
+    },
+    {
+      "id": 4,
+      "section": "Quantitative Aptitude",
+      "question": "2048 516 1032 262 ? 135 270",
+      "options": [
+        "532",
+        "444",
+        "464",
+        "524"
+      ],
+      "correctAnswer": 3,
+      "marks": 1
+    },
+    {
+      "id": 5,
+      "section": "Quantitative Aptitude",
+      "question": "A man deposited Rs. 40,000 in a bank at 10% per annum, compounded annually for two years. He wanted to keep the amount deposited at the end of the two years, but there was a new law in place that for any amount in the account that date onwards, any annual interest greater than Rs.2,500 would be taxed. Also, the rate of interest was reduced to 8% per annum. What amount should he remove from his account to ensure that he just avoids paying the tax? Assume that his account had zero balance before he deposited Rs. 40,000.",
+      "options": [
+        "Rs. 31,250",
+        "Rs. 17,150",
+        "Rs. 21,684",
+        "Rs. 18,050"
+      ],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 6,
+      "section": "Quantitative Aptitude",
+      "question": "Asha took an educational loan of Rs. 4,00,000 from a nationalized bank for her 2 years course. She returned half of the amount (including interest) at the completion of her studies and remaining after 3 years from the end of her course. If she would be charged at 7% p.a. at CI during her course and at 10% p.a. at CI after the completion of the course. Then what is her total interest amount?",
+      "options": [
+        "Rs. 1,98,765.35",
+        "Rs. 1,33,752.38",
+        "Rs. 1,67,190.47",
+        "Rs. 1,45,618.50"
+      ],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 7,
+      "section": "Quantitative Aptitude",
+      "question": "Four friends A, B, C and D are assigned to complete a work. A, C and D together can complete the task in 8 days while A and C together can complete the same work in 72/7 days. If B is 20% more efficient than D, then find the sum of number of days taken by B and C to complete the task individually, if it is given that ratio of efficiency of A and C is 3: 4, respectively.",
+      "options": [
+        "56 days",
+        "42 days",
+        "36 days",
+        "48 days"
+      ],
+      "correctAnswer": 3,
+      "marks": 1
+    },
+    {
+      "id": 8,
+      "section": "Quantitative Aptitude",
+      "question": "A and B alone can complete a work in 24 and 48 days, respectively. 50% of the work is completed by C in 3x days and remaining work is completed by A and B working together in 'x' days, find the time taken by B and C to complete the work while working together.",
+      "options": [
+        "16 days",
+        "20 days",
+        "24 days",
+        "18 days"
+      ],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 9,
+      "section": "Quantitative Aptitude",
+      "question": "What is the sum of the age of Ram and Mohan? Statement I : The age of Ram is 6 years more than the age of Mohan. Statement II : 40% of the age of Mohan is equal to 30% of the age of Ram. Statement III : The ratio between half of the age of Ram and one third of the age of Mohan is 2 : 1.",
+      "options": [
+        "Either statement III alone or statements I and II together are sufficient.",
+        "Only statement III is sufficient.",
+        "Only statement I and II is sufficient.",
+        "None of these"
+      ],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 10,
+      "section": "Quantitative Aptitude",
+      "question": "How much is monthly profit of a company? Statement I: Company decided to give bonus with the salary to its employees. Bonus is 12% of the monthly profit of the company. Statement II: On the day of salary distribution, company changed its mind and gave a total of Rs.24000 as bonus which was 125% of what the company had decided earlier. Statement III : Company gives an amount of Rs.15000 as bonus which is 3/4th of total monthly profit.",
+      "options": [
+        "The data in statements I alone is sufficient to answer the question, while the data in statement II and III is not sufficient to answer the question.",
+        "The data in statements II and III is sufficient to answer the question, while the data in statement I is not sufficient to answer the question.",
+        "The data in statements I and II or in statement II and III is sufficient to answer the question.",
+        "The data in all the statements I, II and III is not sufficient to answer the question."
+      ],
+      "correctAnswer": 0,
+      "marks": 1
+    },
+    {
+      "id": 11,
+      "section": "Quantitative Aptitude",
+      "question": "In a showroom, if the customer's total bill amounts to more than Rs. 2500 in a single purchase, then he or she is eligible for an extra discount on the complete bill. Two friends went for shopping. One purchased a Indian traditional worth Rs. 2250 and the other purchased a deodorant worth Rs. 475. If the separate billing were done, then both are not eligible for discount, but if both the products are billed together, then they are given the discount of 5% on the individual item and the extra discount of 15% on the bill amount. Determine the value of extra discount received by them.",
+      "options": [
+        "Rs. 350.3125",
+        "Rs. 400.6525",
+        "Rs. 388.3125",
+        "Rs. 395.7825"
+      ],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 12,
+      "section": "Quantitative Aptitude",
+      "question": "Anuj buys a share of company ABC and earns a profit of 25% by selling them. The stock market fluctuates and price of some share drops down including share price of company ABC. Anuj again bought share of ABC at 25% less price than what he bought earlier and sold for Rs. 25 less and he still has managed to earn 25% profit. Find the cost of the share when Anuj bought the share for 1st time.",
+      "options": [
+        "Rs. 80",
+        "Rs. 45",
+        "Rs. 60",
+        "None of these"
+      ],
+      "correctAnswer": 0,
+      "marks": 1
+    },
+    {
+      "id": 13,
+      "section": "Quantitative Aptitude",
+      "question": "Three friends Aravind, Bharat and Chandu are about to have their breakfast. Aravind has 7 Apples , Bharat has 5 apples and Chandu has no apples but has 12 coins. He offers to pay for some apples. They agree to share the 12 apples equally among themselves and agree that Chandu would pay 12 coins for his share. Bharat suggests that he be paid 5 coins and Aravind be paid 7 coins. Aravind says that he should get more than 7 coins. How much should Aravind get?",
+      "options": [
+        "11 coins",
+        "10 coins",
+        "12 coins",
+        "8 coins"
+      ],
+      "correctAnswer": 3,
+      "marks": 1
+    },
+    {
+      "id": 14,
+      "section": "Quantitative Aptitude",
+      "question": "In a town with population of 4500, the ratio of males to females is 3 : 2 and the ratio of females to children is 4 : x. In election of Nagar -- Palika, two candidates are there, children aren't allowed to vote and 10% of the eligible population didn't cast their vote. If the winner candidate won by 400 votes and the runner up candidate got 1150 votes, then find the value of 'x'. [Note: Total population of village = Male + Female + Children]",
+      "options": [
+        "1",
+        "5",
+        "3",
+        "4"
+      ],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 15,
+      "section": "Quantitative Aptitude",
+      "question": "From a class of 50 students numbered 1, 2, 3, ............ 50, some students were selected randomly for republic day parade but condition was that the number should be either multiple of 2 or multiple of 5. The average weight of all the students who were not selected was 56 kg and the average weight of all the students who were selected was 58 kg. What was the average weight (in kg) of the class?",
+      "options": [
+        "57.8",
+        "57.2",
+        "56.9",
+        "None of these"
+      ],
+      "correctAnswer": 1,
+      "marks": 1
+    }
+  ]
+}

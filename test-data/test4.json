@@ -1,0 +1,679 @@
+{
+  "testInfo": {
+    "testName": "Computer Networking internship - Question Paper",
+    "testNumber": 1,
+    "duration": null,
+    "totalQuestions": 50,
+    "sections": [
+      {
+        "name": "Quantitative Aptitude",
+        "questions": 15
+      },
+      {
+        "name": "Verbal Ability (English)",
+        "questions": 15
+      },
+      {
+        "name": "Computer Networking",
+        "questions": 20
+      }
+    ],
+    "description": "Question paper with 50 questions spanning Quantitative Aptitude, Verbal Ability, and Computer Networking"
+  },
+  "questions": [
+    {
+      "id": 1,
+      "section": "Quantitative Aptitude",
+      "question": "A man lent Rs. 4500 at 30% compound interest per annum for 3 years. What is the difference between the interest earned by the man in the 2nd year only and the interest earned by the man in the 3rd year only?",
+      "options": [
+        "Rs. 545.5",
+        "Rs. 502",
+        "Rs. 526.5",
+        "Rs. 532"
+      ],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 2,
+      "section": "Quantitative Aptitude",
+      "question": "Kishan borrowed a certain sum from the bank. The bank charges a simple interest of 10 % per annum. Kishan later realized that he no longer needs the entire money. So he lent 60 percent of the borrowed sum to Vikas at the rate of 20% per annum compounded annually. At the end of 3 years, Vikas paid him a sum of Rs. 1555200. How much amount(in Rs.) will Kishan pay to the bank if he repays the entire loan at the end of 4 years?",
+      "options": [
+        "2400000",
+        "2700000",
+        "2100000",
+        "2500000",
+        "2000000"
+      ],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 3,
+      "section": "Quantitative Aptitude",
+      "question": "A man distributes 10%, 18% and 22% of his salary into his three children who spend 40%, 60% and 25% of that amount respectively. The difference between the total amount left with the children and man is Rs. 1015. What is the salary of the man?",
+      "options": [
+        "Rs. 5000",
+        "Rs. 4200",
+        "Rs. 4800",
+        "Rs. 6000"
+      ],
+      "correctAnswer": 0,
+      "marks": 1
+    },
+    {
+      "id": 4,
+      "section": "Quantitative Aptitude",
+      "question": "Salary of A is 37.5% of the total salary of A and B. B saves 60% of his salary and total savings of A and B is 50% of their total income. Their average expenditure is Rs 16000. What is the total salary of A and B?",
+      "options": [
+        "Rs. 96000",
+        "Rs. 54000",
+        "Rs. 72000",
+        "Rs. 64000"
+      ],
+      "correctAnswer": 3,
+      "marks": 1
+    },
+    {
+      "id": 5,
+      "section": "Quantitative Aptitude",
+      "question": "First 15 natural numbers are written from bottom to top. The letters of the word 'SCORE' are written in alphabetical order against the multiples of 3 such that one letter is written against one number from bottom to top. Only three numbers are left blank and against rest of the numbers, letters viz. X, Y, Z, D, J, K and L were written against rest of the numbers not necessarily in the same order. • Only three letters were written between Y and E. • L was written against the number which is the highest odd prime number among the given numbers. • The bottom most number was not left blank. • X was written at a gap of two places from L. • D and X were adjacent. • J was immediately above Y. • Two blank positions were not consecutive. • K was written exactly between E and J. • Number of places above and below Z were same. 1. What is the sum of the numbers against which letters Z and K are written?",
+      "options": [
+        "14",
+        "12",
+        "18",
+        "10"
+      ],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 6,
+      "section": "Quantitative Aptitude",
+      "question": "A, B and C can do a certain piece of work in 16, 20 and 24 days respectively. They started the work together but after 'x -- 8' days, A left the job. 'x' days before completion of the work B also left. If the whole work is completed in 'x+5' days, then find the value of 'x'.",
+      "options": [
+        "12",
+        "14",
+        "15",
+        "None of these"
+      ],
+      "correctAnswer": 3,
+      "marks": 1
+    },
+    {
+      "id": 7,
+      "section": "Quantitative Aptitude",
+      "question": "Four friends A, B, C and D are assigned to complete a work. A, C and D together can complete the task in 8 days while A and C together can complete the same work in 72/7 days. If B is 20% more efficient than D, then find the sum of number of days taken by B and C to complete the task individually, if it is given that ratio of efficiency of A and C is 3: 4, respectively.",
+      "options": [
+        "48 days",
+        "42 days",
+        "36 days",
+        "56 days"
+      ],
+      "correctAnswer": 0,
+      "marks": 1
+    },
+    {
+      "id": 8,
+      "section": "Quantitative Aptitude",
+      "question": "How much does a watch lose per day, if its hands coincide every 64 minutes?",
+      "options": [
+        "32 (8/11)",
+        "33 (8/11)",
+        "34 (8/11)",
+        "35 (8/11)"
+      ],
+      "correctAnswer": 0,
+      "marks": 1
+    },
+    {
+      "id": 9,
+      "section": "Quantitative Aptitude",
+      "question": "The time in the clock is 12 : 23 then what is the time in mirror image?",
+      "options": [
+        "12:33",
+        "11:37",
+        "12:37",
+        "1:23"
+      ],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 10,
+      "section": "Quantitative Aptitude",
+      "question": "A shopkeeper earns a profit of Rs. 156.25 by selling a tyre for Rs. 1250. Find the profit percentage earned by the shopkeeper if he calculates his profit on selling price.",
+      "options": [
+        "10%",
+        "15%",
+        "12.5%",
+        "25%"
+      ],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 11,
+      "section": "Quantitative Aptitude",
+      "question": "Akhil sold a phone to Nikhil at 25% profit, Nikhil sold it to Prakhar at 8% profit. Prakhar sold it to Nihal at 16% loss. If the difference between the profits of Akhil and Nikhil is Rs. 2,025, then at what price does Nihal bought the phone?",
+      "options": [
+        "14444",
+        "16408",
+        "15309",
+        "18495"
+      ],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 12,
+      "section": "Quantitative Aptitude",
+      "question": "Anjali goes 12 km towards North from a fixed point and then she goes 4 km towards South from there. In the end she goes 6 km towards west. How far and in what direction is she from her starting point?",
+      "options": [
+        "7 km East",
+        "10 km West",
+        "7 km West",
+        "10 km North-west"
+      ],
+      "correctAnswer": 3,
+      "marks": 1
+    },
+    {
+      "id": 13,
+      "section": "Quantitative Aptitude",
+      "question": "The simple interest on Rs. 1000 for 2 years is the same as the true discount on Rs. 1280 due 2 years hence. If the rate of interest is the same in both cases , it is:",
+      "options": [
+        "10%",
+        "12%",
+        "14%",
+        "16%"
+      ],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 14,
+      "section": "Quantitative Aptitude",
+      "question": "A has to pay Rs. 220 to B after 1 year. B asks A to pay Rs. 110 in cash and defer the payment of Rs. 110 for 2 years. A agrees to it. If the rate of interest be 10% per annum in this mode of payment:",
+      "options": [
+        "There is no gain or loss to anyone",
+        "A gains Rs. 7.34",
+        "A loses Rs 7.34",
+        "None of These"
+      ],
+      "correctAnswer": 3,
+      "marks": 1
+    },
+    {
+      "id": 15,
+      "section": "Quantitative Aptitude",
+      "question": "A copper sphere of radius 9 cm is beaten and drawn into a wire of diameter 0.2 cm. The length of the wire is?",
+      "options": [
+        "972 m",
+        "912 m",
+        "932 m",
+        "936 m"
+      ],
+      "correctAnswer": 0,
+      "marks": 1
+    },
+    {
+      "id": 16,
+      "section": "Verbal Ability (English)",
+      "question": "In the given question, two words are omitted, which are replaced by blanks. Choose the best combination of the words that can fit into the given blank at the same order so to make a grammatically and logically correct statement.\n\nThe company's sudden announcement of layoffs was seen as _______ by many employees, who did not feel the decision had been _______ from the beginning.",
+      "options": [
+        "abrupt, predetermined",
+        "strategic, unexpected",
+        "transparent, concealed",
+        "reckless, justified"
+      ],
+      "correctAnswer": 3,
+      "marks": 1
+    },
+    {
+      "id": 17,
+      "section": "Verbal Ability (English)",
+      "question": "In the given question, two words are omitted, which are replaced by blanks. Choose the best combination of the words that can fit into the given blank at the same order so to make a grammatically and logically correct statement.\n\nThe government's response to the economic crisis was widely criticized as _______ and only served to _______ public frustration.",
+      "options": [
+        "deliberate, intensify",
+        "prudent, alleviate",
+        "swift, suppress",
+        "ineffectual, exacerbate"
+      ],
+      "correctAnswer": 3,
+      "marks": 1
+    },
+    {
+      "id": 18,
+      "section": "Verbal Ability (English)",
+      "question": "In the given question, two words are omitted, which are replaced by blanks. Choose the best combination of the words that can fit into the given blank at the same order so to make a grammatically and logically correct statement.... The athlete's return to the field after a year-long injury was both _______ and _______, as fans wondered if he could regain his former strength.",
+      "options": [
+        "unexpected, reassuring",
+        "anticipated, uncertain",
+        "disappointing, celebrated",
+        "inevitable, dismissed",
+        "predictable, unnoticed"
+      ],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 19,
+      "section": "Verbal Ability (English)",
+      "question": "In the given question, two words are omitted, which are replaced by blanks. Choose the best combination of the words that can fit into the given blank at the same order so to make a grammatically and logically correct statement.\n\nThe whistleblower's testimony was so _______ that it left lawmakers scrambling to _______ the allegations before they could gain further traction.",
+      "options": [
+        "uninformative, dismiss",
+        "baseless, ignore",
+        "damning, counter",
+        "neutral, endorse",
+        "unfounded, deny"
+      ],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 20,
+      "section": "Verbal Ability (English)",
+      "question": "In the given question, two words are omitted, which are replaced by blanks. Choose the best combination of the words that can fit into the given blank at the same order so to make a grammatically and logically correct statement.\n\nThe new scientific discovery was hailed as _______ but also met with skepticism, as researchers sought to _______ the results through further experiments.",
+      "options": [
+        "revolutionary, replicate",
+        "trivial, ignore",
+        "debatable, obscure",
+        "conclusive, pacify",
+        "marginal, amplify"
+      ],
+      "correctAnswer": 0,
+      "marks": 1
+    },
+    {
+      "id": 21,
+      "section": "Verbal Ability (English)",
+      "question": "Read the sentence to find out if there is any grammatical error in it. The error, if any, will be in one part of the sentence. Choose the option with parts with no error as your answer. If there is no error, mark E as your answer.\n\nThe Brazilian market for (A)/ flying is expected to grow (B)/ by around 10% per year (C)/ annually for at least (D)/",
+      "options": [
+        "ABCD",
+        "ABCE",
+        "BCDE",
+        "Other than these options"
+      ],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 22,
+      "section": "Verbal Ability (English)",
+      "question": "Since the grid now has more (A)/ than one owner, it is often (B)/ hard to know whom will (C)/ bear the risks and who (D)",
+      "options": [
+        "ABDE",
+        "ABCE",
+        "BCDE",
+        "Other than these options"
+      ],
+      "correctAnswer": 0,
+      "marks": 1
+    },
+    {
+      "id": 23,
+      "section": "Verbal Ability (English)",
+      "question": "Select the sentence which is error-free.\n\nA. Ms. Mangeshkar is not first victim from filmdom of the bogus news syndrome.\n\nB. Ms. Mangeshkar is not the first victim from filmdom of the bogus newses syndrome.\n\nC. Ms. Mangeshkar is not the first victims from filmdom of the bogus news syndrome.\n\nD. Ms. Mangeshkar is not the first victim from filmdom of the bogus news syndrome.",
+      "options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "correctAnswer": 3,
+      "marks": 1
+    },
+    {
+      "id": 24,
+      "section": "Verbal Ability (English)",
+      "question": "In today's world, privacy (1) and a company's ability (2) to secure personal data has become an practice (3) component of strong business essential (4).",
+      "options": [
+        "practice -- essential",
+        "privacy -- ability",
+        "essential -- privacy",
+        "No change required"
+      ],
+      "correctAnswer": 3,
+      "marks": 1
+    },
+    {
+      "id": 25,
+      "section": "Verbal Ability (English)",
+      "question": "In this new age of discussions (1) governance, issues like gender equality (2), equal pay, diversity, and environmental responsibility (3) are becoming second nature in daily business corporate (4).",
+      "options": [
+        "discussions -- equality",
+        "responsibility -- corporate",
+        "corporate -- discussions",
+        "equality -- responsibility"
+      ],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 26,
+      "section": "Verbal Ability (English)",
+      "question": "Physical exercise can help counter (1) the loss of memory delay (2) by Alzheimer's as well as caused (3) the onset of the most common type of dementia, according (4) to a study.",
+      "options": [
+        "Counter -- According",
+        "Delay -- Caused",
+        "According -- Delay",
+        "Caused -- Counter"
+      ],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 27,
+      "section": "Verbal Ability (English)",
+      "question": "PECULIAR: People go trekking and wander in the adjacent forest witnessing some of the peculiar flora and fauna of the Himalayas.",
+      "options": [
+        "Strange",
+        "Uncanny",
+        "Normal",
+        "Dubious"
+      ],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 28,
+      "section": "Verbal Ability (English)",
+      "question": "IMPETUOUS: Keeping at his impetuous ways, US President Donald Trump created history as he became the first occupant of the White House to shake hands with a North Korean leader, Kim Jong-un.",
+      "options": [
+        "Bridled",
+        "Rash",
+        "Impulsive",
+        "Rampant"
+      ],
+      "correctAnswer": 0,
+      "marks": 1
+    },
+    {
+      "id": 29,
+      "section": "Verbal Ability (English)",
+      "question": "DEVOID: Devoid of commercial development, the beaches at the Murud coast are practically deserted and make for a relaxed outing.",
+      "options": [
+        "Void",
+        "Lacking",
+        "Sans",
+        "Complete"
+      ],
+      "correctAnswer": 3,
+      "marks": 1
+    },
+    {
+      "id": 30,
+      "section": "Verbal Ability (English)",
+      "question": "Why did you not throw the bag away?",
+      "options": [
+        "did you not throw",
+        "had you not threw",
+        "did you not thrown",
+        "you did not thrown"
+      ],
+      "correctAnswer": 0,
+      "marks": 1
+    },
+    {
+      "id": 31,
+      "section": "Computer Networking",
+      "question": "Which protocol is responsible for resolving IP addresses to MAC addresses in IPv6?",
+      "options": [
+        "RARP",
+        "ARP",
+        "NDP",
+        "ICMPv6 Echo"
+      ],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 32,
+      "section": "Computer Networking",
+      "question": "In BGP, which attribute is used to detect routing loops?",
+      "options": [
+        "AS-PATH",
+        "MED",
+        "LOCAL_PREFERENCE",
+        "ORIGIN"
+      ],
+      "correctAnswer": 0,
+      "marks": 1
+    },
+    {
+      "id": 33,
+      "section": "Computer Networking",
+      "question": "Which of the following scheduling algorithms is used in IEEE 802.11e for QoS?",
+      "options": [
+        "AIFS",
+        "HCCA",
+        "DCF",
+        "RTS/CTS"
+      ],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 34,
+      "section": "Computer Networking",
+      "question": "The maximum window size in TCP without scaling is:",
+      "options": [
+        "2¹⁶ − 1",
+        "2³² − 1",
+        "2⁸ − 1",
+        "2¹⁰ − 1"
+      ],
+      "correctAnswer": 0,
+      "marks": 1
+    },
+    {
+      "id": 35,
+      "section": "Computer Networking",
+      "question": "Which layer of OSI handles end-to-end reliable communication?",
+      "options": [
+        "Network Layer",
+        "Transport Layer",
+        "Session Layer",
+        "Data Link Layer"
+      ],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 36,
+      "section": "Computer Networking",
+      "question": "Which of the following IPv6 transition mechanisms embeds IPv4 addresses within IPv6?",
+      "options": [
+        "6to4 Tunneling",
+        "Dual Stack",
+        "ISATAP",
+        "NAT64"
+      ],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 37,
+      "section": "Computer Networking",
+      "question": "In Distance Vector Routing, the count-to-infinity problem is prevented using:",
+      "options": [
+        "Poison Reverse",
+        "SPF Algorithm",
+        "Flooding",
+        "IP Spoofing"
+      ],
+      "correctAnswer": 0,
+      "marks": 1
+    },
+    {
+      "id": 38,
+      "section": "Computer Networking",
+      "question": "MPLS labels are inserted between:",
+      "options": [
+        "Network and Transport layer",
+        "Data Link and Network layer",
+        "Physical and Data Link layer",
+        "Transport and Session layer"
+      ],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 39,
+      "section": "Computer Networking",
+      "question": "Which of the following is the default port for LDAPS (LDAP over SSL)?",
+      "options": [
+        "636",
+        "389",
+        "443",
+        "989"
+      ],
+      "correctAnswer": 0,
+      "marks": 1
+    },
+    {
+      "id": 40,
+      "section": "Computer Networking",
+      "question": "In OSPF, which LSA type describes summaries sent between areas?",
+      "options": [
+        "Type-1",
+        "Type-2",
+        "Type-3",
+        "Type-5"
+      ],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 41,
+      "section": "Computer Networking",
+      "question": "What is the main purpose of the Spanning Tree Protocol (STP)?",
+      "options": [
+        "Encrypt traffic",
+        "Prevent routing loops",
+        "Prevent switching loops",
+        "Manage VLAN IDs"
+      ],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 42,
+      "section": "Computer Networking",
+      "question": "Which of the following congestion control techniques is used by TCP Tahoe?",
+      "options": [
+        "Fast Recovery",
+        "Fast Retransmit",
+        "Additive Increase Multiplicative Decrease (AIMD)",
+        "Slow Start"
+      ],
+      "correctAnswer": 3,
+      "marks": 1
+    },
+    {
+      "id": 43,
+      "section": "Computer Networking",
+      "question": "The hidden terminal problem occurs mainly in:",
+      "options": [
+        "Wired LAN",
+        "Fiber networks",
+        "Wireless LAN",
+        "WAN"
+      ],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 44,
+      "section": "Computer Networking",
+      "question": "A CIDR block 192.168.16.0/20 provides how many usable host IPs?",
+      "options": [
+        "1022",
+        "4094",
+        "2046",
+        "8190"
+      ],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 45,
+      "section": "Computer Networking",
+      "question": "Which tunneling protocol does IPSec mainly use for encryption and authentication?",
+      "options": [
+        "AH",
+        "ESP",
+        "GRE",
+        "PPTP"
+      ],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 46,
+      "section": "Computer Networking",
+      "question": "What is the minimum number of bits in the TCP header?",
+      "options": [
+        "20 bytes",
+        "32 bytes",
+        "10 bytes",
+        "24 bytes"
+      ],
+      "correctAnswer": 0,
+      "marks": 1
+    },
+    {
+      "id": 47,
+      "section": "Computer Networking",
+      "question": "Which DNS record stores mail server information?",
+      "options": [
+        "A Record",
+        "PTR Record",
+        "MX Record",
+        "CNAME Record"
+      ],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 48,
+      "section": "Computer Networking",
+      "question": "Which queue management technique randomly drops packets before the queue is full?",
+      "options": [
+        "FIFO",
+        "RED",
+        "SFQ",
+        "Priority Queuing"
+      ],
+      "correctAnswer": 1,
+      "marks": 1
+    },
+    {
+      "id": 49,
+      "section": "Computer Networking",
+      "question": "What is the default MTU size of Ethernet?",
+      "options": [
+        "9000 bytes",
+        "576 bytes",
+        "1500 bytes",
+        "4096 bytes"
+      ],
+      "correctAnswer": 2,
+      "marks": 1
+    },
+    {
+      "id": 50,
+      "section": "Computer Networking",
+      "question": "Which routing protocol uses the Dijkstra algorithm to compute shortest paths?",
+      "options": [
+        "RIP",
+        "BGP",
+        "EIGRP",
+        "OSPF"
+      ],
+      "correctAnswer": 3,
+      "marks": 1
+    }
+  ]
+}
