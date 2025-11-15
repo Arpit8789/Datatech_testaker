@@ -2,9 +2,11 @@ import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { CreditCard, CheckCircle, Home } from 'lucide-react'
 import toast from 'react-hot-toast'
-import { databases } from '../../config/appwrite'
-import { APPWRITE_CONFIG } from '../../config/constants'
+import { databases, functions } from '../../config/appwrite'
+import { APPWRITE_CONFIG, RAZORPAY_CONFIG } from '../../config/constants'
 import { useAuth } from '../../context/AuthContext'
+
+const functionId = '69188a130030c52db62b' // Your deployed Appwrite function ID
 
 const PaymentPage = () => {
   const { attemptId } = useParams()
@@ -18,6 +20,7 @@ const PaymentPage = () => {
   useEffect(() => {
     loadRazorpayScript()
     fetchAttemptDetails()
+    // eslint-disable-next-line
   }, [attemptId])
 
   const loadRazorpayScript = () => {
@@ -62,55 +65,85 @@ const PaymentPage = () => {
 
     setProcessing(true)
 
-    const options = {
-      key: import.meta.env.VITE_RAZORPAY_KEY_ID || 'rzp_test_YOUR_KEY',
-      amount: 94900, // ₹949 in paise
-      currency: 'INR',
-      name: 'Datatech Test Platform',
-      description: `${test?.testName || 'Test'} - Course Fee`,
-      handler: async function (response) {
-        try {
-          // ✅ Update payment status with all fields
-          await databases.updateDocument(
-            APPWRITE_CONFIG.databaseId,
-            APPWRITE_CONFIG.collections.attempts,
-            attemptId,
-            {
-              paymentStatus: 'paid',
-              paymentId: response.razorpay_payment_id,
-              orderId: response.razorpay_order_id || 'N/A',
-              testName: test?.testName || 'Unknown Test'
-            }
-          )
+    try {
+      // Call Appwrite Function to create order (secure)
+      const execution = await functions.createExecution(
+        functionId,
+        JSON.stringify({
+          amount: 94900, currency: 'INR', receipt: attemptId,
+        })
+      );
+      console.log('Raw execution response:', execution);
+      let order;
+      try {
+        order = JSON.parse(execution.responseBody);
+      } catch (e) {
+        console.error('Failed to parse responseBody JSON:', e);
+        toast.error('Payment service error — try again later!');
+        setProcessing(false);
+        return;
+      }
 
-          toast.success('✅ Payment successful!')
-          setTimeout(() => {
-            navigate('/student/payment-success')
-          }, 1000)
-        } catch (error) {
-          console.error('Payment update error:', error)
-          toast.error('Payment completed but database update failed. Payment ID: ' + response.razorpay_payment_id)
-        }
-      },
-      prefill: {
-        name: studentData?.name || '',
-        email: studentData?.email || '',
-        contact: studentData?.phone || ''
-      },
-      theme: {
-        color: '#3B82F6'
-      },
-      modal: {
-        ondismiss: function() {
-          setProcessing(false)
-          toast.error('Payment cancelled')
+      if (!order || !order.ok || !order.id) {
+        toast.error(order?.error?.description || 'Order creation failed. Try again.');
+        setProcessing(false);
+        return;
+      }
+
+
+      const options = {
+        key: RAZORPAY_CONFIG.keyId,
+        amount: 94900, // paise
+        currency: 'INR',
+        order_id: order.id, // <<== Use returned order_id
+        name: 'DataTechAlpha Test Platform',
+        description: `${test?.testName || 'Test'} - Course Fee`,
+        handler: async function (response) {
+          try {
+            await databases.updateDocument(
+              APPWRITE_CONFIG.databaseId,
+              APPWRITE_CONFIG.collections.attempts,
+              attemptId,
+              {
+                paymentStatus: 'paid',
+                paymentId: response.razorpay_payment_id,
+                orderId: response.razorpay_order_id || 'N/A',
+                testName: test?.testName || 'Unknown Test'
+              }
+            )
+            toast.success('✅ Payment successful!')
+            setTimeout(() => {
+              navigate('/student/payment-success')
+            }, 1000)
+          } catch (error) {
+            console.error('Payment update error:', error)
+            toast.error('Payment completed but database update failed. Payment ID: ' + response.razorpay_payment_id)
+          }
+        },
+        prefill: {
+          name: studentData?.name || '',
+          email: studentData?.email || '',
+          contact: studentData?.phone || ''
+        },
+        theme: {
+          color: '#3B82F6'
+        },
+        modal: {
+          ondismiss: function () {
+            setProcessing(false)
+            toast.error('Payment cancelled')
+          }
         }
       }
-    }
 
-    const razorpay = new window.Razorpay(options)
-    razorpay.open()
-    setProcessing(false)
+      const razorpay = new window.Razorpay(options)
+      razorpay.open()
+    } catch (error) {
+      console.error('Order creation error:', error)
+      toast.error('Failed to initiate payment')
+    } finally {
+      setProcessing(false)
+    }
   }
 
   if (loading) {
@@ -150,13 +183,11 @@ const PaymentPage = () => {
             <h1 className="text-3xl font-bold text-gray-900 mb-2">Complete Payment</h1>
             <p className="text-gray-600">{test?.testName || 'Test Fee'}</p>
           </div>
-
           <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl p-6 mb-6 text-center">
             <p className="text-sm mb-2 opacity-90">Course Fee</p>
             <p className="text-5xl font-bold mb-2">₹949</p>
             <p className="text-xs opacity-75">One-time payment • Lifetime access</p>
           </div>
-
           <button
             onClick={handlePayment}
             disabled={processing}
@@ -169,7 +200,6 @@ const PaymentPage = () => {
               </>
             )}
           </button>
-
           <p className="text-xs text-gray-500 text-center mt-4">
             🔒 100% Secure payment powered by Razorpay
           </p>
