@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { GraduationCap, Building2, Shield, ChevronDown, CheckCircle2, TrendingUp, CreditCard } from 'lucide-react'
+import { GraduationCap, Building2, Shield, ChevronDown, CheckCircle2, TrendingUp, CreditCard, Briefcase } from 'lucide-react' // Added Briefcase
 import { useState } from 'react'
 
 const HomePage = () => {
@@ -44,6 +44,22 @@ const HomePage = () => {
                     <div>
                       <p className="font-semibold text-gray-900">Admin</p>
                       <p className="text-xs text-gray-500">Manage platform</p>
+                    </div>
+                  </Link>
+
+                  <div className="my-2 border-t border-gray-100"></div>
+
+                  <Link
+                    to="/employee/login"
+                    className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors"
+                    onClick={() => setShowDropdown(false)}
+                  >
+                    <div className="bg-purple-100 p-2 rounded-lg">
+                      <Briefcase className="text-purple-600" size={20} />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-gray-900">Employee Login</p>
+                      <p className="text-xs text-gray-500">Track college payments</p>
                     </div>
                   </Link>
 
@@ -123,19 +139,22 @@ const HomePage = () => {
         {/* Mobile Dropdown */}
         {showDropdown && (
           <div className="md:hidden mt-4 space-y-2">
-            <Link to="/admin/login" className="block px-4 py-2 bg-gray-50 rounded-lg hover:bg-gray-100">
+            <Link to="/admin/login" className="block px-4 py-2 bg-gray-50 rounded-lg hover:bg-gray-100" onClick={() => setShowDropdown(false)}>
               <span className="font-medium">Admin Login</span>
             </Link>
-            <Link to="/college/login" className="block px-4 py-2 bg-gray-50 rounded-lg hover:bg-gray-100">
+            <Link to="/employee/login" className="block px-4 py-2 bg-gray-50 rounded-lg hover:bg-gray-100" onClick={() => setShowDropdown(false)}>
+              <span className="font-medium">Employee Login</span>
+            </Link>
+            <Link to="/college/login" className="block px-4 py-2 bg-gray-50 rounded-lg hover:bg-gray-100" onClick={() => setShowDropdown(false)}>
               <span className="font-medium">Institute Login</span>
             </Link>
-            <Link to="/college/signup" className="block px-4 py-2 bg-gray-50 rounded-lg hover:bg-gray-100">
+            <Link to="/college/signup" className="block px-4 py-2 bg-gray-50 rounded-lg hover:bg-gray-100" onClick={() => setShowDropdown(false)}>
               <span className="font-medium">Institute Signup</span>
             </Link>
-            <Link to="/student/login" className="block px-4 py-2 bg-gray-50 rounded-lg hover:bg-gray-100">
+            <Link to="/student/login" className="block px-4 py-2 bg-gray-50 rounded-lg hover:bg-gray-100" onClick={() => setShowDropdown(false)}>
               <span className="font-medium">Student Login</span>
             </Link>
-            <Link to="/student/signup" className="block px-4 py-2 bg-gray-50 rounded-lg hover:bg-gray-100">
+            <Link to="/student/signup" className="block px-4 py-2 bg-gray-50 rounded-lg hover:bg-gray-100" onClick={() => setShowDropdown(false)}>
               <span className="font-medium">Student Signup</span>
             </Link>
           </div>
@@ -223,50 +242,48 @@ const HomePage = () => {
       </main>
 
       {/* Modern Footer */}
-      {/* Modern Footer */}
-<footer className="bg-gray-900 text-gray-300 py-8">
-  <div className="max-w-7xl mx-auto px-6">
-    <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-      <div className="flex items-center gap-3">
-        <div className="rounded-lg bg-gradient-to-br from-primary-600 to-blue-600 w-10 h-10 flex items-center justify-center text-white font-bold text-xl">
-          D
-        </div>
-        <div>
-          <p className="font-semibold text-white">Datatech Test Platform</p>
-          <p className="text-sm text-gray-400">© 2025 All rights reserved</p>
-        </div>
-      </div>
+      <footer className="bg-gray-900 text-gray-300 py-8">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="flex items-center gap-3">
+              <div className="rounded-lg bg-gradient-to-br from-primary-600 to-blue-600 w-10 h-10 flex items-center justify-center text-white font-bold text-xl">
+                D
+              </div>
+              <div>
+                <p className="font-semibold text-white">Datatech Test Platform</p>
+                <p className="text-sm text-gray-400">© 2025 All rights reserved</p>
+              </div>
+            </div>
 
-      <div className="flex gap-6">
-        <Link
-          to="/privacy"
-          className="text-gray-400 hover:text-white transition-colors"
-        >
-          Privacy Policy
-        </Link>
-        <Link
-          to="/terms"
-          className="text-gray-400 hover:text-white transition-colors"
-        >
-          Terms
-        </Link>
-        <Link
-          to="/refund"
-          className="text-gray-400 hover:text-white transition-colors"
-        >
-          Refund Policy
-        </Link>
-        <Link
-          to="/contact"
-          className="text-gray-400 hover:text-white transition-colors"
-        >
-          Contact
-        </Link>
-      </div>
-    </div>
-  </div>
-</footer>
-
+            <div className="flex gap-6">
+              <Link
+                to="/privacy"
+                className="text-gray-400 hover:text-white transition-colors"
+              >
+                Privacy Policy
+              </Link>
+              <Link
+                to="/terms"
+                className="text-gray-400 hover:text-white transition-colors"
+              >
+                Terms
+              </Link>
+              <Link
+                to="/refund"
+                className="text-gray-400 hover:text-white transition-colors"
+              >
+                Refund Policy
+              </Link>
+              <Link
+                to="/contact"
+                className="text-gray-400 hover:text-white transition-colors"
+              >
+                Contact
+              </Link>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }

@@ -38,6 +38,13 @@ import PaymentPage from './pages/student/PaymentPage'
 import PaymentSuccess from './pages/student/PaymentSuccess'
 import TechnicalTests from './pages/student/TechnicalTests'
 
+//Employeepages
+import EmployeeLogin from './pages/employee/EmployeeLogin'
+import EmployeeDashboard from './pages/employee/EmployeeDashboard'
+
+import CreateEmployee from './pages/admin/CreateEmployee'
+import EmployeePerformance from './pages/admin/EmployeePerformance'
+
 // Import the new pages
 import TermsConditions from './pages/TermsConditions'
 import PrivacyPolicy from './pages/PrivacyPolicy'
@@ -98,6 +105,14 @@ function App() {
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/refund" element={<RefundPolicy />} />
           <Route path="/contact" element={<ContactUs />} />
+          {/*Employee*/}
+          <Route path="/employee/login" element={<EmployeeLogin />} />
+          <Route path="/employee/dashboard" element={<EmployeeDashboard />} />
+          <Route path="/employee/login" element={<EmployeeLogin />} />
+          <Route path="/employee/dashboard" element={<EmployeeDashboard />} />
+          <Route path="/admin/create-employee" element={<CreateEmployee />} />
+          <Route path="/admin/employee-performance" element={<EmployeePerformance />} />
+          
           
           {/* Catch all - redirect to home */}
           <Route path="*" element={<Navigate to="/" replace />} />

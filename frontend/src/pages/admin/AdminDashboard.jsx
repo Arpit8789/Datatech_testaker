@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Building2, Users, BookOpen, CreditCard, LogOut, TrendingUp, Award, Globe } from 'lucide-react'
+import { Building2, Users, BookOpen, CreditCard, LogOut, TrendingUp, Award, Globe, UserPlus, Briefcase } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { logout } from '../../services/authService'
 import { databases } from '../../config/appwrite'
@@ -17,7 +17,9 @@ const AdminDashboard = () => {
     generalStudents: 0,
     tests: 0,
     attempts: 0,
-    totalRevenue: 0
+    totalRevenue: 0,
+    employees: 0,
+    employeeColleges: 0
   })
   const [colleges, setColleges] = useState([])
   const [loading, setLoading] = useState(true)
@@ -28,11 +30,13 @@ const AdminDashboard = () => {
 
   const fetchDashboardData = async () => {
     try {
-      const [collegesRes, studentsRes, testsRes, attemptsRes] = await Promise.all([
+      const [collegesRes, studentsRes, testsRes, attemptsRes, employeesRes, employeeCollegesRes] = await Promise.all([
         databases.listDocuments(APPWRITE_CONFIG.databaseId, APPWRITE_CONFIG.collections.colleges),
         databases.listDocuments(APPWRITE_CONFIG.databaseId, APPWRITE_CONFIG.collections.students),
         databases.listDocuments(APPWRITE_CONFIG.databaseId, APPWRITE_CONFIG.collections.tests),
-        databases.listDocuments(APPWRITE_CONFIG.databaseId, APPWRITE_CONFIG.collections.attempts)
+        databases.listDocuments(APPWRITE_CONFIG.databaseId, APPWRITE_CONFIG.collections.attempts),
+        databases.listDocuments(APPWRITE_CONFIG.databaseId, APPWRITE_CONFIG.collections.employees),
+        databases.listDocuments(APPWRITE_CONFIG.databaseId, APPWRITE_CONFIG.collections.employeeColleges)
       ])
 
       // Separate college and general students
@@ -47,7 +51,9 @@ const AdminDashboard = () => {
         generalStudents: generalStudents.length,
         tests: testsRes.total,
         attempts: attemptsRes.total,
-        totalRevenue: attemptsRes.documents.filter(a => a.paymentStatus === 'paid').length * 949
+        totalRevenue: attemptsRes.documents.filter(a => a.paymentStatus === 'paid').length * 949,
+        employees: employeesRes.total,
+        employeeColleges: employeeCollegesRes.total
       })
     } catch (error) {
       console.error('Error fetching dashboard data:', error)
@@ -135,8 +141,38 @@ const AdminDashboard = () => {
           </div>
         </div>
 
+        {/* Employee Stats (New) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <div className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl p-6 shadow-lg hover:shadow-2xl transition-all">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-indigo-100 text-sm font-medium mb-1">Sales Team</p>
+                <p className="text-4xl font-bold">{loading ? '...' : stats.employees}</p>
+                <p className="text-indigo-100 text-xs mt-2">Active Employees</p>
+              </div>
+              <div className="bg-white/20 p-4 rounded-lg">
+                <Briefcase size={36} />
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-gradient-to-r from-pink-500 to-rose-600 text-white rounded-xl p-6 shadow-lg hover:shadow-2xl transition-all">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-pink-100 text-sm font-medium mb-1">Employee Performance</p>
+                <p className="text-4xl font-bold">{loading ? '...' : stats.employeeColleges}</p>
+                <p className="text-pink-100 text-xs mt-2">Colleges Onboarded by Employees</p>
+              </div>
+              <div className="bg-white/20 p-4 rounded-lg">
+                <Building2 size={36} />
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Quick Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <h2 className="text-2xl font-bold text-gray-900 mb-4">Quick Actions</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           <button
             onClick={() => navigate('/admin/tests')}
             className="bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-xl p-6 hover:shadow-2xl transition-all group"
@@ -171,6 +207,25 @@ const AdminDashboard = () => {
             <CreditCard className="mb-3 group-hover:scale-110 transition-transform" size={32} />
             <h3 className="text-xl font-bold mb-2">Payment Management</h3>
             <p className="text-purple-100 text-sm">Track payments and revenue</p>
+          </button>
+
+          {/* NEW: Employee Management */}
+          <button
+            onClick={() => navigate('/admin/create-employee')}
+            className="bg-gradient-to-br from-indigo-500 to-indigo-600 text-white rounded-xl p-6 hover:shadow-2xl transition-all group"
+          >
+            <UserPlus className="mb-3 group-hover:scale-110 transition-transform" size={32} />
+            <h3 className="text-xl font-bold mb-2">Create Employee</h3>
+            <p className="text-indigo-100 text-sm">Register new sales team member</p>
+          </button>
+
+          <button
+            onClick={() => navigate('/admin/employee-performance')}
+            className="bg-gradient-to-br from-pink-500 to-rose-600 text-white rounded-xl p-6 hover:shadow-2xl transition-all group"
+          >
+            <TrendingUp className="mb-3 group-hover:scale-110 transition-transform" size={32} />
+            <h3 className="text-xl font-bold mb-2">Employee Performance</h3>
+            <p className="text-pink-100 text-sm">Track sales team achievements</p>
           </button>
         </div>
 

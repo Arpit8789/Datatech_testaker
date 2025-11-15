@@ -10,7 +10,9 @@ export const APPWRITE_CONFIG = {
     attempts: import.meta.env.VITE_APPWRITE_COLLECTIONS_ATTEMPTS,
     payments: import.meta.env.VITE_APPWRITE_COLLECTIONS_PAYMENTS,
     groups: import.meta.env.VITE_APPWRITE_COLLECTIONS_GROUPS,
-    generalSettings: import.meta.env.VITE_APPWRITE_COLLECTIONS_GENERAL_SETTINGS
+    generalSettings: import.meta.env.VITE_APPWRITE_COLLECTIONS_GENERAL_SETTINGS,
+    employees: import.meta.env.VITE_APPWRITE_COLLECTIONS_EMPLOYEES, // NEW
+    employeeColleges: import.meta.env.VITE_APPWRITE_COLLECTIONS_EMPLOYEE_COLLEGES, // NEW
   },
   bucketId: import.meta.env.VITE_APPWRITE_BUCKET_ID,
 }
@@ -25,6 +27,7 @@ export const USER_ROLES = {
   ADMIN: 'admin',
   COLLEGE: 'college',
   STUDENT: 'student',
+  EMPLOYEE: 'employee', // NEW
 }
 
 // Test Configuration
