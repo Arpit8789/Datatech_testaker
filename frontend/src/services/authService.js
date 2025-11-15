@@ -291,25 +291,22 @@ export const logout = async () => {
  */
 export const studentSignup = async (userData) => {
   try {
-    const user = await account.create(
-      ID.unique(),
-      userData.email,
-      userData.password,
-      userData.name
-    )
+    // Get currently logged-in user authenticated through OTP
+    const user = await account.get()
 
+    // Create student record in database only (no auth user creation here!)
     await databases.createDocument(
       APPWRITE_CONFIG.databaseId,
       APPWRITE_CONFIG.collections.students,
-      user.$id,  // student document ID = user ID
+      user.$id, // Use Appwrite userId as document ID
       {
-        userId: user.$id,   // ✅ FIX: required attribute added
+        userId: user.$id,
         name: userData.name,
         email: userData.email,
         phone: userData.phone,
         collegeId: userData.collegeId || null,
         studentType: userData.studentType || 'general',
-        payNowEnabled: false // optional but you have this in DB
+        payNowEnabled: false
       }
     )
 
@@ -319,4 +316,5 @@ export const studentSignup = async (userData) => {
     return { success: false, error: error.message }
   }
 }
+
 

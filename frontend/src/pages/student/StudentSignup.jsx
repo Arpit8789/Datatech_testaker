@@ -9,7 +9,7 @@ import { studentSignup } from '../../services/authService'
 
 const StudentSignup = () => {
   const navigate = useNavigate()
-  const [phase, setPhase] = useState('FORM') // 'FORM' | 'OTP' | 'SUCCESS'
+  const [phase, setPhase] = useState('FORM') // FORM | OTP | SUCCESS
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -24,7 +24,10 @@ const StudentSignup = () => {
   const [showGeneralOption, setShowGeneralOption] = useState(false)
   const [resendTimer, setResendTimer] = useState(0)
 
-  // Timer countdown
+  useEffect(() => {
+    account.deleteSessions().catch(() => {});
+  }, [])
+
   useEffect(() => {
     let interval
     if (resendTimer > 0) {
@@ -37,7 +40,6 @@ const StudentSignup = () => {
 
   const checkCollegeExists = async (collegeId) => {
     if (!collegeId || collegeId.trim() === '') return null
-    
     try {
       const response = await databases.listDocuments(
         APPWRITE_CONFIG.databaseId,
@@ -51,19 +53,16 @@ const StudentSignup = () => {
     }
   }
 
+  // Phase 1: Handle submission of email to get OTP.
   const handleEmailSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
-
     try {
-      // Validate college ID if provided
       if (formData.collegeId && formData.collegeId.trim() !== '') {
         const college = await checkCollegeExists(formData.collegeId)
-        
         if (!college) {
           const newAttempts = invalidAttempts + 1
           setInvalidAttempts(newAttempts)
-          
           if (newAttempts >= 3) {
             setShowGeneralOption(true)
             toast.error('❌ College code not found!')
@@ -74,12 +73,12 @@ const StudentSignup = () => {
           return
         }
       }
+      await account.deleteSessions().catch(() => {}) // Clear any session before OTP request
 
-      // Send OTP to email
       const response = await account.createEmailToken(ID.unique(), formData.email)
       setUserId(response.userId)
       setPhase('OTP')
-      setResendTimer(40) // 40 second cooldown
+      setResendTimer(40)
       toast.success('📧 OTP sent to your email! Check inbox/spam.')
     } catch (error) {
       console.error('OTP send error:', error)
@@ -89,22 +88,20 @@ const StudentSignup = () => {
     }
   }
 
+  // Phase 2: Handle OTP verification and user registration (database records only).
   const handleOtpSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
-
     try {
-      // Verify OTP by creating session
-      await account.createSession(userId, otp)
+      await account.deleteSessions().catch(() => {}) // Clear existing sessions before verify
+      await account.createSession(userId, otp) // Verify OTP and log in user
 
-      // Determine student type
+      // The user is now logged in; create student document in DB (do NOT create auth user again)
       const studentType = formData.collegeId && formData.collegeId.trim() !== '' ? 'college' : 'general'
-
-      // Now create the actual student record
       const result = await studentSignup({
         ...formData,
         collegeId: formData.collegeId.trim() || null,
-        studentType: studentType
+        studentType
       })
 
       if (result.success) {
@@ -115,18 +112,19 @@ const StudentSignup = () => {
         toast.error(result.error || 'Signup failed!')
       }
     } catch (error) {
-      console.error('OTP verification error:', error)
       toast.error('❌ Invalid or expired OTP. Please try again.')
+      console.error('OTP verification error:', error)
     } finally {
       setLoading(false)
     }
   }
 
+  // Resend OTP with cooldown and session cleanup
   const handleResendOtp = async () => {
     if (resendTimer > 0) return
-    
     setLoading(true)
     try {
+      await account.deleteSessions().catch(() => {})
       const response = await account.createEmailToken(ID.unique(), formData.email)
       setUserId(response.userId)
       setResendTimer(40)
@@ -138,6 +136,7 @@ const StudentSignup = () => {
     }
   }
 
+  // Switch to general registration if invalid college code attempts exhausted
   const registerAsGeneral = () => {
     setFormData({ ...formData, collegeId: '' })
     setInvalidAttempts(0)
@@ -145,6 +144,7 @@ const StudentSignup = () => {
     toast.success('✅ Switched to General Student registration')
   }
 
+  // UI render
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 flex items-center justify-center p-4">
       <div className="max-w-md w-full">
@@ -154,24 +154,18 @@ const StudentSignup = () => {
           </div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Student Registration</h1>
           <p className="text-gray-600">
-            {phase === 'FORM' ? 'Create your account to access tests' : 
-             phase === 'OTP' ? 'Verify your email address' : 
-             'Account created successfully!'}
+            {phase === 'FORM' ? 'Create your account to access tests' :
+              phase === 'OTP' ? 'Verify your email address' :
+                'Account created successfully!'}
           </p>
         </div>
-
-        {/* General Student Option Banner */}
         {showGeneralOption && phase === 'FORM' && (
           <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4 mb-6">
             <div className="flex items-start gap-3">
               <AlertCircle className="text-yellow-600 flex-shrink-0 mt-0.5" size={20} />
               <div className="flex-1">
-                <p className="text-sm font-medium text-yellow-900 mb-2">
-                  Didn't receive a college code?
-                </p>
-                <p className="text-xs text-yellow-700 mb-3">
-                  No worries! You can register as a general student and access all tests immediately.
-                </p>
+                <p className="text-sm font-medium text-yellow-900 mb-2">Didn't receive a college code?</p>
+                <p className="text-xs text-yellow-700 mb-3">No worries! You can register as a general student and access all tests immediately.</p>
                 <button
                   onClick={registerAsGeneral}
                   className="btn-primary text-sm py-2 px-4"
@@ -182,15 +176,11 @@ const StudentSignup = () => {
             </div>
           </div>
         )}
-
         <div className="bg-white rounded-2xl shadow-xl p-8">
-          {/* PHASE 1: Form Input */}
           {phase === 'FORM' && (
             <form onSubmit={handleEmailSubmit} className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Full Name
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
                 <div className="relative">
                   <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
                   <input
@@ -203,11 +193,8 @@ const StudentSignup = () => {
                   />
                 </div>
               </div>
-
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Email Address
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
                 <div className="relative">
                   <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
                   <input
@@ -220,11 +207,8 @@ const StudentSignup = () => {
                   />
                 </div>
               </div>
-
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Phone Number
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
                 <div className="relative">
                   <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
                   <input
@@ -237,11 +221,8 @@ const StudentSignup = () => {
                   />
                 </div>
               </div>
-
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Password
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
                   <input
@@ -255,11 +236,8 @@ const StudentSignup = () => {
                   />
                 </div>
               </div>
-
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  College Code (Optional)
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">College Code (Optional)</label>
                 <div className="relative">
                   <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
                   <input
@@ -271,50 +249,33 @@ const StudentSignup = () => {
                   />
                 </div>
                 {invalidAttempts > 0 && invalidAttempts < 3 && (
-                  <p className="text-xs text-red-600 mt-1">
-                    ⚠️ Invalid college code. {3 - invalidAttempts} attempt(s) remaining.
-                  </p>
+                  <p className="text-xs text-red-600 mt-1">⚠️ Invalid college code. {3 - invalidAttempts} attempt(s) remaining.</p>
                 )}
                 <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mt-3">
                   <p className="text-xs text-blue-900 flex items-start gap-2">
                     <AlertCircle size={14} className="flex-shrink-0 mt-0.5" />
-                    <span>
-                      💡 <strong>Don't have a college code?</strong> No problem! Leave this field blank to register as a <strong>General Student</strong>.
-                    </span>
+                    <span>💡 <strong>Don't have a college code?</strong> No problem! Leave this field blank to register as a <strong>General Student</strong>.</span>
                   </p>
                 </div>
               </div>
-
-              <button
-                type="submit"
-                disabled={loading}
-                className="btn-primary w-full"
-              >
+              <button type="submit" disabled={loading} className="btn-primary w-full">
                 {loading ? 'Sending OTP...' : 'Send OTP →'}
               </button>
             </form>
           )}
 
-          {/* PHASE 2: OTP Verification */}
           {phase === 'OTP' && (
             <div className="space-y-6">
               <div className="text-center mb-6">
                 <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-4">
                   <Mail className="text-green-600" size={32} />
                 </div>
-                <p className="text-sm text-gray-600">
-                  We've sent a 6-digit code to <strong>{formData.email}</strong>
-                </p>
-                <p className="text-xs text-gray-500 mt-2">
-                  📬 Check your inbox or spam folder
-                </p>
+                <p className="text-sm text-gray-600">We've sent a 6-digit code to <strong>{formData.email}</strong></p>
+                <p className="text-xs text-gray-500 mt-2">📬 Check your inbox or spam folder</p>
               </div>
-
               <form onSubmit={handleOtpSubmit} className="space-y-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Enter OTP
-                  </label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Enter OTP</label>
                   <input
                     type="text"
                     required
@@ -327,16 +288,10 @@ const StudentSignup = () => {
                     onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
                   />
                 </div>
-
-                <button
-                  type="submit"
-                  disabled={loading || otp.length !== 6}
-                  className="btn-primary w-full"
-                >
+                <button type="submit" disabled={loading || otp.length !== 6} className="btn-primary w-full">
                   {loading ? 'Verifying...' : 'Verify & Create Account'}
                 </button>
               </form>
-
               <div className="text-center">
                 <button
                   type="button"
@@ -347,17 +302,12 @@ const StudentSignup = () => {
                   {resendTimer > 0 ? `Resend OTP in ${resendTimer}s` : 'Resend OTP'}
                 </button>
               </div>
-
-              <button
-                onClick={() => setPhase('FORM')}
-                className="text-sm text-gray-600 hover:text-gray-900 w-full text-center"
-              >
+              <button onClick={() => setPhase('FORM')} className="text-sm text-gray-600 hover:text-gray-900 w-full text-center">
                 ← Change Email
               </button>
             </div>
           )}
 
-          {/* PHASE 3: Success */}
           {phase === 'SUCCESS' && (
             <div className="text-center py-8">
               <div className="inline-flex items-center justify-center w-20 h-20 bg-green-100 rounded-full mb-4">

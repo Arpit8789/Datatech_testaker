@@ -10,7 +10,7 @@ import { ID } from 'appwrite'
 
 const CollegeSignup = () => {
   const navigate = useNavigate()
-  const [phase, setPhase] = useState('FORM') 
+  const [phase, setPhase] = useState('FORM')
   const [formData, setFormData] = useState({
     collegeName: '',
     collegeId: '',
@@ -25,6 +25,11 @@ const CollegeSignup = () => {
   const [loading, setLoading] = useState(false)
   const [generatingId, setGeneratingId] = useState(false)
   const [resendTimer, setResendTimer] = useState(0)
+
+  // On mount, clear all possible sessions
+  useEffect(() => {
+    account.deleteSessions().catch(() => {});
+  }, []);
 
   useEffect(() => {
     let interval
@@ -48,28 +53,23 @@ const CollegeSignup = () => {
 
   const handleEmailSubmit = async (e) => {
     e.preventDefault()
-
     if (!validateEmail(formData.email)) {
       toast.error('Invalid email address')
       return
     }
-
     if (!validatePhone(formData.phone)) {
       toast.error('Invalid phone number')
       return
     }
-
     const passwordValidation = validatePassword(formData.password)
     if (!passwordValidation.valid) {
       toast.error(passwordValidation.message)
       return
     }
-
     if (formData.password !== formData.confirmPassword) {
       toast.error('Passwords do not match')
       return
     }
-
     if (!formData.collegeId) {
       toast.error('Please generate a College ID')
       return
@@ -78,6 +78,9 @@ const CollegeSignup = () => {
     setLoading(true)
 
     try {
+      // Always delete all prior sessions before starting new OTP flow!
+      await account.deleteSessions().catch(() => {})
+
       const response = await account.createEmailToken(ID.unique(), formData.email)
       setUserId(response.userId)
       setPhase('OTP')
@@ -96,10 +99,13 @@ const CollegeSignup = () => {
     setLoading(true);
 
     try {
+      // THIS IS THE MAIN FIX—delete all sessions before OTP session
+      await account.deleteSessions().catch(() => {});
+
       // Create session with OTP
       const session = await account.createSession(userId, otp);
 
-      // Update user name in Appwrite (fixes "name showing admin")
+      // Update user profile name
       await account.updateName(formData.collegeName);
 
       // Save college data in backend
@@ -110,8 +116,6 @@ const CollegeSignup = () => {
 
       toast.success('Account created successfully!');
       setPhase('SUCCESS');
-
-      // Go to login page after short delay
       setTimeout(() => navigate('/college/login'), 1500);
 
     } catch (error) {
@@ -124,9 +128,9 @@ const CollegeSignup = () => {
 
   const handleResendOtp = async () => {
     if (resendTimer > 0) return
-    
     setLoading(true)
     try {
+      await account.deleteSessions().catch(() => {});
       const response = await account.createEmailToken(ID.unique(), formData.email)
       setUserId(response.userId)
       setResendTimer(40)
@@ -148,13 +152,12 @@ const CollegeSignup = () => {
           <h1 className="text-3xl font-bold text-gray-900 mb-2">College Registration</h1>
           <p className="text-gray-600">
             {phase === 'FORM' ? 'Create your college account' :
-             phase === 'OTP' ? 'Verify your email address' :
-             'Registration successful!'}
+              phase === 'OTP' ? 'Verify your email address' :
+                'Registration successful!'}
           </p>
         </div>
-
         <div className="bg-white rounded-2xl shadow-xl p-8">
-          
+
           {/* FORM PHASE */}
           {phase === 'FORM' && (
             <form onSubmit={handleEmailSubmit} className="space-y-6">
@@ -175,7 +178,6 @@ const CollegeSignup = () => {
                     />
                   </div>
                 </div>
-
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     College ID
@@ -202,7 +204,6 @@ const CollegeSignup = () => {
                     </button>
                   </div>
                 </div>
-
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Email Address
@@ -219,7 +220,6 @@ const CollegeSignup = () => {
                     />
                   </div>
                 </div>
-
                 <div className="md:col-span-2">
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Phone Number
@@ -236,7 +236,6 @@ const CollegeSignup = () => {
                     />
                   </div>
                 </div>
-
                 <div className="md:col-span-2">
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Address
@@ -253,7 +252,6 @@ const CollegeSignup = () => {
                     />
                   </div>
                 </div>
-
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Password
@@ -270,7 +268,6 @@ const CollegeSignup = () => {
                     />
                   </div>
                 </div>
-
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Confirm Password
@@ -288,7 +285,6 @@ const CollegeSignup = () => {
                   </div>
                 </div>
               </div>
-
               <button
                 type="submit"
                 disabled={loading}
@@ -313,7 +309,6 @@ const CollegeSignup = () => {
                   📬 Check your inbox or spam folder
                 </p>
               </div>
-
               <form onSubmit={handleOtpSubmit} className="space-y-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -331,7 +326,6 @@ const CollegeSignup = () => {
                     onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
                   />
                 </div>
-
                 <button
                   type="submit"
                   disabled={loading || otp.length !== 6}
@@ -340,7 +334,6 @@ const CollegeSignup = () => {
                   {loading ? 'Verifying...' : 'Verify & Register'}
                 </button>
               </form>
-
               <div className="text-center">
                 <button
                   type="button"
@@ -351,7 +344,6 @@ const CollegeSignup = () => {
                   {resendTimer > 0 ? `Resend OTP in ${resendTimer}s` : 'Resend OTP'}
                 </button>
               </div>
-
               <button
                 onClick={() => setPhase('FORM')}
                 className="text-sm text-gray-600 hover:text-gray-900 w-full text-center"
